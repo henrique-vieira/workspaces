@@ -1,0 +1,11 @@
+127.0.0.1 - - [26/Feb/2016:17:57:46 -0300] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [26/Feb/2016:17:58:04 -0300] "GET /FinanceiroJPA/ HTTP/1.1" 200 1394
+0:0:0:0:0:0:0:1 - - [26/Feb/2016:17:58:06 -0300] "GET /FinanceiroJPA/javax.faces.resource/sistema.css.xhtml;jsessionid=652510C8127F0BB17DDC3DBB18F24FA6?ln=css HTTP/1.1" 200 1702
+0:0:0:0:0:0:0:1 - - [26/Feb/2016:17:58:06 -0300] "GET /FinanceiroJPA/imagens/tela.png HTTP/1.1" 200 487
+0:0:0:0:0:0:0:1 - henrique [26/Feb/2016:17:58:16 -0300] "POST /FinanceiroJPA/Login.xhtml;jsessionid=652510C8127F0BB17DDC3DBB18F24FA6 HTTP/1.1" 200 1534
+0:0:0:0:0:0:0:1 - henrique [26/Feb/2016:17:58:16 -0300] "GET /FinanceiroJPA/imagens/logo.png HTTP/1.1" 200 6078
+0:0:0:0:0:0:0:1 - henrique [26/Feb/2016:17:58:16 -0300] "GET /FinanceiroJPA/javax.faces.resource/sistema.css.xhtml?ln=css HTTP/1.1" 200 1702
+0:0:0:0:0:0:0:1 - henrique [26/Feb/2016:17:58:16 -0300] "GET /FinanceiroJPA/imagens/vibra_tech.png HTTP/1.1" 200 24023
+0:0:0:0:0:0:0:1 - henrique [26/Feb/2016:17:58:16 -0300] "GET /FinanceiroJPA/javax.faces.resource/jsf.js.xhtml?ln=javax.faces&stage=Development HTTP/1.1" 200 147802
+0:0:0:0:0:0:0:1 - - [26/Feb/2016:17:58:20 -0300] "POST /FinanceiroJPA/Home.xhtml HTTP/1.1" 200 1308
+0:0:0:0:0:0:0:1 - - [26/Feb/2016:17:58:20 -0300] "GET /FinanceiroJPA/javax.faces.resource/sistema.css.xhtml?ln=css HTTP/1.1" 304 -

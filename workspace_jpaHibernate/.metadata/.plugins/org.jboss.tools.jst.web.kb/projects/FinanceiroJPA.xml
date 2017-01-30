@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kb-project>
+ <depends-on-projects/>
+ <used-by-projects/>
+ <paths>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/mysql-connector-java-5.1.20.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-jdbc.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/mysql-connector-java-5.1.34.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-dbcp.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-util-scan.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/javassist-3.15.0-GA.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/jpa/hibernate-entitymanager-4.1.5.SP1.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/catalina-tribes.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/catalina.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/antlr-2.7.7.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/jasper.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-i18n-es.jar"/>
+  <path value="/FinanceiroJPA/WebContent/WEB-INF/faces-config.xml">
+   <libraries>
+    <library class="faces-config">
+     <id class="model-object"
+      path="FileSystems/WEB-INF/faces-config.xml" project="FinanceiroJPA"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/hibernate-core-4.1.5.SP1.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-api.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/annotations-api.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/catalina-storeconfig.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/catalina-ant.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/jasper-el.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-coyote.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-i18n-ja.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-websocket.jar"/>
+  <path value="/FinanceiroJPA/WebContent/resources/components">
+   <libraries>
+    <library class="composite">
+     <id class="model-object"
+      path="FileSystems/WEB-ROOT/resources/components" project="FinanceiroJPA"/>
+     <attributes>
+      <entry name="uri">
+       <value-info value="http://java.sun.com/jsf/composite/components"/>
+      </entry>
+     </attributes>
+     <component class="composite" path="/FinanceiroJPA/WebContent/resources/components/outputCurrency.xhtml">
+      <id class="model-object" path="/outputcurrency.xhtml" project="FinanceiroJPA"/>
+      <attributes>
+       <entry name="name">
+        <value-info value="outputCurrency"/>
+       </entry>
+      </attributes>
+      <attribute class="composite">
+       <id class="model-object"
+        path="/outputcurrency.xhtml/Interface/currencySimbol" project="FinanceiroJPA"/>
+      </attribute>
+      <attribute class="composite">
+       <id class="model-object"
+        path="/outputcurrency.xhtml/Interface/locale" project="FinanceiroJPA"/>
+      </attribute>
+      <attribute class="composite">
+       <id class="model-object"
+        path="/outputcurrency.xhtml/Interface/styleClass" project="FinanceiroJPA"/>
+      </attribute>
+      <attribute class="composite">
+       <id class="model-object"
+        path="/outputcurrency.xhtml/Interface/value" project="FinanceiroJPA"/>
+      </attribute>
+     </component>
+     <component class="composite" path="/FinanceiroJPA/WebContent/resources/components/outputValorLancamento.xhtml">
+      <id class="model-object" path="/outputvalorlancamento.xhtml" project="FinanceiroJPA"/>
+      <attributes>
+       <entry name="name">
+        <value-info value="outputValorLancamento"/>
+       </entry>
+      </attributes>
+      <attribute class="composite">
+       <id class="model-object"
+        path="/outputvalorlancamento.xhtml/Interface/currencySimbol" project="FinanceiroJPA"/>
+      </attribute>
+      <attribute class="composite">
+       <id class="model-object"
+        path="/outputvalorlancamento.xhtml/Interface/locale" project="FinanceiroJPA"/>
+      </attribute>
+      <attribute class="composite">
+       <id class="model-object"
+        path="/outputvalorlancamento.xhtml/Interface/lancamentoBean" project="FinanceiroJPA"/>
+      </attribute>
+     </component>
+    </library>
+   </libraries>
+  </path>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/jsp-api.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/websocket-api.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-jni.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/el-api.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/ecj-4.4.2.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/hibernate-commons-annotations-4.0.1.Final.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/catalina-ha.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/servlet-api.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/dom4j-1.6.1.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/javax.faces-2.2.12.jar">
+   <libraries>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-javax.faces-2.2.12.jar/meta-inf/html_basic.tld" project="FinanceiroJPA"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-javax.faces-2.2.12.jar/meta-inf/jsf_core.tld" project="FinanceiroJPA"/>
+    </library>
+    <library class="facelet">
+     <id class="model-object"
+      path="FileSystems/lib-javax.faces-2.2.12.jar/meta-inf/mojarra_ext.taglib.xml" project="FinanceiroJPA"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-javax.faces-2.2.12.jar/meta-inf/mojarra_ext.tld" project="FinanceiroJPA"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-util.jar"/>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/taglibs-standard-jstlel-1.2.5.jar">
+   <libraries>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-taglibs-standard-jstlel-1.2.5.jar/meta-inf/c-1_0.tld" project="FinanceiroJPA"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-taglibs-standard-jstlel-1.2.5.jar/meta-inf/fmt-1_0.tld" project="FinanceiroJPA"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-taglibs-standard-jstlel-1.2.5.jar/meta-inf/sql-1_0.tld" project="FinanceiroJPA"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-taglibs-standard-jstlel-1.2.5.jar/meta-inf/x-1_0.tld" project="FinanceiroJPA"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="C:/Program Files/Apache Software Foundation/Tomcat 8.0/lib/tomcat-i18n-fr.jar"/>
+  <path value="C:/Program Files/Java/jdk1.8.0_73/jre/lib/H/hibernate-4.1.5.SP1-src/hibernate-release-4.1.5.SP1/lib/required/jboss-logging-3.1.0.GA.jar"/>
+ </paths>
+ <validation>
+  <core validator-id="jboss.jsf.core">
+   <linked-resource name="%1;" path="%0"/>
+   <linked-resource name="%3;%4;%5;" path="%2"/>
+   <linked-resource name="%3;%4;%5;" path="%6"/>
+  </core>
+  <el>
+   <linked-el length="21" name="%7" offset="2077" path="%8"/>
+   <linked-el length="14" name="%7" offset="3741" path="%8"/>
+   <linked-el length="24" name="%7" offset="493" path="%9"/>
+   <linked-el length="18" name="%7" offset="2457" path="%8"/>
+   <linked-el length="15" name="%7" offset="1248" path="%10"/>
+   <linked-el length="19" name="%7" offset="3046" path="%8"/>
+   <linked-el length="17" name="%7" offset="2595" path="%8"/>
+   <linked-el length="22" name="%7" offset="416" path="%9"/>
+   <linked-el length="53" name="%7" offset="352" path="%11"/>
+   <linked-el length="24" name="%7" offset="549" path="%9"/>
+   <linked-el length="70" name="%7" offset="493" path="%8"/>
+   <linked-el length="16" name="%7" offset="685" path="%8"/>
+   <linked-el length="16" name="%7" offset="1708" path="%8"/>
+   <linked-el length="11" name="%7" offset="503" path="%12"/>
+   <linked-el length="17" name="%7" offset="1102" path="%10"/>
+   <linked-el length="17" name="%7" offset="616" path="%8"/>
+   <linked-el length="12" name="%7" offset="656" path="%10"/>
+   <linked-el length="29" name="%7" offset="3317" path="%8"/>
+   <linked-el length="32" name="%7" offset="146" path="%13"/>
+   <linked-el length="17" name="%7" offset="981" path="%10"/>
+   <linked-el length="15" name="%7" offset="332" path="%12"/>
+   <linked-el length="15" name="%7" offset="1661" path="%8"/>
+   <linked-el length="70" name="%7" offset="254" path="%8"/>
+   <linked-el length="14" name="%7" offset="781" path="%12"/>
+   <linked-el length="20" name="%7" offset="254" path="%11"/>
+   <linked-el length="14" name="%7" offset="446" path="%11"/>
+   <linked-el length="22" name="%7" offset="3139" path="%8"/>
+   <linked-el length="15" name="%7" offset="1540" path="%8"/>
+   <linked-el length="19" name="%7" offset="1282" path="%8"/>
+   <linked-el length="14" name="%7" offset="667" path="%12"/>
+   <linked-el length="20" name="%7" offset="327" path="%11"/>
+   <linked-el length="13" name="%7" offset="1164" path="%8"/>
+   <linked-el length="12" name="%7" offset="430" path="%10"/>
+   <linked-el length="13" name="%7" offset="857" path="%12"/>
+   <linked-el length="15" name="%7" offset="2133" path="%8"/>
+   <linked-el length="20" name="%7" offset="1942" path="%8"/>
+   <linked-el length="15" name="%7" offset="2259" path="%8"/>
+   <linked-el length="78" name="%14" offset="588" path="%12"/>
+   <linked-el length="37" name="%14" offset="748" path="%8"/>
+   <linked-el length="37" name="%14" offset="743" path="%12"/>
+   <linked-el length="37" name="%14" offset="2832" path="%0"/>
+   <linked-el length="37" name="%14" offset="722" path="%0"/>
+   <linked-el length="37" name="%14" offset="550" path="%0"/>
+   <linked-el length="35" name="%15" offset="3192" path="%0"/>
+   <linked-el length="45" name="%15" offset="1056" path="%0"/>
+   <linked-el length="50" name="%15" offset="3348" path="%0"/>
+   <linked-el length="35" name="%16" offset="3192" path="%0"/>
+   <linked-el length="15" name="%16" offset="2012" path="%0"/>
+   <linked-el length="16" name="%16" offset="3325" path="%0"/>
+   <linked-el length="27" name="%16" offset="1663" path="%0"/>
+   <linked-el length="45" name="%16" offset="1056" path="%0"/>
+   <linked-el length="21" name="%16" offset="2689" path="%0"/>
+   <linked-el length="27" name="%16" offset="1540" path="%0"/>
+   <linked-el length="29" name="%16" offset="2436" path="%0"/>
+   <linked-el length="25" name="%16" offset="1829" path="%0"/>
+   <linked-el length="25" name="%16" offset="2757" path="%0"/>
+   <linked-el length="22" name="%16" offset="3116" path="%0"/>
+   <linked-el length="33" name="%16" offset="1362" path="%0"/>
+   <linked-el length="33" name="%16" offset="1458" path="%0"/>
+   <linked-el length="50" name="%16" offset="3348" path="%0"/>
+   <linked-el length="30" name="%16" offset="2197" path="%0"/>
+   <linked-el length="43" name="%17" offset="3355" path="%8"/>
+   <linked-el length="51" name="%17" offset="1209" path="%8"/>
+   <linked-el length="27" name="%17" offset="1663" path="%0"/>
+   <linked-el length="21" name="%17" offset="2689" path="%0"/>
+   <linked-el length="43" name="%17" offset="3619" path="%8"/>
+   <linked-el length="27" name="%17" offset="1540" path="%0"/>
+   <linked-el length="29" name="%17" offset="2436" path="%0"/>
+   <linked-el length="51" name="%17" offset="2786" path="%8"/>
+   <linked-el length="43" name="%17" offset="3170" path="%8"/>
+   <linked-el length="25" name="%17" offset="1829" path="%0"/>
+   <linked-el length="25" name="%17" offset="2757" path="%0"/>
+   <linked-el length="52" name="%17" offset="2185" path="%8"/>
+   <linked-el length="22" name="%17" offset="3116" path="%0"/>
+   <linked-el length="33" name="%17" offset="1362" path="%0"/>
+   <linked-el length="33" name="%17" offset="1458" path="%0"/>
+   <linked-el length="53" name="%17" offset="1586" path="%8"/>
+   <linked-el length="61" name="%17" offset="3250" path="%8"/>
+   <linked-el length="30" name="%17" offset="2197" path="%0"/>
+   <linked-el length="56" name="%17" offset="1999" path="%8"/>
+   <linked-el length="61" name="%17" offset="2512" path="%8"/>
+   <linked-el length="25" name="%18" offset="1150" path="%10"/>
+   <linked-el length="27" name="%18" offset="1027" path="%10"/>
+   <linked-el length="24" name="%18" offset="1270" path="%10"/>
+   <linked-el length="23" name="%18" offset="833" path="%12"/>
+   <linked-el length="16" name="%19" offset="1867" path="%8"/>
+   <linked-el length="27" name="%19" offset="1663" path="%0"/>
+   <linked-el length="27" name="%19" offset="1540" path="%0"/>
+   <linked-el length="52" name="%20" offset="395" path="%12"/>
+   <linked-el length="28" name="%21" offset="518" path="%22"/>
+   <linked-el length="28" name="%21" offset="672" path="%22"/>
+   <linked-el length="35" name="%2" offset="472" path="%2"/>
+   <linked-el length="59" name="%2" offset="518" path="%2"/>
+   <linked-el length="29" name="%2" offset="643" path="%2"/>
+   <linked-el length="21" name="%2" offset="607" path="%2"/>
+   <linked-el length="52" name="%23" offset="395" path="%12"/>
+   <linked-el length="52" name="%24" offset="395" path="%12"/>
+   <linked-el length="52" name="%25" offset="395" path="%12"/>
+   <linked-el length="70" name="%26" offset="254" path="%8"/>
+   <linked-el length="43" name="%26" offset="3355" path="%8"/>
+   <linked-el length="51" name="%26" offset="1209" path="%8"/>
+   <linked-el length="61" name="%26" offset="2874" path="%8"/>
+   <linked-el length="37" name="%26" offset="1413" path="%8"/>
+   <linked-el length="43" name="%26" offset="3619" path="%8"/>
+   <linked-el length="51" name="%26" offset="2786" path="%8"/>
+   <linked-el length="43" name="%26" offset="3170" path="%8"/>
+   <linked-el length="70" name="%26" offset="493" path="%8"/>
+   <linked-el length="52" name="%26" offset="2185" path="%8"/>
+   <linked-el length="39" name="%26" offset="423" path="%8"/>
+   <linked-el length="43" name="%26" offset="1779" path="%8"/>
+   <linked-el length="20" name="%26" offset="1460" path="%8"/>
+   <linked-el length="52" name="%26" offset="1330" path="%8"/>
+   <linked-el length="53" name="%26" offset="1586" path="%8"/>
+   <linked-el length="61" name="%26" offset="3250" path="%8"/>
+   <linked-el length="34" name="%26" offset="3762" path="%8"/>
+   <linked-el length="56" name="%26" offset="1999" path="%8"/>
+   <linked-el length="61" name="%26" offset="2512" path="%8"/>
+   <linked-el length="21" name="%27" offset="2077" path="%8"/>
+   <linked-el length="14" name="%27" offset="3741" path="%8"/>
+   <linked-el length="24" name="%27" offset="493" path="%9"/>
+   <linked-el length="18" name="%27" offset="2457" path="%8"/>
+   <linked-el length="15" name="%27" offset="1248" path="%10"/>
+   <linked-el length="19" name="%27" offset="3046" path="%8"/>
+   <linked-el length="17" name="%27" offset="2595" path="%8"/>
+   <linked-el length="22" name="%27" offset="416" path="%9"/>
+   <linked-el length="53" name="%27" offset="352" path="%11"/>
+   <linked-el length="24" name="%27" offset="549" path="%9"/>
+   <linked-el length="70" name="%27" offset="493" path="%8"/>
+   <linked-el length="16" name="%27" offset="685" path="%8"/>
+   <linked-el length="16" name="%27" offset="1708" path="%8"/>
+   <linked-el length="11" name="%27" offset="503" path="%12"/>
+   <linked-el length="17" name="%27" offset="1102" path="%10"/>
+   <linked-el length="17" name="%27" offset="616" path="%8"/>
+   <linked-el length="12" name="%27" offset="656" path="%10"/>
+   <linked-el length="29" name="%27" offset="3317" path="%8"/>
+   <linked-el length="32" name="%27" offset="146" path="%13"/>
+   <linked-el length="17" name="%27" offset="981" path="%10"/>
+   <linked-el length="15" name="%27" offset="332" path="%12"/>
+   <linked-el length="15" name="%27" offset="1661" path="%8"/>
+   <linked-el length="70" name="%27" offset="254" path="%8"/>
+   <linked-el length="14" name="%27" offset="781" path="%12"/>
+   <linked-el length="20" name="%27" offset="254" path="%11"/>
+   <linked-el length="14" name="%27" offset="446" path="%11"/>
+   <linked-el length="22" name="%27" offset="3139" path="%8"/>
+   <linked-el length="15" name="%27" offset="1540" path="%8"/>
+   <linked-el length="19" name="%27" offset="1282" path="%8"/>
+   <linked-el length="14" name="%27" offset="667" path="%12"/>
+   <linked-el length="20" name="%27" offset="327" path="%11"/>
+   <linked-el length="13" name="%27" offset="1164" path="%8"/>
+   <linked-el length="12" name="%27" offset="430" path="%10"/>
+   <linked-el length="13" name="%27" offset="857" path="%12"/>
+   <linked-el length="15" name="%27" offset="2133" path="%8"/>
+   <linked-el length="20" name="%27" offset="1942" path="%8"/>
+   <linked-el length="15" name="%27" offset="2259" path="%8"/>
+   <linked-el length="24" name="%28" offset="493" path="%9"/>
+   <linked-el length="22" name="%28" offset="416" path="%9"/>
+   <linked-el length="24" name="%28" offset="549" path="%9"/>
+   <linked-el length="25" name="%29" offset="1150" path="%10"/>
+   <linked-el length="27" name="%29" offset="1027" path="%10"/>
+   <linked-el length="24" name="%29" offset="1270" path="%10"/>
+   <linked-el length="23" name="%29" offset="833" path="%12"/>
+   <linked-el length="28" name="%30" offset="518" path="%22"/>
+   <linked-el length="28" name="%30" offset="672" path="%22"/>
+   <linked-el length="70" name="%31" offset="254" path="%8"/>
+   <linked-el length="43" name="%31" offset="3355" path="%8"/>
+   <linked-el length="51" name="%31" offset="1209" path="%8"/>
+   <linked-el length="61" name="%31" offset="2874" path="%8"/>
+   <linked-el length="37" name="%31" offset="1413" path="%8"/>
+   <linked-el length="43" name="%31" offset="3619" path="%8"/>
+   <linked-el length="51" name="%31" offset="2786" path="%8"/>
+   <linked-el length="43" name="%31" offset="3170" path="%8"/>
+   <linked-el length="70" name="%31" offset="493" path="%8"/>
+   <linked-el length="16" name="%31" offset="1867" path="%8"/>
+   <linked-el length="52" name="%31" offset="2185" path="%8"/>
+   <linked-el length="39" name="%31" offset="423" path="%8"/>
+   <linked-el length="12" name="%31" offset="1845" path="%8"/>
+   <linked-el length="43" name="%31" offset="1779" path="%8"/>
+   <linked-el length="20" name="%31" offset="1460" path="%8"/>
+   <linked-el length="52" name="%31" offset="1330" path="%8"/>
+   <linked-el length="53" name="%31" offset="1586" path="%8"/>
+   <linked-el length="61" name="%31" offset="3250" path="%8"/>
+   <linked-el length="34" name="%31" offset="3762" path="%8"/>
+   <linked-el length="56" name="%31" offset="1999" path="%8"/>
+   <linked-el length="61" name="%31" offset="2512" path="%8"/>
+   <linked-el length="21" name="%6" offset="589" path="%6"/>
+   <linked-el length="20" name="%6" offset="503" path="%6"/>
+   <linked-el length="25" name="%6" offset="534" path="%6"/>
+   <linked-el length="29" name="%6" offset="625" path="%6"/>
+   <linked-el length="37" name="%32" offset="1413" path="%8"/>
+  </el>
+ </validation>
+ <aliases>
+  <alias path="msg" value="%7"/>
+  <alias path="request" value="%14"/>
+  <alias path="consultaLancamentoBean" value="%16"/>
+  <alias path="/FinanceiroJPA/WebContent/CadastroLancamento.xhtml" value="%8"/>
+  <alias path="/FinanceiroJPA/src/com/vibratecnologia/model/Pessoa.java" value="%19"/>
+  <alias
+   path="http://java.sun.com/jsf/composite/components:outputValorLancamento" value="%1"/>
+  <alias path="http://java.sun.com/jsf/composite:implementation" value="%5"/>
+  <alias path="facesContext.externalContext.userPrincipal" value="%20"/>
+  <alias path="/FinanceiroJPA/WebContent/index.xhtml" value="%9"/>
+  <alias path="/FinanceiroJPA/WebContent/403.xhtml" value="%11"/>
+  <alias path="/FinanceiroJPA/WebContent/Login.xhtml" value="%10"/>
+  <alias path="facesContext.externalContext" value="%24"/>
+  <alias
+   path="/FinanceiroJPA/src/com/vibratecnologia/view/CadastroLancamentoBean.java" value="%26"/>
+  <alias path="http://java.sun.com/jsf/composite:interface" value="%3"/>
+  <alias
+   path="/FinanceiroJPA/src/com/vibratecnologia/view/SegurancaBean.java" value="%29"/>
+  <alias path="testeAjaxBean" value="%30"/>
+  <alias path="cadastroLancamentoBean" value="%31"/>
+  <alias
+   path="/FinanceiroJPA/src/com/vibratecnologia/model/TipoLancamento.java" value="%32"/>
+  <alias path="http://java.sun.com/jsf/composite:attribute" value="%4"/>
+  <alias path="/FinanceiroJPA/WebContent/template/Cabecalho.xhtml" value="%12"/>
+  <alias
+   path="/FinanceiroJPA/src/com/vibratecnologia/view/ConsultaLancamentoBean.java" value="%15"/>
+  <alias
+   path="/FinanceiroJPA/src/com/vibratecnologia/model/Lancamento.java" value="%17"/>
+  <alias path="segurancaBean" value="%18"/>
+  <alias
+   path="/FinanceiroJPA/src/com/vibratecnologia/view/TesteAjaxBean.java" value="%21"/>
+  <alias
+   path="/FinanceiroJPA/WebContent/resources/components/outputValorLancamento.xhtml" value="%2"/>
+  <alias path="/FinanceiroJPA/WebContent/TesteAjax.xhtml" value="%22"/>
+  <alias path="facesContext.externalContext.userPrincipal.name" value="%23"/>
+  <alias path="facesContext" value="%25"/>
+  <alias
+   path="/FinanceiroJPA/src/com/vibratecnologia/resources/sistema_en.properties" value="%27"/>
+  <alias path="/FinanceiroJPA/src/resources/application.properties" value="%28"/>
+  <alias path="/FinanceiroJPA/WebContent/ConsultaLancamento.xhtml" value="%0"/>
+  <alias
+   path="/FinanceiroJPA/WebContent/resources/components/outputCurrency.xhtml" value="%6"/>
+  <alias path="/FinanceiroJPA/WebContent/template/Rodape.xhtml" value="%13"/>
+ </aliases>
+ <includes/>
+ <uris>
+  <uri value="http://java.sun.com/jsf/composite">
+   <prefix>composite</prefix>
+  </uri>
+  <uri value="http://java.sun.com/jsf/core">
+   <prefix>f</prefix>
+  </uri>
+  <uri value="http://java.sun.com/jsf/composite/components">
+   <prefix>aw</prefix>
+  </uri>
+  <uri value="http://java.sun.com/jsf/html">
+   <prefix>h</prefix>
+  </uri>
+ </uris>
+</kb-project>
