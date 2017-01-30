@@ -1,0 +1,11 @@
+1456685790937	Delete element
+1456685964028	Encapsulate field 'permissoes'
+1456686005358	Delete element
+1456686078383	Encapsulate field 'nomePermissao'
+1456686177308	Encapsulate field 'permissoes'
+1456688662519	Move 'context.xml' to 'META-INF'
+1456689159214	Move 'context.xml' to 'META-INF'
+1456689262403	Copy file
+1456696317895	Delete element
+1456783413411	Move 3 resources to 'resources'
+1456784264661	Move 'index.jsp' to 'webapp'

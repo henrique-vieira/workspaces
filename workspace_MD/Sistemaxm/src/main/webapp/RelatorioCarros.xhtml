@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Relatório de carros</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<h:form target="_blank">
+				<p:messages autoUpdate="true" closable="true" />
+				<p:panel header="Relatório de carros">
+					
+					<h:panelGrid columns="2" columnClasses="rotulo, campo" style="text-align:center">
+						<p:outputLabel value="Proprietário" for="proprietario" style="margin-left:20px" />
+						<p:autoComplete id="proprietario" dropdown="true"
+							converter="proprietarioConverter"
+							value="#{relatorioCarrosBean.proprietario}"
+							completeMethod="#{relatorioCarrosBean.autoCompleteProprietario}"
+							var="varEnt" itemLabel="#{varEnt.proprietario.nome}" itemValue="#{varEnt}"
+							scrollHeight="150" 
+							forceSelection="false"
+							/>
+							
+					
+					<p:outputLabel value="Placa" for="modelo" style="margin-left:20px" />
+						<p:autoComplete id="modelo" dropdown="true"
+							converter="carroConverter"
+							value="#{relatorioCarrosBean.carro}"
+							completeMethod="#{relatorioCarrosBean.autoCompleteCarro}"
+							var="varEnt" itemLabel="#{varEnt.placa} #{varEnt.modelo}" itemValue="#{varEnt}"
+							scrollHeight="150" 
+							forceSelection="false"
+							title="Campo opcional"/>
+					</h:panelGrid>					
+					<p:commandButton value="Emitir"
+						style="color:black;margin-top:20px;margin-left:40px"
+						action="#{relatorioCarrosBean.emitir}" ajax="false" />
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

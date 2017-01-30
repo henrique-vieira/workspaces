@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Teste PickList com modal</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panelGrid columns="1">
+				<p:commandButton value="Selecione uma peça" onclick="PF('d1').show();" />			
+			</p:panelGrid>
+			
+			<p:dialog header="Modal Dialog" widgetVar="d1" modal="true" >
+				<h:outputText value="TESTE MODAL" />
+			</p:dialog>
+		</ui:define>	
+	</ui:decorate>
+</h:body>
+</html>

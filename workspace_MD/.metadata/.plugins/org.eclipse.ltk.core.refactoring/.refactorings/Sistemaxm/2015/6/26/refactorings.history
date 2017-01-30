@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;CadastroClienteBean.java&apos; to &apos;Sistemaxm/src/main/java/br.com.sistemaxm.beans&apos;&#x0D;&#x0A;- Original project: &apos;Sistemaxm&apos;&#x0D;&#x0A;- Destination element: &apos;Sistemaxm/src/main/java/br.com.sistemaxm.beans&apos;&#x0D;&#x0A;- Original element: &apos;br.com.sistemaxm.CadastroClienteBean.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src\/main\/java&lt;br.com.sistemaxm.beans" element1="/src\/main\/java&lt;br.com.sistemaxm{CadastroClienteBean.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1434913606275" units="1" version="1.0"/>
+</session>

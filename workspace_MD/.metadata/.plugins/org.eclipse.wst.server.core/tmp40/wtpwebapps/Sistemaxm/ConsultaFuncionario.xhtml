@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Consulta de Funcionários</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction
+					action="#{cadastroFuncionarioBean.consultaFuncionarios}"></f:viewAction>
+			</f:metadata>
+			<p:panel header="Consulta de Funcionários">
+				<h:form id="frmLoc">
+					<p:growl id="msgs" showDetail="true" autoUpdate="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="idDt" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							rows="10" emptyMessage="No records found" editable="true"
+							value="#{cadastroFuncionarioBean.funcionarios}" var="f">
+
+							<p:ajax event="rowEdit" update=":frmLoc:msgs"
+								listener="#{cadastroFuncionarioBean.onRowEdit}" />
+								
+								<p:column style="color:black;text-align:center;width:150px"
+								headerText="Empresa Contratante" sortyBy="#{f.cliente.cliente.nome}" filterBy="#{f.cliente.cliente.nome}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{f.cliente.cliente.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="empresa" dropdown="true"
+											converter="clienteConverter" value="#{f.cliente}"
+											completeMethod="#{cadastroFuncionarioBean.autoCompleteCliente}"
+											var="varEnt" itemLabel="#{varEnt.cliente.nome}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Nome" style="color:black;width:250px"
+								sortyBy="#{f}" filterBy="#{f.pessoa.nome}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="nomeOutput" value="#{f.pessoa.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="nomeInput" value="#{f.pessoa.nome}" size="20"
+											style="margin-left:10px" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="CPF" style="color:black;width:120px"
+								sortyBy="#{f.pessoa.cpf}" filterBy="#{f.pessoa.cpf}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="cpfOutput" value="#{f.pessoa.cpf}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="cpfInput" value="#{f.pessoa.cpf}" size="10"
+											style="margin-left:10px" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Data Admissão"
+								style="color:black;width:120px;text-align:center" sortyBy="#{f.dataAdmissao}"
+								filterBy="#{f.dataAdmissao}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dtAdmissaoOutput" value="#{f.dataAdmissao}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{f.dataAdmissao}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;text-align:center;width:150px"
+								headerText="Status Funcionário">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{f.status}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu id="status"
+											value="#{f.status}" style="width:150px">
+											<f:selectItem itemLabel="Selecione" itemValue="" />
+											<f:selectItems value="#{cadastroFuncionarioBean.statusFuncionario}"
+												var="ent" itemLabel="#{ent.label}" itemValue="#{ent}" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Data Demissão"
+								style="color:black;width:120px;text-align:center" sortyBy="#{f.dataDemissao}"
+								filterBy="#{f.dataDemissao}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dtDemissaoOutput" value="#{f.dataDemissao}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{f.dataDemissao}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="ASO"
+								style="color:black;width:80px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="asoOutput"
+											value="#{f.aso.numAso}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="asoInput"
+											value="#{f.aso.numAso}"
+											style="margin-left:10px" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Data Exame Admissional"
+								style="color:black;width:120px;text-align:center" sortyBy="#{f.aso.dataExameAdmissional}"
+								filterBy="#{f.aso.dataExameAdmissional}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dtExAdmissionalOutput" value="#{f.aso.dataExameAdmissional}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar id="dtExAdmissionalInput" value="#{f.aso.dataExameAdmissional}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Data Exame Periódico"
+								style="color:black;width:120px;text-align:center" sortyBy="#{f.aso.dataExamePeriodico}"
+								filterBy="#{f.aso.dataExamePeriodico}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dtExPerioicoOutput" value="#{f.aso.dataExamePeriodico}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar id="dtExPerioicoInput" value="#{f.aso.dataExamePeriodico}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Funcao" style="color:black;width:100px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="funcaoOutput" value="#{f.funcao.descricao}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="funcaoInput" value="#{f.funcao.descricao}"
+											size="20" style="margin-left:10px" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column style="color:black;width:100px"
+								headerText="Salário">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="R$ #{f.salario}" symbol="R$"/>
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{f.salario}" id="salario" symbol="R$" />
+										</f:facet>
+								</p:cellEditor>
+						   </p:column>
+						   
+						   <p:column headerText="Data Férias"
+								style="color:black;width:120px;text-align:center" sortyBy="#{f.dataFerias}"
+								filterBy="#{f.dataFerias}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dtFeriasOutput" value="#{f.dataFerias}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{f.dataFerias}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="CNH" style="color:black;width:100px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="cnhOutput" value="#{f.cnh}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="cnhInput" value="#{f.cnh}" size="20"
+											style="margin-left:10px" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Vencimento CNH"
+								style="color:black;width:120px;text-align:center" sortyBy="#{f.vencimentoCnh}"
+								filterBy="#{f.vencimentoCnh}}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dtVencCnhOutput" value="#{f.vencimentoCnh}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar id="dtVencCnhInput" value="#{f.vencimentoCnh}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Telefone"
+								style="color:black;width:150px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="telefoneOuput" value="#{f.pessoa.telefone}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="telefoneInput" value="#{f.pessoa.telefone}"
+											style="margin-left:10px" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Endereço"
+								style="color:black;width:150px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="logradouroOuput"
+											value="#{f.pessoa.endereco.logradouro}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="logradouroInput"
+											value="#{f.pessoa.endereco.logradouro}"
+											style="margin-left:10px" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Num"
+								style="color:black;width:40px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="numeroOuput"
+											value="#{f.pessoa.endereco.numero}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="numeroInput"
+											value="#{f.pessoa.endereco.numero}" style="margin-left:10px"
+											size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Bairro"
+								style="color:black;width:150px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="bairroOuput"
+											value="#{f.pessoa.endereco.bairro}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="bairroInput"
+											value="#{f.pessoa.endereco.bairro}" style="margin-left:10px"
+											size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Cidade"
+								style="color:black;width:100px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="cidadeOuput"
+											value="#{f.pessoa.endereco.cidade}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="cidadeInput"
+											value="#{f.pessoa.endereco.cidade}" style="margin-left:10px"
+											size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="UF"
+								style="color:black;width:15px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="ufOuput" value="#{f.pessoa.endereco.uf}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="ufInput" value="#{f.pessoa.endereco.uf}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:10px" rendered="#{request.isUserInRole('cadastro')}">
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar">
+								</p:tooltip>
+							</p:column>
+
+							<p:column style="color:black;width:10px" rendered="#{request.isUserInRole('cadastro')}">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroFuncionarioBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frmLoc:opResultadoId">
+									<p:collector unique="true" value="#{f}"
+										removeFrom="#{cadastroFuncionarioBean.funcionarios}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{f}"
+										target="#{cadastroFuncionarioBean.funcionario}" />
+								</p:commandLink>
+								<p:tooltip for="oi" value="Excluir" />
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

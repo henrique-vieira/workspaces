@@ -1,0 +1,159 @@
+package br.com.sistemaxm.beans;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.xml.transform.Source;
+
+import org.primefaces.model.DualListModel;
+
+import br.com.sistemaxm.business.CadastroLocacao;
+import br.com.sistemaxm.entidades.Carro;
+import br.com.sistemaxm.entidades.Cliente;
+import br.com.sistemaxm.entidades.FrotaLocacao;
+import br.com.sistemaxm.entidades.Pessoa;
+import br.com.sistemaxm.repository.CarroRepository;
+import br.com.sistemaxm.repository.ClienteRepository;
+import br.com.sistemaxm.repository.FrotaLocacaoRepository;
+import br.com.sistemaxm.repository.JpaUtil;
+import br.com.sistemaxm.repository.MarcaRepository;
+import br.com.sistemaxm.repository.PessoaRepository;
+
+@ManagedBean
+@ViewScoped
+public class FrotaLocacaoBean implements Serializable {	
+	private static final long serialVersionUID = 1L;
+	
+	private DualListModel<Carro> carros;	
+	private List<Pessoa> pessoas;		
+	private FrotaLocacao frotaLocacao;	
+	private Cliente cliente;
+	private Pessoa pessoa;	
+		
+	public FrotaLocacaoBean() {
+		cliente = new Cliente();
+		pessoa = new Pessoa();
+		frotaLocacao = new FrotaLocacao();
+		
+		cliente.setCliente(pessoa);
+		frotaLocacao.setCliente(cliente);
+	}
+
+	public void prepararCadastro() {
+		EntityManager manager = JpaUtil.getEntityManager();
+		try {
+			PessoaRepository pessoaRepo = new PessoaRepository(manager);
+			this.pessoas = pessoaRepo.todos();
+		}
+		finally {
+			manager.close();
+		}
+	}
+	
+	@PostConstruct
+	public void init() {
+		
+						
+		EntityManager manager = JpaUtil.getEntityManager();
+		try {
+			CarroRepository carroRepo;
+			carroRepo = new CarroRepository(manager);	
+			List carrosSource = new ArrayList<Carro>(); 
+			List carrosTarget = new ArrayList<Carro>(); 
+			carrosSource = carroRepo.todos();			
+			this.carros = new DualListModel<Carro>(carrosSource, carrosTarget); 
+			
+			/*ClienteRepository clienteRepo = new ClienteRepository(manager);
+			this.clientes = clienteRepo.todos();*/
+			
+		}
+		
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			manager.close();
+		}
+		
+	}
+	
+	public void salvar() {
+		EntityManager manager = JpaUtil.getEntityManager();
+		EntityTransaction trx = manager.getTransaction();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		
+		try {
+			trx.begin();
+			CadastroLocacao cadastro = new CadastroLocacao(new FrotaLocacaoRepository(manager));			
+			cadastro.salvar(frotaLocacao);			
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Frota cadastrada com sucesso!",null));
+			this.frotaLocacao = new FrotaLocacao();
+			trx.commit();
+		}
+		
+		catch(Exception e) {
+			trx.rollback();
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Frota não cadastrada!", null));
+		}
+		
+		finally {
+			manager.close();
+		}
+	}
+
+
+	public DualListModel<Carro> getCarros() {
+		return carros;
+	}
+
+	public void setCarros(DualListModel<Carro> carros) {
+		this.carros = carros;
+	}
+
+
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
+
+
+	public void setClientes(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
+	}
+
+
+	public FrotaLocacao getFrotaLocacao() {
+		return frotaLocacao;
+	}
+
+
+	public void setFrotaLocacao(FrotaLocacao frotaLocacao) {
+		this.frotaLocacao = frotaLocacao;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	
+}

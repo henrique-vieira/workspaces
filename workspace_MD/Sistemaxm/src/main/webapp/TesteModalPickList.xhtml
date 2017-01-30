@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Teste modal</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<h:form>
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandLink value="Selecione a(s) peça(s)" onclick="PF('dlg2').show()" />
+					<p:commandLink value="Selecione o(s) serviço(s)" onclick="PF('dlg1').show()"/>
+				</h:panelGrid>
+
+				<p:dialog widgetVar="dlg2" id="dialog" header="Modal Dialog" showEffect="fade" hideEffect="fade">
+					<p:pickList id="pickList" value="#{pickListBean.itemPecas}"
+						converter="PickListConverter" var="iP" itemValue="#{iP}"
+						style="margin-top:30px">
+						<f:facet name="sourceCaption">Disponíveis</f:facet>
+						<f:facet name="targetCaption">Selecionados</f:facet>
+						<p:column headerText="Item">
+							<h:outputText value="#{iP.descricao}" />
+						</p:column>					
+
+					</p:pickList>
+				</p:dialog>
+				<p:dialog widgetVar="dlg1" id="dialogServicos" header="Modal de serviços" showEffect="fade" hideEffect="fade">
+					<p:pickList id="pickListServicos" 
+								value="#{pickListBean.servicos}" 
+								converter="PickListConverter" 
+								var="s" 
+								itemValue="#{s}"
+								style="margin-top:30px">
+							<f:facet name="sourceCaption">Disponíveis</f:facet>
+							<f:facet name="targetCaption">Selecionados</f:facet>
+							<p:column headerText="Serviço">
+								<h:outputText value="#{s.descricao}" />
+							</p:column>
+						
+					</p:pickList>
+				</p:dialog>
+
+			</h:form>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

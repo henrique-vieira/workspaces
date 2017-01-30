@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Cadastro de Veículos</title>
+		<!-- <h:link rel="Stylesheet" type="text/css" hreflang="/style.css"/>-->		
+	</h:head>
+	<h:body>
+		<f:metadata>
+			<f:viewAction action="#{consultaMarcaBean.consultar}"/>
+		</f:metadata>
+		<p:panel header="Cadastro de Veiculos">
+			<h:form>
+			<p:messages autoUpdate="true" closable="true" redisplay="true" />
+				<h:panelGrid columns="6">
+					
+					<h:outputLabel value="Placa" />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.placa}"/>
+					<h:outputLabel value="UF" />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.uf}"/>
+						
+				    <h:outputLabel value="Marca" /> 
+				  	<p:selectOneMenu id="marca" value="#{cadastroCarroBean.carro.marca}" converter="entityConverter"> 
+						<f:selectItem itemLabel="Selecione" itemValue=""/>
+						<f:selectItems value="#{cadastroCarroBean.c}" />
+						
+					</p:selectOneMenu>
+					
+					<h:outputLabel value="Modelo"/>
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.modelo}"/>
+					<h:outputLabel value="Ano Fab." />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.anoFabricacao}"/>
+					<h:outputLabel value="Ano Mod." />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.anoModelo}" />
+					<h:outputLabel value="Cor" />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.cor}"/>
+					<h:outputLabel value="Qtde Portas" />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.qtdePortas}"/>
+					
+					<h:outputLabel value="Cambio" /> 
+				  	<p:selectOneMenu id="cambio" value="#{cadastroCarroBean.carro.cambio}"> 
+						<f:selectItem itemLabel="Selecione" itemValue=""/>
+						<f:selectItems value="#{cadastroCarroBean.tipoItemListCambio}" var="ent" itemLabel="#{ent.label}" itemValue="#{ent}"  />
+										
+					</p:selectOneMenu>
+					
+					<h:outputLabel value="Chassi" />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.chassi}"/>
+					<h:outputLabel value="Renavam" />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.renavam}"/>
+					<h:outputLabel value="Km" />
+						<p:inputText requiredMessage="Campo Obrigatório" value="#{cadastroCarroBean.carro.km}"/>
+					
+					<h:outputLabel value="Combustível" /> 
+				  	<p:selectOneMenu id="combustivel" value="#{cadastroCarroBean.carro.combustivel}"> 
+						<f:selectItem itemLabel="Selecione" itemValue=""/>
+						<f:selectItems value="#{cadastroCarroBean.tipoItemListCombustivel}" var="c"
+								itemLabel="#{c.label}" itemValue="#{c}"/>
+					</p:selectOneMenu>
+					
+				</h:panelGrid><br/>
+					<p:commandLink value="Cadastrar Marca" style="margin-right:10px" actionListener="#{cadastroCarroBean.redirectMarca}"/>
+				 <br/><br/>
+				 <p:outputLabel style="font-weight:bold" value="Itens Opcionais:"/>	<br/><br/>
+				<p:panelGrid columns="10"> 
+					
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.ar}" />
+									<h:outputText value="Ar Condicionado " />							
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.alarme}" />
+									<h:outputText value="Alarme " />							
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.cdMp3Player}" />
+									<h:outputText value="Mp3 Player " />	
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.trava}" />
+									<h:outputText value="Travas Elétricas " />
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.direcao}" />
+									<h:outputText value="Direção Hidraulica " />
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.bancosCouro}" />
+									<h:outputText value="Bancos de Couro " />
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.rastreador}" />
+									<h:outputText value="Rastreador " />
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.bloqueador}" />
+									<h:outputText value="Bloqueador " />
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.sensorRe}" />
+									<h:outputText value="Sensor de Ré " />						
+							    <p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.airBagMotorista}" />
+									<h:outputText value="Airbag Motorista " />	
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.airBagPassageiro}" />
+									<h:outputText value="Airbag Passageiro " />	
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.freioAbs}" />
+									<h:outputText value="Freios Abs " />	
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.rodaLigaLeve}" />
+									<h:outputText value="Rodas de liga leve " />
+								<p:selectBooleanCheckbox value="#{cadastroCarroBean.carro.gps}" />
+									<h:outputText value="Gps " />
+				</p:panelGrid>	<br/>
+				
+				<p:commandButton value="Cadastrar" style="color:black" actionListener="#{cadastroCarroBean.salvar}"/>	
+				<p:commandButton value="Consultar" style="color:black;margin-left:20px"/>		
+			</h:form>
+			
+		</p:panel>
+		
+	</h:body>
+</html>

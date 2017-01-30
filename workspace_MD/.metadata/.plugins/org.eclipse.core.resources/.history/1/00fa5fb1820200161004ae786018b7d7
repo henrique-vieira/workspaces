@@ -1,0 +1,54 @@
+package br.com.sistemaxm.ws;
+
+import java.util.List;
+
+import javax.jws.WebMethod;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+import javax.persistence.EntityManager;
+
+import br.com.sistemaxm.entidades.ItemPeca;
+import br.com.sistemaxm.entidades.ListaItens;
+import br.com.sistemaxm.repository.ItemPecaRepository;
+import br.com.sistemaxm.repository.JpaUtil;
+
+@WebService
+public class EstoqueWs {
+
+	private List<ItemPeca> listaItemPeca;
+	
+	public EstoqueWs() {
+		
+	}
+	@WebMethod(operationName="todosOsItens")
+	@WebResult(name="itens")
+	public ListaItens getItens() {
+		EntityManager manager = JpaUtil.getEntityManager();
+		
+		try {
+			ItemPecaRepository itemPecaRepo = new ItemPecaRepository(manager);
+			this.listaItemPeca = itemPecaRepo.todos();
+			return new ListaItens(this.listaItemPeca);
+		}		
+		
+		finally {
+			manager.close();
+		}
+				
+	}
+
+	public void setItens(List<ItemPeca> listaItemPeca) {
+		this.listaItemPeca = listaItemPeca;
+	}
+
+	public List<ItemPeca> getListaItemPeca() {
+		return listaItemPeca;
+	}
+
+	public void setListaItemPeca(List<ItemPeca> listaItemPeca) {
+		this.listaItemPeca = listaItemPeca;
+	}
+	
+	
+
+}

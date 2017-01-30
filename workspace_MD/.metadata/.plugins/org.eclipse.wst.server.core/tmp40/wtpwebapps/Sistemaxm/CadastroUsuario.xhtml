@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro de Usuarios</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<h:form>
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<p:panel header="Cadastro de usuários">
+					<p:panelGrid columns="2">
+
+						<p:outputLabel for="login" value="Login:" />
+						<p:inputText id="login"
+							value="#{cadastroUsuarioBean.usuario.login}" />
+
+						<p:outputLabel for="nome" value="Nome:" />
+						<p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}" />
+
+						<p:outputLabel for="senha" value="Senha:" />
+						<p:password id="senha"
+							value="#{cadastroUsuarioBean.usuario.senha}" />
+
+						<p:outputLabel value="Confirmar Senha:" />
+						<p:password id="confirmarSenha"
+							value="#{cadastroUsuarioBean.usuario.confirmaSenha}" />
+
+
+						<p:commandButton value="Cadastrar" update="messages"
+							style="color:black" action="#{cadastroUsuarioBean.salvar}"
+							ajax="false">
+							<f:ajax render="@form" resetValues="true" />
+						</p:commandButton>
+
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

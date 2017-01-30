@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro de fornecedores</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastro de Fornecedores">
+			  	<h:form id="frm">
+			  		<p:messages autoUpdate="true" closable="true"/>
+					<p:panelGrid columns="2" columnClasses="rotulo, campo" style="margin-top:20px;width:100%">
+						<h:outputLabel value="Tipo Fornecedor" for="tipoFornecedor" />
+						<p:selectOneMenu id="tipoFornecedor" value="#{cadastroFornecedorBean.fornecedor.tipo}">
+							<f:selectItem itemLabel="Selecione o tipo" itemValue=""/>
+							<f:selectItems noSelectionOption="true"											
+										   value="#{cadastroFornecedorBean.tipoItemListTpFornecedor}" 
+										   var="tf"
+										   itemValue="tf"
+										   itemLabel="#{tf.label}"/>
+						</p:selectOneMenu>
+						
+						<h:outputLabel value="Nome" for="nome" />
+						<p:inputText id="nome" value="#{cadastroFornecedorBean.pessoaJuridica.nome}" size="50" 
+						              required="true" requiredMessage="O Campo NOME é obrigatório"/>
+						
+						<h:outputLabel value="CNPJ" for="cnpj" />
+						<p:inputText id="cnpj" value="#{cadastroFornecedorBean.pessoaJuridica.cnpj}" size="30"
+						             required="true" requiredMessage="O Campo CNPJ é obrigatório"/>
+						
+						<h:outputLabel value="CEP" for="cep" />
+						<p:inputText id="cep" value="#{cadastroFornecedorBean.endereco.cep}" size="8" maxlength="8">
+							<p:ajax event="blur" listener="#{cadastroFornecedorBean.buscaCep}" update="frm"/>
+						</p:inputText>
+						
+						<h:outputLabel value="Logradouro" for="logradouro" />
+						<p:inputText id="logradouro" value="#{cadastroFornecedorBean.endereco.logradouro}" size="50"
+						             required="true" requiredMessage="O Campo LOGRADOURO é obrigatório"/>
+						
+						<h:outputLabel value="Numero" for="numero" />
+						<p:inputText id="numero" value="#{cadastroFornecedorBean.endereco.numero}" size="5"
+						             required="true" requiredMessage="O Campo NÚMERO é obrigatório"/>
+						
+						<h:outputLabel value="Complemento" for="complemento" />
+						<p:inputText id="complemento" value="#{cadastroFornecedorBean.endereco.complemento}" size="10"/>
+						
+						<h:outputLabel value="Bairro" for="bairro" />
+						<p:inputText id="bairro" value="#{cadastroFornecedorBean.endereco.bairro}" size="40"
+						             required="true" requiredMessage="O Campo BAIRRO é obrigatório"/>
+						
+						<h:outputLabel value="Cidade" for="cidade" />
+						<p:inputText id="cidade" value="#{cadastroFornecedorBean.endereco.cidade}" size="20"/>
+						
+						<h:outputLabel value="UF" for="uf" />
+						<p:inputText id="uf" value="#{cadastroFornecedorBean.endereco.uf}" size="1" maxlength="2"/>
+						
+						<h:outputLabel value="Telefone" for="telefone" />
+						<p:inputMask id="telefone" mask="(99) 99999-9999" value="#{cadastroFornecedorBean.pessoaJuridica.telefone}"
+						             required="true" requiredMessage="O Campo TELEFONE é obrigatório"/>
+						
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar" action="#{cadastroFornecedorBean.cadastrar}" style="color:black;margin-top:20px"/>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+
+</html>

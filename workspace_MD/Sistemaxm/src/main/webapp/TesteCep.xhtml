@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Teste CEP</title>
+	</h:head>
+	<h:body>
+		<ui:decorate template="/Master.xhtml">
+			<ui:define name="centro">
+				<h:form id="frm">
+					<p:panelGrid columns="2" columnClasses="rotulo, campo">
+						<p:outputLabel value="CEP" for="cep"/>
+						
+						<p:inputText id="cep" required="true" requiredMessage="campo obrigatório" value="#{cadastroClienteBean.endereco.cep}">
+							<p:ajax event="blur" update="frm" listener="#{cadastroClienteBean.buscaCep}" />
+						</p:inputText>
+						
+						<p:outputLabel value='Logradouro' for="logradouro" />
+						<!-- <h:outputText value="#{testeCepBean.endereco.logradouro}" id="logradouro" /> -->
+						<p:inputText id="logradouro" value="#{cadastroClienteBean.endereco.logradouro}"/>
+					</p:panelGrid>
+				</h:form>
+			</ui:define>
+		</ui:decorate>
+	</h:body>
+</html>

@@ -1,0 +1,34 @@
+package br.com.sistemaxm.entidades;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import br.com.sistemaxm.repository.EnderecoRepository;
+import br.com.sistemaxm.repository.JpaUtil;
+
+public class TesteCep {
+
+	public static void main(String[] args) {
+		EntityManager manager = JpaUtil.getEntityManager();		
+		Object[] out = new Object();
+		//Endereco endereco = null;
+		 try {
+			 EnderecoRepository enderecoRepo = new EnderecoRepository(manager);
+			 //retornoCep = enderecoRepo.retornaEnderecoPorCep("60810720");
+			 //System.out.println(retornoCep);
+			 out = enderecoRepo.retornaEnderecoPorCep("60810720");
+			 //endereco.setLogradouro(out.get(0).toString());
+			 for (Object[] s : out) {
+				 System.out.println(s.toString());
+			 }
+		 }
+		 finally {
+			 manager.close();
+		 }
+
+	}
+
+}

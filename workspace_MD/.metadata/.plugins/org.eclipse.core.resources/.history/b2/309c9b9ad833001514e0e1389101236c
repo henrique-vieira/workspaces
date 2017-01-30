@@ -1,0 +1,160 @@
+package br.com.sistemaxm.beans;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.primefaces.model.DualListModel;
+
+import br.com.sistemaxm.business.CadastroLocacao;
+import br.com.sistemaxm.business.SessaoUtil;
+import br.com.sistemaxm.entidades.Carro;
+import br.com.sistemaxm.entidades.Cliente;
+import br.com.sistemaxm.entidades.ContratoLocacao;
+import br.com.sistemaxm.entidades.Pessoa;
+import br.com.sistemaxm.repository.CarroRepository;
+import br.com.sistemaxm.repository.ClienteRepository;
+import br.com.sistemaxm.repository.ContratoLocacaoRepository;
+import br.com.sistemaxm.repository.JpaUtil;
+import br.com.sistemaxm.repository.PessoaRepository;
+
+@ManagedBean
+@ViewScoped
+public class ContratoLocacaoBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private DualListModel<Carro> carros;
+	private List<Cliente> clientes;
+	private ContratoLocacao contratoLocacao;
+	private Cliente cliente;	
+	private Pessoa pessoa;
+	
+	public ContratoLocacaoBean() {
+		this.cliente = new Cliente();
+		this.contratoLocacao = new ContratoLocacao();
+		this.pessoa = new Pessoa();
+	}
+
+	
+	public void prepararCadastro() {
+		EntityManager manager = JpaUtil.getEntityManager();
+		try {
+			ClienteRepository clienteRepo = new ClienteRepository(manager);
+			this.clientes = clienteRepo.todos();
+		} finally {
+			manager.close();
+		}
+	}
+
+	@PostConstruct
+	public void init() {
+
+		EntityManager manager = JpaUtil.getEntityManager();
+		try {
+			CarroRepository carroRepo;
+			carroRepo = new CarroRepository(manager);
+			List<Carro> carrosSource = new ArrayList<Carro>();
+			List<Carro> carrosTarget = new ArrayList<Carro>();
+			carrosSource = carroRepo.veiculosCombo();
+			this.carros = new DualListModel<Carro>(carrosSource, carrosTarget);
+			
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			manager.close();
+		}
+
+	}
+
+	public void salvar() {
+		EntityManager manager = JpaUtil.getEntityManager();
+		EntityTransaction trx = manager.getTransaction();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		
+		try {
+			trx.begin();	
+			
+			CadastroLocacao cadastro = new CadastroLocacao(
+					new ContratoLocacaoRepository(manager));
+			
+			this.cliente = manager.find(Cliente.class, cliente.getCodigo());
+			this.pessoa = manager.find(Pessoa.class, cliente.getCliente().getCodigo());			
+			this.cliente.setCliente(pessoa);			
+			this.contratoLocacao.setCliente(cliente);
+			
+			for (Carro carro : carros.getTarget()) {
+				this.contratoLocacao.setCarro(carro);
+				cadastro.salvar(contratoLocacao);
+				
+			}
+			
+			this.contratoLocacao = new ContratoLocacao();
+			this.cliente = new Cliente();
+			facesContext.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_INFO,
+					"Frota cadastrada com sucesso!", null));
+						
+			
+			trx.commit();
+		}
+
+		catch (Exception e) {
+			trx.rollback();
+			facesContext
+					.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Frota não cadastrada!", null));
+		}
+
+		finally {
+			manager.close();
+		}
+	}
+
+	public DualListModel<Carro> getCarros() {
+		return carros;
+	}
+
+	public void setCarros(DualListModel<Carro> carros) {
+		this.carros = carros;
+	}
+
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	public ContratoLocacao getContratoLocacao() {
+		return contratoLocacao;
+	}
+
+	public void setContratoLocacao(ContratoLocacao contratoLocacao) {
+		this.contratoLocacao = contratoLocacao;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	
+}

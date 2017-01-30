@@ -1,0 +1,93 @@
+package br.com.sistemaxm.beans;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.persistence.EntityManager;
+
+import br.com.sistemaxm.entidades.Cliente;
+import br.com.sistemaxm.entidades.PessoaFisica;
+import br.com.sistemaxm.entidades.PessoaJuridica;
+import br.com.sistemaxm.repository.ClienteRepository;
+import br.com.sistemaxm.repository.ContratoLocacaoRepository;
+import br.com.sistemaxm.repository.JpaUtil;
+
+@ManagedBean
+@ViewScoped
+public class ConsultaClienteBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	private Cliente cliente;
+	private PessoaFisica pessoaFisica;
+	private PessoaJuridica pessoaJuridica;
+	private List<PessoaFisica> clientesPf;
+	private List<PessoaJuridica> clientesPj;
+	
+	public ConsultaClienteBean() {
+		this.cliente = new Cliente();
+		this.pessoaFisica = new PessoaFisica();
+		this.pessoaJuridica = new PessoaJuridica();
+	}
+
+	public void consultar() {
+		EntityManager manager = JpaUtil.getEntityManager();
+		ClienteRepository clienteRepo = new ClienteRepository(manager);
+		
+		try {
+			this.pessoaFisica = (PessoaFisica) clienteRepo.pessoas();
+		}
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
+	}
+
+
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
+	}
+
+
+	public PessoaJuridica getPessoaJuridica() {
+		return pessoaJuridica;
+	}
+
+
+	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
+	}
+
+
+	public List<PessoaFisica> getClientesPf() {
+		return clientesPf;
+	}
+
+
+	public void setClientesPf(List<PessoaFisica> clientesPf) {
+		this.clientesPf = clientesPf;
+	}
+
+
+	public List<PessoaJuridica> getClientesPj() {
+		return clientesPj;
+	}
+
+
+	public void setClientesPj(List<PessoaJuridica> clientesPj) {
+		this.clientesPj = clientesPj;
+	}
+	
+	
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Cadastro de Estoque</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Entrada de estoque">
+				<h:form id="frm">
+					<p:messages autoUpdate="true" closable="true" />
+
+					<p:panelGrid columns="2" columnClasses="rotulo, campo"
+						style="width:100%;margin-top:20px">
+
+						<h:outputLabel value="Item / Peça" for="itemPeca" />
+						<p:inputText id="itemPeca"
+							value="#{cadastroItemPecaBean.itemPeca.descricao}" size="50"
+							required="true" requiredMessage="O campo Item/Peça é obrigatório" />
+
+						<h:outputLabel value="Compl. Peça" for="complemento" />
+						<p:inputText id="complemento"
+							value="#{cadastroItemPecaBean.itemPeca.complemento}" size="50" />
+
+						<h:outputLabel value="Quantidade Entrada" for="quantidadeEntrada" />
+						<p:spinner id="quantidadeEntrada"
+							value="#{cadastroItemPecaBean.itemPeca.qtdeEntrada}" size="1"
+							min="0" maxlength="4" immediate="true"/>
+
+						<h:outputLabel value="Preço Unidade" for="precoUnidade" />
+						<pe:inputNumber
+							value="#{cadastroItemPecaBean.itemPeca.valorUnitario}"
+							id="precoUnidade" 
+							symbol="R$" required="true" requiredMessage="O campo PREÇO UNITÁRIO é obrigatório">
+							<p:ajax event="blur" 
+									listener="#{cadastroItemPecaBean.atualizaPrecoTotalListener}"
+									update="preco"
+									process="@this, quantidadeEntrada"/>
+									
+						</pe:inputNumber>
+
+						<h:outputLabel value="Preço Total" for="preco" />
+						<pe:inputNumber value="#{cadastroItemPecaBean.itemPeca.valor}"
+							id="preco" symbol="R$" />
+
+						<h:outputLabel value="Data Entrada" for="dataEntrada" />
+						<p:calendar id="dataEntrada"
+							value="#{cadastroItemPecaBean.itemPeca.dataEntrada}"
+							pattern="dd/MM/yyyy">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Fortaleza" />
+						</p:calendar>
+
+						<h:outputLabel value="Fornecedor" for="fornecedor" />
+						<p:autoComplete id="fornecedor" dropdown="true"
+							converter="fornecedorConverter"
+							value="#{cadastroItemPecaBean.fornecedor}"
+							completeMethod="#{cadastroItemPecaBean.autoCompleteFornecedor}"
+							var="varEnt" itemLabel="#{varEnt.fornecedor.nome}"
+							itemValue="#{varEnt}" required="true" forceSelection="true"
+							scrollHeight="150" />
+
+					</p:panelGrid>
+
+					<p:commandButton action="#{cadastroItemPecaBean.salvar}"
+						value="Cadastrar" style="color:black;margin-top:20px" />
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

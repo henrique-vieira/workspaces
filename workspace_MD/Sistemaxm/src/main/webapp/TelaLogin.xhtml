@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+	<h:head> 
+	</h:head> 
+	<h:body> 
+	<ui:decorate template="/Master.xhtml">
+        <ui:define name="centro">
+		<h:form style="margin-left:30%;margin-top:10%" prependId="false"> 
+			<p:messages autoUpdate="true" closable="true" redisplay="true" />
+			<p:panel header="Login" style="width:440px; text-align:center">
+				<p:panelGrid columns="2" style="margin-left:50px"> 
+					<h:outputLabel value="Usuário:" /> 
+					<h:inputText value="#{segurancaBean.usuario}" /> 
+					
+					<h:outputLabel value="Senha:" /> 
+					<h:inputSecret value="#{segurancaBean.senha}" /> 
+				</p:panelGrid> 
+					<h:commandButton value="Entrar" icon="ui-icon-star" ajax="false" action="#{segurancaBean.logar}" style="width:405px;margin-top:5px"> 
+					</h:commandButton>
+			</p:panel>
+		</h:form> 
+		</ui:define>
+	</ui:decorate>
+	</h:body>
+
+
+</html>

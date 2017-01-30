@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>Sistemaxm</display-name>
+	
+	
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>primefaces.skin</param-name>
+		<param-value>none</param-value>
+	</context-param>
+
+	
+	<context-param>
+		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-value>true</param-value>
+	</context-param>		
+			
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<!-- Configurações do JAAS -->
+<login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+        <form-login-page>/faces/TelaLogin.xhtml</form-login-page>
+        <form-error-page>/faces/TelaLogin.xhtml</form-error-page>
+    </form-login-config>
+</login-config>
+
+<security-role>
+    <role-name>cadastro</role-name>
+</security-role>
+<security-role>
+    <role-name>consulta</role-name>
+</security-role>
+<security-role>
+    <role-name>relatorio</role-name>
+</security-role>
+
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Cadastros</web-resource-name>
+        <url-pattern>/faces/Teste.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroCliente.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroCotacao.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroDespesas.xhtml</url-pattern>
+         <url-pattern>/faces/CadastroReceitas.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroEstoque.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroFornecedor.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroFuncionario.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroFuncao.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroJornadaTransporte.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroAbastecimentoSemJornada.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroMarca.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroProprietario.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroServico.xhtml</url-pattern>
+        <url-pattern>/faces/LocacaoVeiculos.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroUsuario.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroManutencao.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+        <role-name>cadastro</role-name>
+    </auth-constraint>
+</security-constraint>
+
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Consultas</web-resource-name>
+        <url-pattern>/faces/ConsultaCarro.xhtml</url-pattern>
+        <url-pattern>/faces/ConsultaCliente.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroMarca.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroServico.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroDespesas.xhtml</url-pattern>
+          <url-pattern>/faces/CadastroReceitas.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroJornadaTransporte.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroAbastecimentoSemJornada.xhtml</url-pattern>
+        <url-pattern>/faces/ConsultaCotacao.xhtml</url-pattern>
+        <url-pattern>/faces/ConsultaEstoque.xhtml</url-pattern>
+        <url-pattern>/faces/ConsultaFornecedor.xhtml</url-pattern>
+        <url-pattern>/faces/ConsultaLocacao.xhtml</url-pattern>
+        <url-pattern>/faces/AlertaManutencao.xhtml</url-pattern>
+        <url-pattern>/faces/CadastroManutencao.xhtml</url-pattern>
+        <url-pattern>/faces/ConsultaLicenciamento.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+        <role-name>consulta</role-name>
+    </auth-constraint>
+</security-constraint>
+
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Relatorios</web-resource-name>
+        <url-pattern>/faces/RelatorioCarros.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioCotacao.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioEstoque.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioLocacao.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioManutencao.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioDespesa.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioReceita.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioContrato.xhtml</url-pattern>
+        <url-pattern>/faces/RelatorioAbastecimento.xhtml</url-pattern>
+         <url-pattern>/faces/RelatorioCentroCustos.xhtml</url-pattern>
+         <url-pattern>/faces/RelatorioJornadaTransporte.xhtml</url-pattern>
+        
+    </web-resource-collection>
+    <auth-constraint>
+        <role-name>relatorio</role-name>
+    </auth-constraint>
+</security-constraint>
+
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Home</web-resource-name>
+        <url-pattern>/faces/Master.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+        <role-name>cadastro</role-name>
+        <role-name>consulta</role-name>
+        <role-name>relatorio</role-name>
+    </auth-constraint>
+</security-constraint>
+<error-page>
+    <error-code>403</error-code>
+    <location>/faces/AcessoNegado.xhtml</location>
+</error-page>
+	
+</web-app>

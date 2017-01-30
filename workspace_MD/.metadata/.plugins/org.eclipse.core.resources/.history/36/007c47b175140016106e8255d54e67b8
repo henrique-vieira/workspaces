@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro da jornada de transporte</title>
+	<script type="text/javascript">
+	PrimeFaces.locales['pt'] = {
+            closeText: 'Fechar',
+            prevText: 'Anterior',
+            nextText: 'Próximo',
+            currentText: 'Começo',
+            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
+            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+            dayNamesMin: ['D','S','T','Q','Q','S','S'],
+            weekHeader: 'Semana',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Horas',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            currentText: 'Data Atual',
+            ampm: false,
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText : 'Todo Dia'
+        };
+	</script>
+</h:head>
+<h:body>
+	<ui:decorate template="Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastro Jornada Transporte">
+				<h:form id="frmId" prependId="false">
+					<p:panelGrid columns="2" columnClasses="rotulo, campo" style="width:100%;margin-top:20px">
+						<p:outputLabel value="Cliente" for="cliente" />
+						<p:autoComplete id="cliente"
+										value="#{cadastroJornadaTransporteBean.cliente}"
+										dropdown="true"
+										converter="clienteConverter"
+										completeMethod="#{cadastroJornadaTransporteBean.autoCompleteCliente}"
+										var="c"
+										itemLabel="#{c.cliente.nome}"
+										itemValue="#{c}" />
+										
+						<p:outputLabel value="Funcionário" for="funcionario" />
+						<p:autoComplete id="funcionario"
+										value="#{cadastroJornadaTransporteBean.funcionario}"
+										dropdown="true"
+										converter="funcionarioConverter"
+										completeMethod="#{cadastroJornadaTransporteBean.autoCompleteFuncionario}"
+										var="f"
+										itemLabel="#{f.pessoa.nome}"
+										itemValue="#{f}" />
+										
+						<p:outputLabel value="Carro" for="carro" />
+						<p:autoComplete id="carro"
+										value="#{cadastroJornadaTransporteBean.carro}"
+										dropdown="true"
+										converter="carroConverter"
+										completeMethod="#{cadastroJornadaTransporteBean.autoCompleteCarro}"
+										forceSelection="true"
+										var="c"
+										itemLabel="#{c.modelo} #{c.placa}"
+										itemValue="#{c}" />
+										
+						<p:outputLabel value="Data Jornada" for="dataJornada" />
+						<p:calendar id="dataJornada" 
+								    value="#{cadastroJornadaTransporteBean.jornadaTransporte.dataJornada}"
+								    pattern="dd/MM/yyyy"
+								    timeZone="America/Fortaleza">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Fortaleza"/>		    
+						</p:calendar>
+						
+						<p:outputLabel value="Início Jornada" for="inicioJornada" />
+						<p:calendar id="inicioJornada" 
+								    value="#{cadastroJornadaTransporteBean.jornadaTransporte.inicioJornada}"
+								    timeOnly="true"
+								    pattern="HH:mm"
+								    timeZone="America/Fortaleza"
+								    locale="pt" />
+								    
+						<p:outputLabel value="Fim Jornada" for="fimJornada" />
+						<p:calendar id="fimJornada" 
+								    value="#{cadastroJornadaTransporteBean.jornadaTransporte.fimJornada}"
+								    timeOnly="true"
+								    pattern="HH:mm"
+								    timeZone="America/Fortaleza"
+								    locale="pt" />
+								    
+						<p:outputLabel value="Extra" for="extra" />
+						<p:inputText id="extra" 
+									 value="#{cadastroJornadaTransporteBean.jornadaTransporte}"
+									 size="5" />    
+						<p:outputLabel value="Observação" for="obs" />
+						<p:inputTextarea id="obs" value="#{cadastroJornadaTransporteBean.jornadaTransporte.obs}" />
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar" 
+									 style="margin-top:20px" 
+									 action="#{cadastroJornadaTransporteBean.salvar}" />
+					
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

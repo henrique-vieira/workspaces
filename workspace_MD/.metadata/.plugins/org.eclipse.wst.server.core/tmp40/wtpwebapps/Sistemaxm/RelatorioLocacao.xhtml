@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Relatório de Locações</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<h:form target="_blank">
+				<p:messages autoUpdate="true" closable="true" />
+				<p:panel header="Relatório de Locações">
+
+					<p:panelGrid columns="2" style="margin-top:8px;width:100%"
+						columnClasses="rotulo, campo">
+						<p:outputLabel value="Cliente" for="cliente" />
+
+
+						<p:autoComplete id="cliente" dropdown="true"
+							value="#{relatorioLocacaoBean.cliente}"
+							converter="clienteConverter"
+							completeMethod="#{relatorioLocacaoBean.autoCompleteCliente}"
+							var="varEnt" itemLabel="#{varEnt.cliente.nome}"
+							itemValue="#{varEnt}" required="true" forceSelection="true"
+							scrollHeight="150" title="Campo obrigatório" />
+					</p:panelGrid>
+					<p:panelGrid columns="6" columnClasses="rotulo, campo" style="margin-top:20px">
+					<p:outputLabel value="Data Locação" />
+						<p:calendar label="Data Inicio" pattern="dd/MM/yyyy" size="10"
+							value="#{relatorioLocacaoBean.pDataCotacaoInicio}"
+							required="true" requiredMessage="Parâmetros são obrigatórios"
+							title="Data Início">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Fortaleza" />
+						</p:calendar>
+						<p:spacer />
+						<p:calendar label="Data Fim" pattern="dd/MM/yyyy" size="10"
+							value="#{relatorioLocacaoBean.pDataCotacaoFim}"
+							required="true" requiredMessage="Parâmetros são obrigatórios"
+							title="Data Fim">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Fortaleza" />
+						</p:calendar>
+
+
+					</p:panelGrid>
+					<p:commandButton value="Emitir"
+						style="color:black;margin-top:20px;margin-left:20px"
+						action="#{relatorioLocacaoBean.emitir}" ajax="false" />
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

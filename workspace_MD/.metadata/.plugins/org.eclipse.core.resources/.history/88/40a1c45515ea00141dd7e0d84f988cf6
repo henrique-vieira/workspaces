@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+      
+      <h:head>
+      	<title>Teste Master</title>
+      	<style type="text/css">
+			.ui-layout-north {
+				Z-INDEX: 20 !IMPORTANT;
+				OVERFLOW: VISIBLE !IMPORTANT;
+			}
+			
+			.ui-layout-north .ui-layout-unit-content {
+				OVERFLOW: VISIBLE !IMPORTANT;
+			}
+			
+			img {
+				WIDTH: 30%;
+				HEIGHT: 60%;
+				margin: 5%;
+				}
+			
+			
+		</style>
+      </h:head>     
+      
+	  <h:body>
+	  <p:layout fullPage="true">
+	  		<p:layoutUnit position="north" header="Sistema XM Locação de Veículos" resizable="false" closable="false" collapsible="true" >
+        		<h:form>  
+   				 <p:growl id="messages"/>
+ 
+    			<p:menubar>
+        			<p:submenu label="Arquivo" icon="ui-icon-document">
+            			<p:submenu label="Novo Cadastro" icon="ui-icon-contact">
+               	    		<p:menuitem value="Veículo" url="/faces/Teste.xhtml" />
+                			<p:menuitem value="Marca" url="/faces/CadastroMarca.xhtml" />
+                			<p:menuitem value="Cliente" url="#" />
+                			<p:menuitem value="Fornecedor" url="#"/>    
+                			<p:menuitem value="Usuário do Sistema" url="#"/>             			
+            			</p:submenu>
+            			<p:submenu label="Consulta" icon="ui-icon-contact">
+            				<p:menuitem value="Consulta Veiculo" url="/faces/ConsultaCarro.xhtml" />
+            				<p:menuitem value="Consulta Marca" url="/faces/CadastroMarca.xhtml" />
+            			</p:submenu>
+            			<p:separator />
+            			<p:menuitem value="Início" url="/faces/Master.xhtml" />
+        		    </p:submenu>
+ 
+        			<p:submenu label="Estoque" icon="ui-icon-pencil">
+            			<p:menuitem value="Entrada" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+            			<p:menuitem value="Saida" url="#" icon="ui-icon-arrowreturnthick-1-w" />
+        			</p:submenu>
+ 
+        			<p:submenu label="Reservas" icon="ui-icon-search">
+            			<p:menuitem value="Veiculos Reservados" url="#" />        			
+        			</p:submenu>
+ 
+        			<p:submenu label="Compras" icon="ui-icon-gear">
+            			<p:menuitem value="Controle de Compras" url="#"/>                		
+        			</p:submenu>
+        			
+        			<p:submenu label="Manutenção" icon="ui-icon-gear">
+            			<p:menuitem value="Controle de Manutenção" url="#"/>                		
+        			</p:submenu>
+ 
+        			<f:facet name="options">
+            			<p:inputText style="margin-right:10px" placeholder="Pesquisa"/>
+            			<p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+        			</f:facet>
+    			</p:menubar>
+				</h:form>
+    		</p:layoutUnit>
+    		<p:layoutUnit position="center" >  
+                    <ui:insert name="centro">
+                      	<h:graphicImage value="/Logonova1.png" />
+                    </ui:insert>
+                </p:layoutUnit> 
+      </p:layout>
+	  </h:body>
+</html>

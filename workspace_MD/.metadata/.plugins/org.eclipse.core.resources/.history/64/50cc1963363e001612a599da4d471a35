@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">	
+
+<h:head>
+	<title>Cadastro de Contrato</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				 <f:viewAction action="#{cadastroContratoBean.listaContratos}" /> 
+			</f:metadata>
+			<p:panel header="Cadastro de Contratos">
+				<h:form>
+					<p:messages autoUpdate="true" closable="true"/>
+					<p:panelGrid columns="2" columnClasses="rotulo, campo" style="margin-top:20px;width:100%">
+						<p:outputLabel value="Valor Contrato" for="valorFixo"/>
+						<pe:inputNumber id="valorFixo" 
+									 value="#{cadastroContratoBean.contrato.valorFixo}" 
+									 size="6"
+									 symbol="R$"
+									 title="Valor total do contrato"
+									 immediate="true">	
+						</pe:inputNumber>	
+						
+						<p:outputLabel value="Quantidade de Km" for="qtdeKmContrato" />
+						<pe:inputNumber id="qtdeKmContrato" 
+									 value="#{cadastroContratoBean.contrato.qtdeKmContrato}" 
+									 size="6"
+									 title="Quantidade de km a ser contratado">								
+						</pe:inputNumber>
+						
+						<p:outputLabel value="Valor km" style="margin-right:10px" for="valorKm"/>
+						<pe:inputNumber id="valorKm" 
+									 value="#{cadastroContratoBean.contrato.valorKm}" 
+									 size="6"
+									 symbol="R$"
+									 title="Valor do contrato por km">	
+						</pe:inputNumber>	
+						
+						<p:outputLabel value="Valor Excedente" style="margin-right:10px" for="valorExcedente"/>
+						<pe:inputNumber id="valorExcedente" 
+									 value="#{cadastroContratoBean.contrato.valorExcedente}" 
+									 size="6"
+									 symbol="R$"
+									 title="Valor excedente por km">	
+						</pe:inputNumber>
+						
+						<p:outputLabel value="Km Excedente" style="margin-right:10px" for="kmExcedente"/>
+						<pe:inputNumber id="kmExcedente" 
+									 value="#{cadastroContratoBean.contrato.qtdeKmExcedente}" 
+									 size="6"									 
+									 title="Km excedente">	
+						</pe:inputNumber>		
+						
+						<p:outputLabel value="Ad. Noturno" style="margin-right:10px" for="adNoturno"/>
+						<pe:inputNumber id="adNoturno"
+									 value="#{cadastroContratoBean.contrato.adicionalNoturno}" 
+									 size="6"
+									 symbol="R$"
+									 title="Valor do adicional noturno">	
+						</pe:inputNumber>					
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar" style="color:black;margin-top:20px"
+							action="#{cadastroContratoBean.salvar}" update=":frm:opResultadoId">							
+							<f:ajax render="@form" resetValues="true"/>
+							<p:collector unique="true" value="#{cadastroContratoBean.contrato}"
+								addTo="#{cadastroContratoBean.contratos}"></p:collector>								
+					</p:commandButton>
+				</h:form>
+				<br />
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId" value="#{cadastroContratoBean.contratos}" var="c"
+							paginator="true" paginatorPosition="bottom" editable="true" emptyMessage="Nenhum registro encontrado.">
+
+							<p:ajax event="rowEdit" listener="#{cadastroContratoBean.onRowEdit}"
+								update=":frm:msgs" />
+
+							<p:column style="color:black" headerText="Código">
+								<h:outputText value="#{c.codigo}" />
+							</p:column>
+							<p:column style="color:black" headerText="Valor Contrato">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.valorFixo}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.valorFixo}" 
+											 size="6"
+											 symbol="R$">	
+										</pe:inputNumber>	
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black" headerText="Quantidade km">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.qtdeKmContrato}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.qtdeKmContrato}" 
+											 size="6">	
+										</pe:inputNumber>	
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black" headerText="Valor km">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.valorKm}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.valorKm}" 
+											 size="6"
+											 symbol="R$">	
+										</pe:inputNumber>	
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black" headerText="Valor Excedente">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.valorExcedente}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.valorExcedente}" 
+											 size="6"
+											 symbol="R$">	
+										</pe:inputNumber>	
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black" headerText="Ad. Noturno">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.adicionalNoturno}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.adicionalNoturno}" 
+											 size="6">	
+										</pe:inputNumber>	
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:16px">
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar">
+								</p:tooltip>
+
+							</p:column>
+
+							<p:column style="color:black;width:15px">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroContratoBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{c}"
+										removeFrom="#{cadastroContratoBean.contratos}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{c}"
+										target="#{cadastroContratoBean.contrato}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir">
+								</p:tooltip>
+							</p:column>
+						</p:dataTable>						
+					</p:outputPanel>						
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

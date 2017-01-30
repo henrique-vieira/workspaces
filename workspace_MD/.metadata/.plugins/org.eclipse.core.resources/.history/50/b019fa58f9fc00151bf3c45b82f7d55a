@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+      
+      <h:head>
+      	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      	<title>Três Estrelas</title>
+      	<style type="text/css">
+      		
+      		body {
+				font-size: 14px;
+				font-family: Arial, Helvetica, sans-serif;
+				margin: 0px;
+				font-weight: normal;
+			}
+
+			header {
+				color:#fff;
+				box-shadow: 0px 2px 2px #ccc;
+				padding: 5px 0px;
+				margin-bottom:20px;
+				height:70px;
+				background-color:#545454;
+			}
+			
+			
+	header > div {
+		margin-left: 15px;
+	}
+			
+			.ui-inputfield {
+			
+					color:black !important;
+					font-weight: normal !important;
+					
+			}
+			
+						
+			.ui-button-text {
+				font-weight: normal !important;
+				color:black !important;
+			}
+      		
+      	
+			.ui-layout-north {
+				Z-INDEX: 20 !IMPORTANT;
+				OVERFLOW: VISIBLE !IMPORTANT;
+			}
+			
+			.ui-layout-north .ui-layout-unit-content {
+				OVERFLOW: VISIBLE !IMPORTANT;
+			}
+			
+			img {
+				WIDTH: 30%;
+				HEIGHT: 60%;
+				margin: 5%;
+				}
+			
+			.ui-picklist-list {
+				width:450px !important;
+			}
+			
+			.ui-picklist-list td {
+				text-align:left;
+				width:80px;
+			}
+			
+															
+		</style>
+      </h:head>     
+      
+	  <h:body>
+	  <p:layout fullPage="true">
+	  		 <p:layoutUnit position="north" resizable="false" closable="false" collapsible="true" > 
+        		<h:form>  
+   				 <p:growl id="messages"/>
+ 
+    			<p:menubar>
+        			<p:submenu label="Arquivo" icon="ui-icon-document">
+            			<p:submenu label="Novo Cadastro" icon="ui-icon-contact">
+               	    		<p:menuitem value="Veículo" url="/faces/Teste.xhtml" />
+                			<p:menuitem value="Marca" url="/faces/CadastroMarca.xhtml" />
+                			<p:menuitem value="Cliente" url="/faces/CadastroCliente.xhtml" />
+                			<p:menuitem value="Proprietario" url="/faces/CadastroProprietario.xhtml" />
+                			<p:menuitem value="Locação" url="/faces/LocacaoVeiculos.xhtml" />
+                			<p:menuitem value="Fornecedor" url="/faces/CadastroFornecedor.xhtml"/>    
+                			<p:menuitem value="Usuário do Sistema" url="/faces/CadastroUsuario.xhtml"/>             			
+            			</p:submenu>
+            			<p:submenu label="Consulta" icon="ui-icon-contact">
+            				<p:menuitem value="Consulta Veiculo" url="/faces/ConsultaCarro.xhtml" />
+            				<p:menuitem value="Consulta Marca" url="/faces/CadastroMarca.xhtml" />
+            				<p:menuitem value="Consulta Cliente" url="/faces/ConsultaCliente.xhtml" />
+            				<p:menuitem value="Consulta Fornecedor" url="/faces/ConsultaFornecedor.xhtml" />
+            			</p:submenu>
+            			<p:submenu label="Relatórios" icon="ui-icon-contact">
+            				<p:menuitem value="Relatório de Cotações" url="/faces/RelatorioCotacao.xhtml" />            				
+            				<p:menuitem value="Relatório de Estoque" url="/faces/RelatorioEstoque.xhtml" />
+            				<p:menuitem value="Relatório de Manutenção" url="/faces/RelatorioManutencao.xhtml" />
+            				<p:menuitem value="Relatório de Locações" url="/faces/RelatorioLocacao.xhtml" />
+            				<p:menuitem value="Relatório de Carros" url="/faces/RelatorioCarros.xhtml" />
+            			</p:submenu>
+            			<p:separator />
+            			<p:menuitem value="Início" url="/faces/Master.xhtml" />
+        		    </p:submenu>
+ 
+        			<p:submenu label="Estoque" icon="ui-icon-pencil">
+            			<p:menuitem value="Entrada" url="/faces/CadastroEstoque.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            			<p:menuitem value="Consulta de peças" url="/faces/ConsultaEstoque.xhtml" icon="ui-icon-arrowgothick-1-e" />
+        			</p:submenu>
+ 
+        			<p:submenu label="Locações" icon="ui-icon-search">
+            			<p:menuitem value="Veiculos locados" url="/faces/ConsultaLocacao.xhtml" />        			
+        			</p:submenu>
+        			
+        			<p:submenu label="Serviços" icon="ui-icon-search">
+            			<p:menuitem value="Cadastrar Serviços" url="/faces/CadastroServico.xhtml" />        			
+        			</p:submenu>
+ 
+        			<p:submenu label="Compras" icon="ui-icon-gear">
+            			<p:menuitem value="Cotação de peças" url="/faces/CadastroCotacao.xhtml"/>       
+            			<p:menuitem value="Consulta de cotação" url="/faces/ConsultaCotacao.xhtml"/>            		
+        			</p:submenu>
+        			
+        			<p:submenu label="Manutenção" icon="ui-icon-gear">
+            			<p:menuitem value="Controle de Manutenção" url="/faces/CadastroManutencao.xhtml"/>                		
+        			</p:submenu>
+    			</p:menubar>
+				</h:form>
+    		</p:layoutUnit>
+    		<p:layoutUnit position="center" >  
+                    <ui:insert name="centro">
+                      	<h:graphicImage value="/logo3estrelassemfundonovo.png" width="100%" />
+                    </ui:insert>
+            </p:layoutUnit> 
+      </p:layout>
+	  </h:body>
+</html>

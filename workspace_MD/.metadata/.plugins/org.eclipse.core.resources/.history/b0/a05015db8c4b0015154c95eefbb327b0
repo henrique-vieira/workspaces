@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro de cotação de peças</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastro de cotação de peças">
+				<h:form id="frm">
+					<p:messages autoUpdate="true" closable="true" />
+					<f:metadata>
+						<f:viewAction action="#{cadastroCotacaoBean.listaCarros}" />
+					</f:metadata>
+					<p:panelGrid columns="2" columnClasses="rotulo, campo"
+						style="width:100%;margin-top:20px">
+						<h:outputLabel value="Carro" for="carro" />
+						<p:selectOneMenu id="carro" value="#{cadastroCotacaoBean.carro}"
+							label="Carro" converter="carroConverter">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{cadastroCotacaoBean.carros}" var="cp"
+								itemValue="#{cp}" itemLabel="#{cp.modelo}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Item/Peça" for="item" />
+						<p:inputText id="item"
+							value="#{cadastroCotacaoBean.cotacaoPecas.item}" size="50" />
+
+						<h:outputLabel value="Quantidade" for="quantidade" />
+						<p:spinner id="quantidade"
+							value="#{cadastroCotacaoBean.cotacaoPecas.qtde}" size="1" min="0"
+							maxlength="2" />
+
+						<h:outputLabel value="Fornecedor" for="fornecedor" />
+						<p:autoComplete id="fornecedor" dropdown="true"
+							converter="fornecedorConverter"
+							value="#{cadastroCotacaoBean.fornecedor}"
+							completeMethod="#{cadastroCotacaoBean.autoCompleteFornecedor}"
+							var="varEnt" itemLabel="#{varEnt.fornecedor.nome}"
+							itemValue="#{varEnt}" required="true" forceSelection="true"
+							scrollHeight="150" />
+
+						<h:outputLabel value="Data cotação" for="dataCotacao" />
+						<p:calendar
+							value="#{cadastroCotacaoBean.cotacaoPecas.dataCotacao}">
+							<f:convertDateTime pattern="dd/mm/yyyy" />
+						</p:calendar>
+					</p:panelGrid>
+
+					<p:commandButton action="#{cadastroCotacaoBean.salvar}"
+						value="Cadastrar" style="color:black;margin-top:20px" />
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

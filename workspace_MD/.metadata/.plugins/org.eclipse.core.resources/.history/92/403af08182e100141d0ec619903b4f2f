@@ -1,0 +1,257 @@
+package br.com.sistemaxm.entidades;
+
+import javax.persistence.*;
+
+import br.com.sistemaxm.enums.Cambio;
+import br.com.sistemaxm.enums.Combustivel;
+import br.com.sistemaxm.entidades.Marca;
+
+@Entity
+@Table(name="carro")
+public class Carro {
+	
+	private int id;
+	private String placa;
+	private String modelo;
+	private String uf;
+	private String cor;
+	private String renavam;
+	private String chassi;
+	private int anoFabricacao;
+	private int anoModelo;
+	private int qtdePortas;
+	private long km;
+	private boolean cdMp3Player;
+	private boolean sensorRe;
+	private boolean rastreador;
+	private boolean bloqueador;
+	private boolean ar;
+	private boolean bancosCouro;
+	private boolean direcao;
+	private boolean trava;
+	private boolean alarme;
+	private boolean airBagMotorista;
+	private boolean airBagPassageiro;
+	private boolean freioAbs;
+	private boolean rodaLigaLeve;
+	private boolean gps;
+	private Cambio cambio;
+	private Combustivel combustivel;
+	private Marca marca;
+		
+		
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getPlaca() {
+		return placa;
+	}
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+	public String getModelo() {
+		return modelo;
+	}
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+	@Column(length=2)
+	public String getUf() {
+		return uf;
+	}
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+	public String getCor() {
+		return cor;
+	}
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+	public String getRenavam() {
+		return renavam;
+	}
+	public void setRenavam(String renavam) {
+		this.renavam = renavam;
+	}
+	public String getChassi() {
+		return chassi;
+	}
+	public void setChassi(String chassi) {
+		this.chassi = chassi;
+	}
+	@Column(length=4)
+	public int getAnoFabricacao() {
+		return anoFabricacao;
+	}
+	public void setAnoFabricacao(int anoFabricacao) {
+		this.anoFabricacao = anoFabricacao;
+	}
+	@Column(length=4)
+	public int getAnoModelo() {
+		return anoModelo;
+	}
+	public void setAnoModelo(int anoModelo) {
+		this.anoModelo = anoModelo;
+	}
+	public boolean isAr() {
+		return ar;
+	}
+	public void setAr(boolean ar) {
+		this.ar = ar;
+	}
+	public boolean isDirecao() {
+		return direcao;
+	}
+	public void setDirecao(boolean direcao) {
+		this.direcao = direcao;
+	}
+	public boolean isTrava() {
+		return trava;
+	}
+	public void setTrava(boolean trava) {
+		this.trava = trava;
+	}
+	public boolean isAlarme() {
+		return alarme;
+	}
+	public void setAlarme(boolean alarme) {
+		this.alarme = alarme;
+	}
+	public boolean isAirBagMotorista() {
+		return airBagMotorista;
+	}
+	public void setAirBagMotorista(boolean airBagMotorista) {
+		this.airBagMotorista = airBagMotorista;
+	}
+	public boolean isAirBagPassageiro() {
+		return airBagPassageiro;
+	}
+	public void setAirBagPassageiro(boolean airBagPassageiro) {
+		this.airBagPassageiro = airBagPassageiro;
+	}
+	public boolean isFreioAbs() {
+		return freioAbs;
+	}
+	public void setFreioAbs(boolean freioAbs) {
+		this.freioAbs = freioAbs;
+	}
+	public boolean isRodaLigaLeve() {
+		return rodaLigaLeve;
+	}
+	public void setRodaLigaLeve(boolean rodaLigaLeve) {
+		this.rodaLigaLeve = rodaLigaLeve;
+	}
+	public boolean isGps() {
+		return gps;
+	}
+	public void setGps(boolean gps) {
+		this.gps = gps;
+	}
+	
+	@Enumerated	
+	public Cambio getCambio() {
+		return cambio;
+	}
+	
+	public void setCambio(Cambio cambio) {
+		this.cambio = cambio;
+	}
+	@Enumerated
+	public Combustivel getCombustivel() {
+		return combustivel;
+	}
+	
+	public void setCombustivel(Combustivel combustivel) {
+		this.combustivel = combustivel;
+	}
+
+	@ManyToOne
+	@JoinColumn(name="cod_marca", foreignKey=@ForeignKey(name="FK_MARCA"))
+	public Marca getMarca() {
+		return marca;
+	}
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+		
+	public int getQtdePortas() {
+		return qtdePortas;
+	}
+	public void setQtdePortas(int qtdePortas) {
+		this.qtdePortas = qtdePortas;
+	}
+	
+	public long getKm() {
+		return km;
+	}
+	public void setKm(long km) {
+		this.km = km;
+	}
+		
+	public boolean isCdMp3Player() {
+		return cdMp3Player;
+	}
+	public void setCdMp3Player(boolean cdMp3Player) {
+		this.cdMp3Player = cdMp3Player;
+	}
+	
+	public boolean isBancosCouro() {
+		return bancosCouro;
+	}
+	public void setBancosCouro(boolean bancosCouro) {
+		this.bancosCouro = bancosCouro;
+	}
+		
+	public boolean isSensorRe() {
+		return sensorRe;
+	}
+	public void setSensorRe(boolean sensorRe) {
+		this.sensorRe = sensorRe;
+	}
+	
+	public boolean isRastreador() {
+		return rastreador;
+	}
+	public void setRastreador(boolean rastreador) {
+		this.rastreador = rastreador;
+	}
+	public boolean isBloqueador() {
+		return bloqueador;
+	}
+	public void setBloqueador(boolean bloqueador) {
+		this.bloqueador = bloqueador;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((placa == null) ? 0 : placa.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Carro other = (Carro) obj;
+		if (placa == null) {
+			if (other.placa != null)
+				return false;
+		} else if (!placa.equals(other.placa))
+			return false;
+		return true;
+	}
+	
+	
+	
+
+}

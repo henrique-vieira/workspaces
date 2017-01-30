@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Cadastro de Funcionários</title>
+</h:head>
+<h:body>
+	<ui:decorate template="Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastro de funcionários">
+				<h:panelGroup id="panelFuncionario">
+					<h:form id="frm" prependId="false">									
+							<p:tabView effect="fade" effectDuration="fast" style="height:80%"
+								id="tabViewIdFunc">
+
+								<p:tab title="Dados">
+									<p:messages autoUpdate="true" closable="true" />
+									<p:panelGrid columns="2" columnClasses="rotulo, campo"
+										style="width:100%; margin-top:20px">
+
+										<p:outputLabel value="Empresa Contratante" for="empresa" />
+											<p:autoComplete id="empresa"
+												value="#{cadastroFuncionarioBean.cliente}" dropdown="true"
+												converter="clienteConverter"
+												completeMethod="#{cadastroFuncionarioBean.autoCompleteCliente}"
+												scrollHeight="250" var="c" 
+												itemLabel="#{c.cliente.nome}" itemValue="#{c}" />
+							
+										<p:outputLabel value="Nome Funcionário" for="nomeFuncionario" />
+										<p:inputText id="nomeFuncionario"
+											value="#{cadastroFuncionarioBean.pessoaFisica.nome}"
+											size="40" maxlength="30" 
+											required="true" requiredMessage="Campo NOME é obrigatório"/>
+
+										<p:outputLabel value="Sexo" for="sexo" />
+										<p:selectOneRadio id="sexo"
+											value="#{cadastroFuncionarioBean.pessoaFisica.sexo}">
+											<f:selectItems
+												value="#{cadastroFuncionarioBean.tipoItemListSexo}" />
+										</p:selectOneRadio>
+
+										<p:outputLabel value="Data Nascimento" for="dataNascimento" />
+										<p:calendar id="dataNascimento"
+											value="#{cadastroFuncionarioBean.pessoaFisica.dataNascimento}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+
+										<p:outputLabel value="CPF" for="cpf" />
+										<p:inputText id="cpf"
+											value="#{cadastroFuncionarioBean.pessoaFisica.cpf}" size="20"
+											maxlength="11" required="true"
+											requiredMessage="O Campo CPF é Obrigatório" />
+
+										<p:outputLabel value="RG" for="rg" />
+										<p:inputText id="rg"
+											value="#{cadastroFuncionarioBean.pessoaFisica.rg}" size="20"
+											maxlength="15" required="true"
+											requiredMessage="O Campo RG é Obrigatório" />
+
+										<p:outputLabel value="Matricula" for="matricula" />
+										<p:inputText id="matricula"
+											value="#{cadastroFuncionarioBean.funcionario.matricula}"
+											size="20" maxlength="10" />
+
+										<p:outputLabel value="Data Admissão" for="dataAdmissao" />
+										<p:calendar id="dataAdmissao"
+											value="#{cadastroFuncionarioBean.funcionario.dataAdmissao}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+										<h:outputLabel value="Status do Funcionário*" for="status" />
+											<p:selectOneMenu id="status"
+												value="#{cadastroFuncionarioBean.funcionario.status}" required="true" requiredMessage="O STATUS é obrigatório">
+												<f:selectItem itemLabel="Selecione" itemValue="" />
+												<f:selectItems value="#{cadastroFuncionarioBean.statusFuncionario}"
+															var="ent" itemLabel="#{ent.label}" itemValue="#{ent}" />
+											</p:selectOneMenu>
+											
+										<p:outputLabel value="Data das Férias" for="dataFerias" />
+										<p:calendar id="dataFerias"
+											value="#{cadastroFuncionarioBean.funcionario.dataFerias}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+
+										<p:outputLabel value="Número do ASO" for="aso" />
+										<p:inputText id="aso"
+											value="#{cadastroFuncionarioBean.aso.numAso}" required="false"
+											size="20" />
+											
+										<p:outputLabel value="Data Exame Admicional" for="dataExameAdmicional" />
+										<p:calendar id="dataExameAdmicional"
+											value="#{cadastroFuncionarioBean.aso.dataExameAdmissional}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+												
+										<p:outputLabel value="Data Exame Periódico" for="dataExamePeriodico" />
+										<p:calendar id="dataExamePeriodico"
+											value="#{cadastroFuncionarioBean.aso.dataExamePeriodico}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+										
+										<p:outputLabel value="Vencimento RAC" for="vencimentoRac" />
+										<p:calendar id="vencimentoRac"
+											value="#{cadastroFuncionarioBean.funcionario.vencimentoRac}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+
+										<p:outputLabel value="Função" for="funcao" />
+										<p:selectOneMenu id="funcao" label="Funcao"
+											value="#{cadastroFuncionarioBean.funcao}"
+											converter="funcaoConverter" style="width:150px">
+											<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+											<f:selectItems value="#{cadastroFuncionarioBean.funcoes}"
+												var="func" itemLabel="#{func.descricao}" itemValue="#{func}" />
+											<p:ajax event="change"
+												update=":tabViewIdFunc:cnhOut, :tabViewIdFunc:cnhIn, :tabViewIdFunc:vencCnhOut, :tabViewIdFunc:vencCnhIn"
+												process="@this" />
+										</p:selectOneMenu>
+										
+										<p:outputLabel value="Salário" for="salario" />
+										<pe:inputNumber id="salario"
+												value="#{cadastroFuncionarioBean.funcionario.salario}"
+												size="10" symbol="R$">
+										</pe:inputNumber>
+
+										<h:panelGroup id="cnhOut">
+											<p:outputLabel value="CNH" for="cnh"
+												rendered="#{cadastroFuncionarioBean.funcao.descricao=='MOTORISTA'}" />
+										</h:panelGroup>
+										<h:panelGroup id="cnhIn">
+											<p:inputText id="cnh"
+												value="#{cadastroFuncionarioBean.funcionario.cnh}" 
+												rendered="#{cadastroFuncionarioBean.funcao.descricao=='MOTORISTA'}" />
+										</h:panelGroup>
+										<h:panelGroup id="vencCnhOut">
+											<p:outputLabel value="Vencimento CNH" for="vencCnhOut"
+												rendered="#{cadastroFuncionarioBean.funcao.descricao=='MOTORISTA'}" />
+										</h:panelGroup>
+										<h:panelGroup id="vencCnhIn">
+											<p:calendar id="vencimentoCnh"
+											value="#{cadastroFuncionarioBean.funcionario.vencimentoRac}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza" rendered="#{cadastroFuncionarioBean.funcao.descricao=='MOTORISTA'}">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+												 
+										</p:calendar>
+												
+										</h:panelGroup>
+
+									</p:panelGrid>
+								</p:tab>
+
+								<p:tab title="Endereço/Contato">
+									<h:panelGroup id="panelEndereco">
+										<p:panelGrid columns="2" style="margin-top:20px;width:90%"
+											columnClasses="rotulo, campo">
+
+											<p:outputLabel value="CEP" for="cep" />
+											<p:inputText id="cep" size="8" maxlength="8"
+												value="#{cadastroFuncionarioBean.endereco.cep}">
+												<p:ajax event="blur" update="panelEndereco" global="false"
+													listener="#{cadastroFuncionarioBean.buscaCep}" />
+											</p:inputText>
+
+											<p:outputLabel value="Logradouro" for="logradouro" />
+											<p:inputText id="logradouro" size="50" maxlength="50"
+												value="#{cadastroFuncionarioBean.endereco.logradouro}" 
+												required="true" requiredMessage="O Campo LOGRADOURO é Obrigatório"/>
+
+											<p:outputLabel value="Numero" for="numero" />
+											<p:inputText id="numero" size="8" maxlength="8"
+												value="#{cadastroFuncionarioBean.endereco.numero}" 
+												required="true" requiredMessage="O Campo NÚMERO é Obrigatório"/>
+
+											<p:outputLabel value="Complemento" for="complemento" />
+											<p:inputText id="complemento" size="30" maxlength="30"
+												value="#{cadastroFuncionarioBean.endereco.complemento}" />
+
+											<p:outputLabel value="Bairro" for="bairro" />
+											<p:inputText id="bairro" size="40" maxlength="50"
+												value="#{cadastroFuncionarioBean.endereco.bairro}" 
+												required="true" requiredMessage="O Campo BAIRRO é Obrigatório"/>
+
+											<p:outputLabel value="Cidade" for="cidade" />
+											<p:inputText id="cidade" size="20" maxlength="20"
+												value="#{cadastroFuncionarioBean.endereco.cidade}" />
+
+											<p:outputLabel value="UF" for="uf" />
+											<p:inputText id="uf" size="1" maxlength="2"
+												value="#{cadastroFuncionarioBean.endereco.uf}" />
+
+											<p:outputLabel value="E-mail" for="email" />
+											<p:inputText id="email"
+												value="#{cadastroFuncionarioBean.pessoaFisica.email}"
+												validatorMessage="Formato de e-mail inválido">
+												<f:validateRegex
+													pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+											</p:inputText>
+
+											<p:outputLabel value="Telefone" for="telefone" />
+											<p:inputMask id="telefone" mask="(99) 99999-9999"
+												value="#{cadastroFuncionarioBean.pessoaFisica.telefone}" />
+										</p:panelGrid>
+									</h:panelGroup>
+								</p:tab>
+							</p:tabView>
+							<p:commandButton value="Cadastrar"
+								action="#{cadastroFuncionarioBean.salvar}"
+								style="color:black;margin-left:5px;margin-top:10px"
+								process="@form">
+								<f:ajax render="@form" resetValues="true" />
+							</p:commandButton>						
+					</h:form>				
+
+				</h:panelGroup>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

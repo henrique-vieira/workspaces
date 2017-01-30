@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Consulta de itens no estoque</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{consultaItemPecaBean.consultar}"></f:viewAction>
+			</f:metadata>
+			<p:panel header="Consulta de Peças">
+				<h:form id="frmLoc">
+					<p:growl id="msgs" showDetail="true" autoUpdate="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="idDt" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							rows="10" emptyMessage="No records found" editable="true"
+							value="#{consultaItemPecaBean.itemPecas}" var="iP">
+
+							<p:ajax event="rowEdit" update=":frmLoc:msgs" listener="#{consultaItemPecaBean.onRowEditView}"/>
+																												
+							<p:column headerText="Item/Peça" style="color:black;width:150px" sortyBy="#{iP.descricao}" filterBy="#{iP.descricao}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="pecaOutput" value="#{iP.descricao}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="pecaInput" value="#{iP.descricao}" size="25" style="margin-left:10px" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Compl. Peça" style="color:black;width:150px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="complementoOutput" value="#{iP.complemento}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="complementoitemInput" value="#{iP.complemento}" size="25" style="margin-left:10px"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Preço Unitário" style="color:black;width:70px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="valorUnitarioOuput" value="#{iP.valorUnitario}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{iP.valorUnitario}" id="precoUnitario" symbol="R$" style="width:10px"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Preço Total" style="color:black;width:70px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="valorTotalOuput" value="#{iP.valor}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{iP.valor}" id="preco" symbol="R$" style="width:10px"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Quantidade Entrada" style="color:black;width:70px;text-align:center">
+								<h:outputText id="qtdeEntradaOutput" value="#{iP.qtdeEntrada}" />
+							</p:column>
+							<p:column headerText="Quantidade" style="color:black;width:70px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="qtdeOuput" value="#{iP.qtde}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:spinner id="qtdeInput"
+												   value="#{iP.qtde}" size="1" min="0"
+												   maxlength="4" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+														
+							<p:column headerText="Data Entrada" style="color:black;width:100px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dataOuput" value="#{iP.dataEntrada}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar id="dataInput" value="#{iP.dataEntrada}" pattern="dd/MM/yyyy" size="10">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Fortaleza"/>
+										</p:calendar> 
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Fornecedor" style="color:black;width:160px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="fornecedorOuput" value="#{iP.fornecedor.fornecedor.nome}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="fornecedorInput" 
+										                dropdown="true" 
+										                completeMethod="#{cadastroItemPecaBean.autoCompleteFornecedor}"
+										                converter="fornecedorConverter"
+										                value="#{iP.fornecedor}"
+										                var="varEnt"
+										                itemLabel="#{varEnt.fornecedor.nome}"
+										                itemValue="#{varEnt}"
+										                required="true"
+										                forceSelection="true"
+										                scrollHeight="150"
+										                 />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+																				
+								<p:column style="color:black;width:10px" rendered="#{request.isUserInRole('cadastro')}">
+										<p:rowEditor id="ok" />
+										<p:tooltip for="ok" value="Editar">
+										</p:tooltip>
+								</p:column>
+							
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

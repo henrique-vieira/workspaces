@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Veículos</title>
+
+	<style type="text/css">
+.ui-datatable-frozenlayout-left {
+	width: 20% !important;
+	height: 30px !important;
+}
+
+.ui-commandlink ui-widget fa fa-trash-o {
+	
+	visibility: visible !important;
+	
+
+}
+
+.ui-datatable-frozenlayout-left td {
+	width: 60px !important;
+}
+
+.ui-datatable-data tr {
+	height: 40px !important;
+	width: 100% !important;
+}
+</style>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{consultaCarroBean.Consultar}" />
+			</f:metadata>
+			<p:panel header="Consulta de Veiculos">
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:dataTable id="dtId" value="#{consultaCarroBean.carros}" var="c"
+						editable="true" paginator="true" paginatorPosition="bottom"
+						paginatorAlwaysVisible="false" scrollable="true"
+						scrollWidth="1150px" frozenColumns="2" rows="9"
+						style="width:480px">
+
+						<p:ajax event="rowEdit" listener="#{dtEditViewCar.onRowEdit}"
+							update=":frm:msgs" />
+
+						<p:column style="color:black" headerText="Editar">
+
+							<p:rowEditor id="okk" />
+							<p:tooltip for="okk" value="Editar">
+							</p:tooltip>
+
+						</p:column>
+
+						<p:column style="color:black;" headerText="Excluir">
+							<p:commandLink id="oi" process="@this"
+								action="#{cadastroCarroBean.excluir}" styleClass="fa fa-trash-o"
+								update=":frm">
+
+								<p:collector unique="true" value="#{c}"
+									removeFrom="#{consultaCarroBean.carros}">
+								</p:collector>
+								<f:setPropertyActionListener value="#{c}"
+									target="#{cadastroCarroBean.carro}" />
+							</p:commandLink>
+
+							<p:tooltip for="oi" value="Excluir">
+							</p:tooltip>
+						</p:column>
+
+
+						<p:column style="color:black; width: 200px" headerText="Marca">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.marca.descricao}" />
+								</f:facet>
+								<f:facet name="input" style="width:150px">
+									<p:selectOneMenu value="#{c.marca}" label="Marca"
+										converter="marcaConverter"
+										style="width:150px;margin-left:30px">
+
+										<f:selectItems value="#{cadastroCarroBean.marcas}" var="marca"
+											itemValue="#{marca}" itemLabel="#{marca.descricao}" />
+									</p:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="color:black; width: 300px" headerText="Modelo">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.modelo}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.modelo}" size="100" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="color:black; width: 200px" headerText="Placa" filterBy="#{c.placa}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.placa}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.placa}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="color:black; width: 200px" headerText="Cambio">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.cambio}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectOneMenu id="cambio" value="#{c.cambio}"
+										style="width:180px;margin-left:15px">
+										<f:selectItems value="#{cadastroCarroBean.tipoItemListCambio}"
+											var="ent" itemLabel="#{ent.label}" itemValue="#{ent}" />
+
+									</p:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px" headerText="Renavam">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.renavam}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.renavam}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px" headerText="Chassi">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.chassi}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.chassi}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px" headerText="Km">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.km}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.km}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Ano Faricação">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.anoFabricacao}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.anoFabricacao}" maxlength="4" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Ano Modelo">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.anoModelo}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.anoModelo}" maxlength="4" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+						<p:column style="color:black; width: 200px" headerText="Ar">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.ar}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.ar}"
+										style="margin-left:15px" />
+									<h:outputText value="Ar Condicionado" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Airbag Motorista">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.airBagMotorista}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.airBagMotorista}"
+										style="margin-left:15px" />
+									<h:outputText value="AirBag Motorista" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Airbag Passageiro">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.airBagPassageiro}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.airBagPassageiro}"
+										style="margin-left:15px" />
+									<h:outputText value="AirBag Passageiro" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Bancos de couro">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.bancosCouro}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.bancosCouro}"
+										style="margin-left:15px" />
+									<h:outputText value="Bancos de couro" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Travas elétricas">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.trava}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.trava}"
+										style="margin-left:15px" />
+									<h:outputText value="Travas elétricas" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Vidros elétricos">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.vidro}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.vidro}"
+										style="margin-left:15px" />
+									<h:outputText value="Vidros elétricos" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px" headerText="Alarme">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.alarme}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.alarme}"
+										style="margin-left:15px" />
+									<h:outputText value="Alarme" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="CD Mp3Player">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.cdMp3Player}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.cdMp3Player}"
+										style="margin-left:15px" />
+									<h:outputText value="CD Mp3Player" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Bloqueador">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.bloqueador}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.bloqueador}"
+										style="margin-left:15px" />
+									<h:outputText value="Bloqueador" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Rastreador">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.rastreador}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.rastreador}"
+										style="margin-left:15px" />
+									<h:outputText value="Rastreador" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px" headerText="Gps">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.gps}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.gps}"
+										style="margin-left:15px" />
+									<h:outputText value="Gps" style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Direção hidraulica">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:selectBooleanCheckbox value="#{c.direcao}"
+										style="margin-left:90px" disabled="true" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{c.direcao}"
+										style="margin-left:15px" />
+									<h:outputText value="Direção hidraulicas"
+										style="margin-left:6px" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Proprietario">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.proprietario.proprietario.nome}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:autoComplete
+										completeMethod="#{consultaCarroBean.autoCompleteProprietario}"
+										dropdown="true" converter="proprietarioConverter"
+										value="#{c.proprietario}" var="varEnt"
+										itemLabel="#{varEnt.proprietario.nome}" itemValue="#{varEnt}"
+										scrollHeight="140" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+					</p:dataTable>
+
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

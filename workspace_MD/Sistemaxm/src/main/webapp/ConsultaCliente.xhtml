@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Clientes</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			
+			<p:panel header="Consulta de Clientes">
+
+				<h:form preparedId="false" id="frm">
+					<p:panelGrid columns="2" style="margin-top:20px;width:90%"
+						columnClasses="rotulo, campo">
+
+						<p:outputLabel value="Tipo Cliente" />
+						<p:selectOneRadio id="tipoPessoa"
+							valueChangeListener="#{cadastroClienteBean.vcePjPf}">
+							<f:selectItem itemLabel="Pessoa Física" itemValue="pf" />
+							<f:selectItem itemLabel="Pessoa Jurídica" itemValue="pj" />
+							<p:ajax event="change" update=":panelPessoa" />
+						</p:selectOneRadio>
+
+					</p:panelGrid>
+				</h:form>
+
+				<h:panelGroup id="panelPessoa">
+					<h:form id="frmPf" prependId="false" style="margin-top:20px">
+					<f:metadata>
+						<f:viewAction action="#{consultaClienteBean.consultarClientes}" />
+					</f:metadata>
+					<p:growl id="msgs" showDetail="true" />
+						<h:panelGroup rendered="#{cadastroClienteBean.cliente.pf}">							
+							<p:outputPanel id="opResultadoIdPf">
+								<p:dataTable id="dtId" value="#{consultaClienteBean.clientesPf}"
+									var="pf" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+									editable="true">
+
+									<p:ajax event="rowEdit" listener="#{editViewCliente.onRowEditPf}"
+										update=":frmPf:msgs" />
+									
+									<p:column headerText="Nome" style="color:black" sortyBy="#{pf.nome}" filterBy="#{pf.nome}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pf.nome}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pf.nome}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="CPF" style="color:black" sortyBy="#{pf.cpf}" filterBy="#{pf.cpf}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pf.cpf}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pf.cpf}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="RG" style="color:black">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pf.rg}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pf.rg}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Telefone" style="color:black;text-align:center">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pf.telefone}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pf.telefone}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="Email" style="color:black;width:200px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pf.email}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pf.email}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="Endereço" style="color:black;width:200px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pf.endereco.logradouro}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pf.endereco.logradouro}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="Numero" style="color:black;width:60px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pf.endereco.numero}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pf.endereco.numero}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column style="color:black;width:15px">
+
+										<p:rowEditor id="ok" />
+										<p:tooltip for="ok" value="Editar">
+										</p:tooltip>
+
+									</p:column>
+									
+									<p:column style="color:black;width:15px">
+										<p:commandLink id="oi" process="@this"
+											action="#{consultaClienteBean.excluirPf}"
+											styleClass="fa fa-trash-o" update=":frmPf:opResultadoIdPf">
+											<p:collector unique="true" value="#{pj}"
+												removeFrom="#{consultaClienteBean.clientesPf}">
+											</p:collector>
+											<f:setPropertyActionListener value="#{pf}"
+												target="#{consultaClienteBean.pessoaFisica}" />
+										</p:commandLink>
+		
+										<p:tooltip for="oi" value="Excluir"/>								
+									</p:column>
+								
+								</p:dataTable>
+							</p:outputPanel>
+						</h:panelGroup>
+					</h:form>
+					
+					<h:form id="frmPj" prependId="false" style="margin-top:20px">
+					<f:metadata>
+						<f:viewAction action="#{consultaClienteBean.consultarClientes}" />
+					</f:metadata>
+					<p:growl id="msgsPj" showDetail="true" />
+						<h:panelGroup rendered="#{cadastroClienteBean.cliente.pj}">							
+							<p:outputPanel id="opResultadoIdPj">
+								<p:dataTable id="dtIdPj" value="#{consultaClienteBean.clientesPj}"
+									var="pj" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+									editable="true">
+
+									<p:ajax event="rowEdit" listener="#{editViewCliente.onRowEditPj}"
+										update=":frmPj:msgsPj" />
+									
+									<p:column headerText="Nome Fantasia" style="color:black" sortyBy="#{pj.nome}" filterBy="#{pj.nome}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pj.nome}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pj.nome}" size="17" style="margin-left:8px"/>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="CNPJ" style="color:black" sortyBy="#{pj.cnpj}" filterBy="#{pj.cnpj}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pj.cnpj}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pj.cnpj}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="Telefone" style="color:black;text-align:center">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pj.telefone}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pj.telefone}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="Email" style="color:black;width:200px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pj.email}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pj.email}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="Endereço" style="color:black;width:200px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pj.endereco.logradouro}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pj.endereco.logradouro}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column headerText="Numero" style="color:black;width:60px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pj.endereco.numero}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pj.endereco.numero}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column style="color:black;width:15px">
+
+										<p:rowEditor id="okk" />
+										<p:tooltip for="okk" value="Editar">
+										</p:tooltip>
+
+									</p:column>
+									
+									<p:column style="color:black;width:15px">
+										<p:commandLink id="oi" process="@this"
+											action="#{consultaClienteBean.excluirPj}"
+											styleClass="fa fa-trash-o" update=":frmPj:opResultadoIdPj">
+											<p:collector unique="true" value="#{pj}"
+												removeFrom="#{consultaClienteBean.clientesPj}">
+											</p:collector>
+											<f:setPropertyActionListener value="#{pj}"
+												target="#{consultaClienteBean.pessoaJuridica}" />
+										</p:commandLink>
+		
+										<p:tooltip for="oi" value="Excluir"/>								
+									</p:column>
+								
+								</p:dataTable>
+							</p:outputPanel>
+						</h:panelGroup>
+					</h:form>
+				</h:panelGroup>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

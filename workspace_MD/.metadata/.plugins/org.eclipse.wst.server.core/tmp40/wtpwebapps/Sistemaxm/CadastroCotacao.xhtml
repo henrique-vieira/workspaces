@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Cadastro de cotação de peças</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastro de cotação de peças">
+				<h:form id="frm">
+					<p:messages autoUpdate="true" closable="true" />
+					<f:metadata>
+						<f:viewAction action="#{cadastroCotacaoBean.listaCarros}" />
+					</f:metadata>
+					<p:panelGrid columns="2" columnClasses="rotulo, campo"
+						style="width:100%;margin-top:20px">
+						<h:outputLabel value="Carro" for="carro" />
+						 <p:autoComplete id="carro"
+							value="#{cadastroCotacaoBean.carro}" dropdown="true"
+							converter="carroConverter"
+							completeMethod="#{cadastroCotacaoBean.autoCompleteCarro}"
+							forceSelection="true" scrollHeight="250" var="cp"
+							itemLabel=" #{cp.placa} #{cp.modelo} " itemValue="#{cp}">
+							
+						</p:autoComplete>
+						<h:outputLabel value="Item/Peça" for="item" />
+						<p:inputText id="item"
+							value="#{cadastroCotacaoBean.cotacaoPecas.item}" size="50" />
+
+						<h:outputLabel value="Quantidade" for="quantidade" />
+						<p:spinner id="quantidade"
+							value="#{cadastroCotacaoBean.cotacaoPecas.qtde}" size="1" min="0"
+							maxlength="4" />
+							
+						<h:outputLabel value="Preço Unidade" for="precoUnidade" />
+						<pe:inputNumber
+							value="#{cadastroCotacaoBean.cotacaoPecas.valorUnitario}"
+							id="precoUnidade" 
+							symbol="R$">
+							<p:ajax event="blur" 
+									listener="#{cadastroCotacaoBean.atualizaPrecoTotalListener}"
+									update="preco"
+									process="@this, quantidade"/>
+						</pe:inputNumber>
+
+						<h:outputLabel value="Preço Total" for="preco" />
+						<pe:inputNumber value="#{cadastroCotacaoBean.cotacaoPecas.valor}"
+							id="preco" symbol="R$" />
+
+
+						<h:outputLabel value="Fornecedor" for="fornecedor" />
+						<p:autoComplete id="fornecedor" dropdown="true"
+							converter="fornecedorConverter"
+							value="#{cadastroCotacaoBean.fornecedor}"
+							completeMethod="#{cadastroCotacaoBean.autoCompleteFornecedor}"
+							var="varEnt" itemLabel="#{varEnt.fornecedor.nome}"
+							itemValue="#{varEnt}" required="true" forceSelection="true"
+							scrollHeight="150" />
+
+						<h:outputLabel value="Data cotação" for="dataCotacao" />
+						<p:calendar id="dataCotacao"
+							value="#{cadastroCotacaoBean.cotacaoPecas.dataCotacao}" pattern="dd/MM/yyyy">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Fortaleza"/>
+						</p:calendar>
+					</p:panelGrid>
+
+					<p:commandButton action="#{cadastroCotacaoBean.salvar}"
+						value="Cadastrar" style="color:black;margin-top:20px" />
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

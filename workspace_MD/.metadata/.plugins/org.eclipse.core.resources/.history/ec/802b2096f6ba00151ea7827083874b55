@@ -1,0 +1,41 @@
+package br.com.sistemaxm.repository;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import br.com.sistemaxm.entidades.Manutencao;
+
+public class ManutencaoRepository implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	EntityManager manager;
+	
+	public ManutencaoRepository(EntityManager manager) {		
+		this.manager = manager;
+	}
+
+	public ManutencaoRepository() {
+		
+	}
+	
+	public List<Manutencao> todos() {
+		TypedQuery<Manutencao> query = manager.createQuery("from Manutencao", Manutencao.class);
+		return query.getResultList();
+	}
+	
+	public void adicionar(Manutencao manutencao) {
+		this.manager.persist(manutencao);
+	}
+	
+	public void editar(Manutencao manutencao) {
+		this.manager.merge(manutencao);
+	}
+	
+	public void excluir(Manutencao manutencao) {
+		this.manager.remove(manutencao);
+	}
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Veículos</title>
+
+	<style type="text/css">
+<!--
+.ui-datatable-frozenlayout-left {
+	width: 12%;
+}
+-->
+</style>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{consultaCarroBean.Consultar}" />
+			</f:metadata>
+			<p:panel header="Consulta de Veiculos">
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<!-- <p:outputPanel id="opResultadoId" > -->
+					<p:dataTable id="dtId" value="#{consultaCarroBean.carros}" var="c"
+						editable="true" paginator="true" paginatorPosition="bottom">
+
+						<p:ajax event="rowEdit" listener="#{dtEditViewCar.onRowEdit}"
+							update=":frm:msgs" />
+
+						
+						<p:column style="WIDTH: 28px; TEXT-ALIGN: CENTER;">
+							<p:commandLink id="clExcluirId" process="@this">
+								<h:graphicImage value="/assets/images/icons/icon-delete-24x24.png"/>
+								ok
+							</p:commandLink>
+							
+							<p:tooltip for="clExcluirId">
+								<h:outputText value="EXCLUIR: "/>
+							</p:tooltip>
+						</p:column>
+
+						
+
+						<p:column style="color:black; width: 200px" headerText="Marca">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.marca.descricao}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.marca.descricao}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="color:black; width: 200px" headerText="Modelo">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.modelo}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.modelo}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="color:black; width: 200px" headerText="Placa">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.placa}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.placa}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px" headerText="Renavam">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.renavam}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.renavam}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Ano Faricação">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.anoFabricacao}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.anoFabricacao}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="color:black; width: 200px"
+							headerText="Ano Modelo">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{c.anoModelo}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{c.anoModelo}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						
+
+					</p:dataTable>
+					<!-- </p:outputPanel> -->
+				</h:form>
+			</p:panel>
+			<ui:include src="./carro_update.xhtml"/>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

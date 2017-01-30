@@ -1,0 +1,33 @@
+package br.com.sistemaxm.entidades;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import br.com.sistemaxm.repository.JpaUtil;
+import br.com.sistemaxm.repository.ManutencaoRepository;
+
+public class TesteListaAlertaManutencao {
+
+	public static void main(String[] args) {		
+		EntityManager manager = JpaUtil.getEntityManager();
+		List<Object[]> outList;
+		try {
+			ManutencaoRepository manutencaoRepo = new ManutencaoRepository(manager);
+			String servico = "Teste";
+			outList = manutencaoRepo.listaAlertaManutencoes(servico);
+			
+			for (Object[] out : outList) {
+				System.out.println(out[0]);
+			}
+		}
+		catch(Exception e) {
+			e.getMessage();
+		}
+		finally {
+			manager.close();
+		}
+
+	}
+
+}

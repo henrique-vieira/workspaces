@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Locação de veículos</title>
+</h:head>
+<h:body>
+	 
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastrar locação de veículos" style="height:100%">
+				<p:messages autoUpdate="true" closable="true" />
+				<h:form id="frmlocacao">
+					<p:panelGrid columns="3" style="margin-top:8px;width:100%"
+						columnClasses="rotulo, campo">
+						<p:outputLabel value="Cliente" for="cliente" />
+
+						
+						<p:autoComplete id="cliente" 
+										dropdown="true" 
+										value="#{contratoLocacaoBean.cliente}" 
+										converter="clienteConverter"
+										completeMethod="#{contratoLocacaoBean.autocompleteCliente}" 
+										var="varEnt" 
+										itemLabel="#{varEnt.cliente.nome}"
+										itemValue="#{varEnt}"
+										required="true" 
+										forceSelection="true"										
+										scrollHeight="150"/>
+						<p:link value="Cadastrar cliente" outcome="/CadastroCliente.xhtml" />
+					</p:panelGrid>
+
+					<p:pickList id="pickList" value="#{contratoLocacaoBean.carros}" converter="PickListConverter"
+						var="c" itemValue="#{c}" style="margin-top:30px">
+						<f:facet name="sourceCaption">Disponíveis</f:facet>
+						<f:facet name="targetCaption">Selecionados</f:facet>
+						<p:column headerText="Modelo">
+							<h:outputText value="#{c.modelo}" />
+						</p:column>
+
+						<p:column headerText="Espaço">
+							<h:outputText value="-" />
+						</p:column>
+
+						<p:column headerText="Placa" style="margin-left:20px">
+							<h:outputText value="#{c.placa}" />
+						</p:column>						
+						
+					</p:pickList>
+					<p:panelGrid columns="2" style="margin-top:20px;width:100%"
+						columnClasses="rotulo, campo">
+						<p:outputLabel value="Data Início" for="dataInicio" />
+						<p:calendar id="dataInicio"
+							value="#{contratoLocacaoBean.contratoLocacao.dataInicioLocacao}" pattern="dd/MM/yyyy">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Fortaleza"/>
+						</p:calendar>
+						<p:outputLabel value="Data Fim" for="dataFim" />
+						<p:calendar id="dataFim"
+							value="#{contratoLocacaoBean.contratoLocacao.dataFimLocacao}" pattern="dd/MM/yyyy">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Fortaleza" />
+						</p:calendar>
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar"
+						style="color:black;margin-top:20px"
+						actionListener="#{contratoLocacaoBean.salvar}" />
+					
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

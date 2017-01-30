@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      
+<h:head>
+	<title>Consulta Vencimento Licenciamento</title>
+</h:head>
+<h:body>
+	<ui:decorate template="Master.xhtml">
+		<ui:define name="centro">		
+			<p:panel header="Consulta Vencimento de Licenciamento">
+				<p:panelGrid columns="2" columnClasses="rotulo, campo" style="width:100%">
+					<p:outputLabel value="Mês" for="mes"/>
+					<p:autoComplete id="mes"
+									title="Selecione o Mês"
+									value="#{consultaLicenciamentoBean.calendarioLicenciamento.mesVencimento}"									
+									dropdown="true"
+									completeMethod="#{consultaLicenciamentoBean.autoCompleteCalendarioLicenciamento}"																		
+									forceSelection="true">
+						<p:ajax event="itemSelect" listener="#{consultaLicenciamentoBean.onItemSelect}" update=":frmDt:dtId" />
+					</p:autoComplete>
+				</p:panelGrid>
+				<h:form id="frmDt">
+					<p:dataTable id="dtId"
+								 rows="10" 
+								 paginatorAlwaysVisible="false" 
+								 paginator="true" 
+								 paginatorPosition="bottom"
+								 value="#{consultaLicenciamentoBean.carros}"
+								 var="c"
+								 style="margin-top:20px">
+						<p:column headerText="Modelo">
+							<h:outputText value="#{c.modelo}" />
+						</p:column>
+						
+						<p:column headerText="Placa">
+							<h:outputText value="#{c.placa}" />
+						</p:column>
+						
+						<p:column headerText="Dia Vencimento">
+							<h:outputText value="#{c.calendarioLicenciamento.diaVencimento}" />
+						</p:column>
+						
+						<p:column headerText="Mês Vencimento">
+							<h:outputText value="#{c.calendarioLicenciamento.mesVencimento}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

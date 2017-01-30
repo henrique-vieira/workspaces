@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">	
+
+<h:head>
+	<title>Cadastro de Contrato</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			 <f:metadata>
+				 <f:viewAction action="#{cadastroContratoBean.listaContratos}" /> 
+			</f:metadata>
+			<p:panel header="Cadastro de Contratos">
+				<h:form>
+					<p:messages autoUpdate="true" closable="true"/>
+					<p:panelGrid columns="2" columnClasses="rotulo, campo" style="width:100%; margin-top:20px">
+						
+						<p:outputLabel value="Data do Contrato" for="dataContrato" />
+						<p:calendar id="dataContrato"
+							value="#{cadastroContratoBean.contrato.dataContrato}"
+							pattern="dd/MM/yyyy" timeZone="America/Fortaleza" locale="pt">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Fortaleza" />
+						</p:calendar>
+						
+						<h:outputLabel for="cliente" value="Cliente" style="margin-right:10px" />
+						<p:autoComplete id="cliente" dropdown="true"
+							value="#{cadastroContratoBean.cliente}"
+							converter="clienteConverter"
+							completeMethod="#{cadastroContratoBean.autoCompleteCliente}"
+							var="varEnt" itemLabel="#{varEnt.cliente.nome}"
+							itemValue="#{varEnt}" required="true" forceSelection="true"
+							scrollHeight="150" title="Campo obrigatório" />
+							
+						<h:outputLabel for="veiculo" value="Veículo" style="margin-right:10px" />
+						<p:autoComplete id="veiculo" dropdown="true"
+							converter="carroConverter"
+							value="#{cadastroContratoBean.carro}"
+							completeMethod="#{cadastroContratoBean.autoCompleteCarro}"
+							var="varEnt" itemLabel="#{varEnt.placa} - #{varEnt.modelo}"
+							itemValue="#{varEnt}" required="true" forceSelection="true"
+							scrollHeight="150" size="30">
+						</p:autoComplete>
+						
+						<p:outputLabel value="Rota" style="margin-right:10px" for="rota"/>
+						<p:inputText id="rota"
+									 value="#{cadastroContratoBean.contrato.local}" 
+									 size="20"
+									 title="Descrição da Rota">	
+						</p:inputText>	
+						
+						<p:outputLabel value="Capacidade" style="margin-right:10px" for="capacidade"/>
+						<p:inputText id="capacidade"
+									 value="#{cadastroContratoBean.contrato.capacidade}" 
+									 size="3"
+									 title="Capacidade de passageiros do veículo">	
+						</p:inputText>	
+						
+						<p:outputLabel value="Prazo" style="margin-right:10px" for="prazo"/>
+						<p:inputText id="prazo"
+									 value="#{cadastroContratoBean.contrato.prazo}" 
+									 size="15"
+									 title="Prazo de validade do contrato">	
+						</p:inputText>	
+							
+						<p:outputLabel value="Valor Mensal" for="valorMensal"/>
+						<pe:inputNumber id="valorMensal" 
+									 value="#{cadastroContratoBean.contrato.valorMensal}" 
+									 size="6"
+									 symbol="R$"
+									 title="Valor Mensal do contrato"
+									 immediate="true">	
+						</pe:inputNumber>	
+						
+						<p:outputLabel value="Viagem extra" style="margin-right:10px" for="valorViagemExtra"/>
+						<pe:inputNumber id="valorViagemExtra" 
+									 value="#{cadastroContratoBean.contrato.viagemExtra}" 
+									 size="6"
+									 symbol="R$"
+									 title="Valor da Viagem Extra">	
+						</pe:inputNumber>	
+						
+						<p:outputLabel value="Valor Km Excedente" style="margin-right:10px" for="kmExcedente"/>
+						<pe:inputNumber id="kmExcedente" 
+									 value="#{cadastroContratoBean.contrato.kmExcedente}" 
+									 size="6"
+									 symbol="R$"
+									 title="Valor excedente por km">	
+						</pe:inputNumber>
+						
+									
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar" style="color:black;margin-top:20px"
+							action="#{cadastroContratoBean.salvar}" update=":frm:opResultadoId">							
+							<f:ajax render="@form" resetValues="true"/>
+							<p:collector unique="true" value="#{cadastroContratoBean.contrato}"
+								addTo="#{cadastroContratoBean.contratos}"></p:collector>								
+					</p:commandButton>
+				</h:form>
+				<br />
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId" value="#{cadastroContratoBean.contratos}" var="c"
+							paginator="true" paginatorPosition="bottom" editable="true" emptyMessage="Nenhum registro encontrado.">
+
+							<p:ajax event="rowEdit" listener="#{cadastroContratoBean.onRowEdit}"
+								update=":frm:msgs" />
+
+							<p:column style="color:black;width:30px" headerText="Cód.:">
+								<h:outputText value="#{c.codigo}" />
+							</p:column>
+							<p:column style="color:black;text-align:center;width:250px"
+								headerText="Cliente" sortyBy="#{c.cliente.cliente.nome}" filterBy="#{c.cliente.cliente.nome}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.cliente.cliente.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										 <p:autoComplete id="cliente" dropdown="true"
+											converter="clienteConverter" value="#{c.cliente}"
+											completeMethod="#{cadastroContratoBean.autoCompleteCliente}"
+											var="varEnt" itemLabel="#{varEnt.cliente.nome}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="20" /> 
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column style="color:black;text-align:center;width:250px"
+								headerText="Veículo"
+								sortyBy="#{c.carro.placa} - #{c.carro.modelo}"
+								filterBy="#{c.carro.placa} - #{c.carro.modelo}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.carro.placa} - #{c.carro.modelo}" />
+									</f:facet>
+									<f:facet name="input">
+									      <p:autoComplete id="veiculo" dropdown="true"
+											converter="carroConverter" value="#{c.carro}"
+											completeMethod="#{cadastroContratoBean.autoCompleteCarro}"
+											var="varEnt" itemLabel="#{varEnt.modelo} #{varEnt.placa}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="10" /> 
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column style="color:black;width:100px" headerText="Valor Mensal">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.valorMensal}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.valorMensal}" id="valorMensal" symbol="R$"/>	
+										
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+												
+							<p:column style="color:black;width:100px" headerText="Valor km Excedente">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.kmExcedente}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.kmExcedente}" id="kmExcedente" symbol="R$"/>	
+											
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;width:100px" headerText="Prazo">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.prazo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{c.prazo}" size="10"/>	
+										
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;width:250px" headerText="Rota">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.local}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{c.local}" size="15"/>	
+											
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:16px">
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar">
+								</p:tooltip>
+
+							</p:column>
+
+							<p:column style="color:black;width:15px">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroContratoBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{c}"
+										removeFrom="#{cadastroContratoBean.contratos}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{c}"
+										target="#{cadastroContratoBean.contrato}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir">
+								</p:tooltip>
+							</p:column>
+						</p:dataTable>						
+					</p:outputPanel>						
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

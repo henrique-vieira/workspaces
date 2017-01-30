@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Sistemaxm">
+	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.com.sistemaxm.entidades.Carro</class>
+		<class>br.com.sistemaxm.entidades.Despesa</class>
+		<class>br.com.sistemaxm.entidades.Receita</class>
+		<class>br.com.sistemaxm.entidades.Marca</class>
+		<class>br.com.sistemaxm.entidades.Permissao</class>
+		<class>br.com.sistemaxm.entidades.Pessoa</class>
+		<class>br.com.sistemaxm.entidades.PessoaFisica</class>
+		<class>br.com.sistemaxm.entidades.PessoaJuridica</class>
+		<class>br.com.sistemaxm.entidades.Cliente</class>
+		<class>br.com.sistemaxm.entidades.Contrato</class>
+		<class>br.com.sistemaxm.entidades.Funcionario</class>
+		<class>br.com.sistemaxm.entidades.JornadaTransporte</class>
+		<class>br.com.sistemaxm.entidades.Abastecimento</class>
+		<class>br.com.sistemaxm.entidades.AbastecimentoSemJornada</class>
+		<class>br.com.sistemaxm.entidades.Funcao</class>
+		<class>br.com.sistemaxm.entidades.Fornecedor</class>
+		<class>br.com.sistemaxm.entidades.Proprietario</class>
+		<class>br.com.sistemaxm.entidades.Endereco</class>
+		<class>br.com.sistemaxm.entidades.ContratoLocacao</class>
+		<class>br.com.sistemaxm.entidades.CotacaoPecas</class>
+		<class>br.com.sistemaxm.entidades.Servico</class>
+		<class>br.com.sistemaxm.entidades.ItemPeca</class>
+		<class>br.com.sistemaxm.entidades.Manutencao</class>
+		<class>br.com.sistemaxm.entidades.Grupo</class>
+		<class>br.com.sistemaxm.entidades.Aso</class>
+		<class>br.com.sistemaxm.entidades.CalendarioLicenciamento</class>
+	<properties>
+		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/xm" />
+		<property name="javax.persistence.jdbc.user" value="root" />
+		<property name="javax.persistence.jdbc.password" value="1234" />
+		<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+		<property name="hibernate.default_schema" value="xm"/> 
+		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+		<property name="hibernate.show_sql" value="true" />
+		<property name="hibernate.format_sql" value="true" />
+		<property name="hibernate.hbm2ddl.auto" value="update" />
+	</properties>
+	</persistence-unit>
+</persistence>

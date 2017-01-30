@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+      
+      <h:head>
+      	<title>Teste Master</title>
+      	<style type="text/css">
+			.ui-layout-north {
+				Z-INDEX: 20 !IMPORTANT;
+				OVERFLOW: VISIBLE !IMPORTANT;
+			}
+			
+			.ui-layout-north .ui-layout-unit-content {
+				OVERFLOW: VISIBLE !IMPORTANT;
+			}
+			
+			img {
+				WIDTH: 30%;
+				HEIGHT: 60%;
+				margin: 5%;
+				}
+			
+			
+		</style>
+      </h:head>     
+      
+	  <h:body>
+	  <p:layout fullPage="true">
+	  		<p:layoutUnit position="north" header="Sistema XM Locação de Veículos" resizable="false" closable="false" collapsible="true" >
+        		<h:form>  
+   				 <p:growl id="messages"/>
+ 				>
+		<b:navBar brand="SIEOnLine" brandhref="default.xhtml" inverse="true" fixed="top"> 
+			<b:navbarLinks> 
+				<b:navLink value="Meus Cursos" href="#"></b:navLink> 
+				<b:navLink value="Link" href="#"></b:navLink> 
+				<b:dropMenu value="Meu Perfil"> 
+					<b:navLink value="Configuração" href="#"></b:navLink> 
+					<b:navLink value="Certificados" href="#"></b:navLink> 
+					<b:navLink></b:navLink> <b:navLink header="Cursos finalizados"></b:navLink> 
+				</b:dropMenu> 
+			</b:navbarLinks> 
+    	</b:navBar>	
+				</h:form>
+    		</p:layoutUnit>
+    		<p:layoutUnit position="center" >  
+                    <ui:insert name="centro">
+                      	<h:graphicImage value="/Logonova1.png" />
+                    </ui:insert>
+                </p:layoutUnit> 
+      </p:layout>
+	  </h:body>
+</html>

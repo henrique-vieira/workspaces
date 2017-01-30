@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Locação de veículos</title>
+</h:head>
+<h:body>
+	<f:metadata>
+		<f:viewAction action="#{frotaLocacaoBean.prepararCadastro}"></f:viewAction>
+	</f:metadata>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastrar locação de veículos" style="height:100%">
+				<p:messages autoUpdate="true" closable="true" />
+				<h:form id="frmlocacao">
+					<p:panelGrid columns="3" style="margin-top:8px;width:100%"
+						columnClasses="rotulo, campo">
+						<p:outputLabel value="Cliente" for="cliente" />
+
+						<p:selectOneMenu id="cliente"
+							value="#{frotaLocacaoBean.pessoa}"
+							label="Cliente" style="color:black" converter="clienteConverter">
+							<f:selectItem itemLabel="Selecione o cliente"
+								noSelectionOption="true" />
+							<f:selectItems value="#{frotaLocacaoBean.pessoas}" var="clientes"
+								itemValue="#{clientes}" itemLabel="#{clientes.nome}" />
+						</p:selectOneMenu>
+						<p:link value="Cadastrar cliente" outcome="/CadastroCliente.xhtml" />
+					</p:panelGrid>
+
+					<p:pickList id="pickList" value="#{frotaLocacaoBean.carros}"
+						var="c" itemValue="#{c}" style="margin-top:30px">
+						<f:facet name="sourceCaption">Disponíveis</f:facet>
+						<f:facet name="targetCaption">Selecionados</f:facet>
+						<p:column headerText="Modelo">
+							<h:outputText value="#{c.modelo}" />
+						</p:column>
+
+						<p:column headerText="Espaço">
+							<h:outputText value="-" />
+						</p:column>
+
+						<p:column headerText="Placa">
+							<h:outputText value="#{c.placa}" />
+						</p:column>
+
+					</p:pickList>
+					<p:panelGrid columns="2" style="margin-top:20px;width:100%"
+						columnClasses="rotulo, campo">
+						<p:outputLabel value="Data Início" for="dataInicio" />
+						<p:calendar id="dataInicio"
+							value="#{frotaLocacaoBean.frotaLocacao.dataInicioLocacao}" />
+						<p:outputLabel value="Data Fim" for="dataFim" />
+						<p:calendar id="dataFim"
+							value="#{frotaLocacaoBean.frotaLocacao.dataFimLocacao}" />
+
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar"
+						style="color:black;margin-top:20px"
+						action="#{frotaLocacaoBean.salvar}" />
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

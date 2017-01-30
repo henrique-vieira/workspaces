@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Locação de veículos</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<p:panel header="Cadastrar locação de veículos">
+				<p:messages autoUpdate="true"/>
+				<h:form id="frmlocacao">
+					<p:panelGrid columns="2" style="margin-top:10px;width:90%" columnClasses="rotulo, campo">
+						<p:outputLabel value="Cliente" for="cliente"/>
+						<p:selectOneMenu id="cliente" >
+							<f:selectItem itemLabel="Selecione o cliente" itemValue=""/>
+						</p:selectOneMenu>	
+					</p:panelGrid>	
+					
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

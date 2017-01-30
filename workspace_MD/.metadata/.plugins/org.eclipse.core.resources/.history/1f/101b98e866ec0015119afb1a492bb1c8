@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro de Função</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{cadastroFuncaoBean.listaFuncoes}" />
+			</f:metadata>
+			<p:panel header="Cadastro de Funções">
+				<h:form>
+					<p:messages autoUpdate="true" closable="true" redisplay="true" />
+					<p:panelGrid columns="2" columnClasses="rotulo, campo" style="width:100%">
+						<h:outputLabel value="Função" style="margin-right:10px" />
+						<p:inputText id="descricao" requiredMessage="Campo Obrigatório"
+							value="#{cadastroFuncaoBean.funcao.descricao}" />						
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar" style="color:black;margin-top:20px"
+							action="#{cadastroFuncaoBean.salvar}" update=":frm:opResultadoId">							
+							<f:ajax render="@form" resetValues="true"/>
+							<p:collector unique="true" value="#{cadastroFuncaoBean.funcao}"
+								addTo="#{cadastroFuncaoBean.funcoes}"></p:collector>								
+						</p:commandButton>
+				</h:form>
+				<br />
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId" value="#{cadastroFuncaoBean.listaFuncoes}" var="f"
+							paginator="true" paginatorPosition="bottom" editable="true">
+
+							<p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}"
+								update=":frm:msgs" />
+
+							<p:column style="color:black" headerText="Código">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{f.codigo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="modelInput" value="#{f.codigo}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column style="color:black" headerText="Descrição">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{f.descricao}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{f.descricao}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:15px">
+
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar #{m.descricao}">
+								</p:tooltip>
+
+							</p:column>
+
+							<p:column style="color:black;width:15px">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroMarcaBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{m}"
+										removeFrom="#{consultaMarcaBean.marcas}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{m}"
+										target="#{cadastroMarcaBean.marca}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir #{m.descricao}">
+								</p:tooltip>
+							</p:column>
+						</p:dataTable>
+						
+					</p:outputPanel>
+						<p:commandLink value="testeExporter" ajax="false">
+							
+							<p:dataExporter type="pdf" target="dtId" fileName="marcas"/>
+						</p:commandLink>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

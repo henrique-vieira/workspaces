@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Cadastro de Receitas Extras</title>
+	<script>
+        PrimeFaces.locales['pt'] = {
+            closeText: 'Fechar',
+            prevText: 'Anterior',
+            nextText: 'Próximo',
+            currentText: 'Começo',
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+            weekHeader: 'Semana',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Só Horas',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            ampm: false,
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText: 'Todo o Dia'
+        };
+    </script>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{cadastroReceitaBean.listaReceitaBean}" />
+			</f:metadata>
+			<p:panel header="Cadastro de Receitas Extras">
+				<h:form id="frmPanelGrid" rendered="#{request.isUserInRole('cadastro')}">
+					<p:messages autoUpdate="true" closable="true" redisplay="true" />
+					<p:panelGrid columns="2" style="width:100%;margin-top:20px">
+						
+						<p:outputLabel value="Cliente*" for="cliente" />
+						<p:autoComplete id="cliente"
+							value="#{cadastroReceitaBean.cliente}" dropdown="true"
+							converter="clienteConverter"
+							completeMethod="#{cadastroReceitaBean.autoCompleteCliente}"
+							scrollHeight="250" var="c" 
+							itemLabel="#{c.cliente.nome}" itemValue="#{c}" />
+						
+						<h:outputLabel for="carro" value="Carro*" style="margin-right:10px" />
+						<p:autoComplete id="carro" dropdown="true"
+							converter="carroConverter" value="#{cadastroReceitaBean.carro}"
+							completeMethod="#{cadastroReceitaBean.autoCompleteCarro}"
+							var="varEnt" itemLabel="#{varEnt.placa} #{varEnt.modelo}"
+							itemValue="#{varEnt}" required="true" forceSelection="true"
+							scrollHeight="250" size="15">
+						</p:autoComplete>
+
+						<h:outputLabel value="Data Receita*" for="dataReceita" />
+						<p:calendar id="dataReceita"
+							value="#{cadastroReceitaBean.receita.dataReceita}"
+							pattern="dd/MM/yyyy" timeZone="America/Fortaleza" required="true" requiredMessage="O campo DATA RECEITA é obrigatório">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Fortaleza" />
+						</p:calendar>
+
+						<h:outputLabel value="Tipo de Receita*" for="receita" />
+						<p:selectOneMenu id="receita"
+							value="#{cadastroReceitaBean.receita.tipoReceita}" required="true" requiredMessage="O TIPO DE RECEITA é obrigatório">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItems value="#{cadastroReceitaBean.tipoItemReceita}"
+								var="ent" itemLabel="#{ent.label}" itemValue="#{ent}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Descrição" for="descricao" />
+						<p:inputText id="descricao"
+							value="#{cadastroReceitaBean.receita.descricao}" size="60" 
+							required="true" requiredMessage="O campo DESCRIÇÃO é obrigatório"/>
+
+						<h:outputLabel value="Valor*" for="valor" />
+						<pe:inputNumber id="valor" symbol="R$"
+							value="#{cadastroReceitaBean.receita.valor}" 
+							required="true" requiredMessage="O campo VALOR é obrigatório"/>
+					</p:panelGrid>
+
+					<p:commandButton value="Cadastrar"
+						style="color:black;margin-top:20px"
+						action="#{cadastroReceitaBean.salvar}" update=":frm:opResultadoId">
+
+						<f:ajax render="@form" resetValues="true" />
+						<p:collector unique="true" value="#{cadastroReceitaBean.receita}"
+							addTo="#{cadastroReceitaBean.listaReceitas}"></p:collector>
+					</p:commandButton>
+				</h:form>
+				<br />
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId"
+							value="#{cadastroReceitaBean.listaReceitas}" var="ld"
+							paginator="true" paginatorPosition="bottom"
+							paginatorAlwaysVisible="false" rows="5" editable="true" rendered="#{request.isUserInRole('consulta')}">
+
+							<p:ajax event="rowEdit"
+								listener="#{cadastroReceitaBean.onRowEdit}"
+								update=":frm:msgs" />
+								
+								<p:column style="color:black;text-align:center;width:150px"
+								headerText="Cliente" sortyBy="#{ld.cliente.cliente.nome}" filterBy="#{ld.cliente.cliente.nome}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ld.cliente.cliente.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="cliente" dropdown="true"
+											converter="clienteConverter" value="#{ld.cliente}"
+											completeMethod="#{cadastroReceitaBean.autoCompleteCliente}"
+											var="varEnt" itemLabel="#{varEnt.cliente.nome}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:250px"
+								headerText="Carro"
+								sortyBy="#{ld.carro.placa} - #{ld.carro.modelo}"
+								filterBy="#{ld.carro.placa} - #{ld.carro.modelo}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ld.carro.placa} - #{ld.carro.modelo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="carro" dropdown="true"
+											converter="carroConverter" value="#{ld.carro}"
+											completeMethod="#{cadastroReceitaBean.autoCompleteCarro}"
+											var="varEnt" itemLabel="#{varEnt.modelo} #{varEnt.placa}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="15" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center"
+								headerText="Data Receita" sortBy="#{ld.dataReceita}" filterBy="#{ld.dataReceita}" filterMatchMode="contains">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ld.dataReceita}">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{ld.dataReceita}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center"
+								headerText="Tipo Receita">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ld.tipoReceita}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu id="receita"
+											value="#{ld.tipoReceita}" style="width:150px">
+											<f:selectItem itemLabel="Selecione" itemValue="" />
+											<f:selectItems value="#{cadastroReceitaBean.tipoItemReceita}"
+												var="ent" itemLabel="#{ent.label}" itemValue="#{ent}" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;text-align:center"
+								headerText="Descrição Receita">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ld.descricao}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{ld.descricao}" size="30" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Valor"
+								style="color:black;width:100px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="preçoOuput" value="R$ #{ld.valor}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{ld.valor}" id="precoInput"
+											symbol="R$" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+
+							<p:column style="color:black;width:15px">
+
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar">
+								</p:tooltip>
+
+							</p:column>
+
+							 <p:column style="color:black;width:15px" rendered="#{request.isUserInRole('cadastro')}">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroReceitaBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{ld}"
+										removeFrom="#{cadastroReceitaBean.listaReceitas}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{ld}"
+										target="#{cadastroReceitaBean.receita}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir #{ld.descricao}">
+								</p:tooltip>
+							</p:column> 
+						</p:dataTable>
+
+					</p:outputPanel>
+
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

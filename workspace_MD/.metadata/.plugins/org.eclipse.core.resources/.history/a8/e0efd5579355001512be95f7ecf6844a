@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Manutenção de veículos</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{cadastroManutencaoBean.listaManutencaoBean}" />
+			</f:metadata>
+			<p:panel header="Manutenção de veículos">
+				<h:form>
+					<p:messages autoUpdate="true" closable="true" redisplay="true" />
+					<p:panelGrid columns="6" style="width:60%">
+						<h:outputLabel for="carro" value="Carro" style="margin-right:10px" />
+						<p:selectOneMenu id="carro"
+							value="#{cadastroManutencaoBean.carro}"
+							converter="carroConverter" required="true"
+							requiredMessage="Campo obrigatório" label="Carro"
+							immediate="true">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{cadastroManutencaoBean.carros}" var="c"
+								itemValue="#{c}" itemLabel="#{c.modelo} - #{c.placa}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel for="itemPeca" value="Item/Peça"
+							style="margin-right:10px" />
+						<p:selectOneMenu id="itemPeca"
+							value="#{cadastroManutencaoBean.itemPeca}"
+							converter="itemPecaConverter" required="true"
+							requiredMessage="Campo obrigatório" label="Item">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{cadastroManutencaoBean.itemPecas}"
+								var="iP" itemValue="#{iP}" itemLabel="#{iP.descricao}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel for="servico" value="Serviço"
+							style="margin-right:10px" />
+						<p:selectOneMenu id="servico"
+							value="#{cadastroManutencaoBean.servico}"
+							converter="servicoConverter" required="true"
+							requiredMessage="Campo obrigatório" label="Servico">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{cadastroManutencaoBean.servicos}" var="s"
+								itemValue="#{s}" itemLabel="#{s.descricao}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Data Manutenção" for="dataManutencao" />
+						<p:calendar id="dataManutencao"
+							value="#{cadastroManutencaoBean.manutencao.dataManutencao}"
+							pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Fortaleza" />
+						</p:calendar>
+
+						<h:outputLabel value="Valor" for="valor" />
+						<pe:inputNumber id="valor" symbol="R$"
+							value="#{cadastroManutencaoBean.manutencao.valor}" />
+
+						<h:outputLabel value="Km troca" for="kmTroca" />
+						<p:inputText id="kmTroca"
+							value="#{cadastroManutencaoBean.manutencao.kmTroca}" size='5'
+							maxlength="7" />
+
+						<h:outputLabel value="Km Prox. Troca" for="kmProxTroca" />
+						<p:inputText id="kmProxTroca"
+							value="#{cadastroManutencaoBean.manutencao.kmProxTroca}" size="5"
+							maxlength="7" />
+
+						<h:outputLabel value="Obs" for="obs" />
+						<p:inputTextarea id="obs"
+							value="#{cadastroManutencaoBean.manutencao.obs}"
+							style="width:400px" />
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar"
+						style="color:black;margin-top:20px"
+						action="#{cadastroManutencaoBean.salvar}"
+						update=":frm:opResultadoId">
+
+						<f:ajax render="@form" resetValues="true" />
+						<p:collector unique="true"
+							value="#{cadastroManutencaoBean.manutencao}"
+							addTo="#{cadastroManutencaoBean.listaManutencao}"></p:collector>
+
+					</p:commandButton>
+				</h:form>
+				<br />
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId"
+							value="#{cadastroManutencaoBean.listaManutencao}" var="lm"
+							paginator="true" paginatorPosition="bottom" editable="true">
+
+							<p:ajax event="rowEdit"
+								listener="#{cadastroManutencaoBean.onRowEdit}" update=":frm:msgs" />
+
+							<p:column style="color:black" headerText="Código">
+								<h:outputText value="#{lm.codigo}" />
+							</p:column>
+							<p:column style="color:black" headerText="Carro">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{lm.carro.modelo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu id="carro"
+											value="#{lm.carro}"
+											converter="carroConverter" required="true"
+											requiredMessage="Campo obrigatório" label="Carro"
+											immediate="true">
+											<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+											<f:selectItems value="#{cadastroManutencaoBean.carros}"
+												var="c" itemValue="#{c}"
+												itemLabel="#{c.modelo} - #{c.placa}" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black" headerText="Serviço">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{lm.servico.descricao}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu id="servico"
+											value="#{lm.servico}"
+											converter="servicoConverter" required="true"
+											requiredMessage="Campo obrigatório" label="Servico"
+											immediate="true">
+											<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+											<f:selectItems value="#{cadastroManutencaoBean.servicos}"
+												var="s" itemValue="#{s}"
+												itemLabel="#{s.descricao}" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:15px">
+
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar">
+								</p:tooltip>
+
+							</p:column>
+
+							<!-- <p:column style="color:black;width:15px">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroServicoBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{s}"
+										removeFrom="#{cadastroServicoBean.servicos}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{s}"
+										target="#{cadastroServicoBean.servico}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir #{s.descricao}">
+								</p:tooltip>
+							</p:column> -->
+						</p:dataTable>
+
+					</p:outputPanel>
+
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

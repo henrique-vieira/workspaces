@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Cadastro da jornada de transporte</title>
+	<script type="text/javascript">
+	PrimeFaces.locales['pt'] = {
+            closeText: 'Fechar',
+            prevText: 'Anterior',
+            nextText: 'Próximo',
+            currentText: 'Começo',
+            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
+            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+            dayNamesMin: ['D','S','T','Q','Q','S','S'],
+            weekHeader: 'Semana',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Horas',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            currentText: 'Data Atual',
+            ampm: false,
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText : 'Todo Dia'
+        };
+	</script>
+</h:head>
+<h:body>
+	<ui:decorate template="Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction
+					action="#{cadastroJornadaTransporteBean.listaJornadaTransporteInit}" />
+			</f:metadata>
+			<p:panel header="Cadastro Jornada Transporte">
+				<p:messages autoUpdate="true" closable="true" />
+				<h:form id="frmId" rendered="#{request.isUserInRole('cadastro')}">
+					<p:panelGrid columns="4" columnClasses="rotulo, campo"
+						style="width:100%;margin-top:20px">
+						<p:outputLabel value="Cliente" for="cliente" />
+						<p:autoComplete id="cliente"
+							value="#{cadastroJornadaTransporteBean.cliente}" dropdown="true"
+							converter="clienteConverter"
+							completeMethod="#{cadastroJornadaTransporteBean.autoCompleteCliente}"
+							scrollHeight="250" var="c" 
+							itemLabel="#{c.cliente.nome}" itemValue="#{c}" />
+
+						<p:outputLabel value="Motorista" for="funcionario" />
+						<p:autoComplete id="funcionario"
+							value="#{cadastroJornadaTransporteBean.funcionario}"
+							dropdown="true" converter="funcionarioConverter"
+							completeMethod="#{cadastroJornadaTransporteBean.autoCompleteFuncionario}"
+							scrollHeight="250" var="f" 
+							itemLabel="#{f.pessoa.nome}" itemValue="#{f}" />
+
+						<p:outputLabel value="Carro" for="carro" />
+						<p:autoComplete id="carro"
+							value="#{cadastroJornadaTransporteBean.carro}" dropdown="true"
+							converter="carroConverter"
+							completeMethod="#{cadastroJornadaTransporteBean.autoCompleteCarro}"
+							forceSelection="true" scrollHeight="250" var="c"
+							itemLabel=" #{c.placa} #{c.modelo} " itemValue="#{c}">
+							<!-- <p:ajax event="itemSelect" update="kmInicial" process="@this"
+								listener="#{cadastroJornadaTransporteBean.onItemSelectKmInicial}" /> -->
+						</p:autoComplete>
+						<h:outputLabel value="Tipo de Rota" for="rota" />
+
+						<p:selectOneMenu id="rota"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte.tipoRota}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItems
+								value="#{cadastroJornadaTransporteBean.tipoItemListRota}"
+								var="ent" itemLabel="#{ent.label}" itemValue="#{ent}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Data da Jornada" for="dataJornada" />
+						<p:calendar id="dataJornada"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte.dataJornada}"
+							pattern="dd/MM/yyyy" timeZone="America/Fortaleza" locale="pt">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Fortaleza" />
+						</p:calendar>
+
+						<p:outputLabel value="Início da Jornada" for="inicioJornada" />
+						<p:inputMask id="inicioJornada"	
+						             mask="99:99"								 
+		                             size="5" 
+		                             value="#{cadastroJornadaTransporteBean.jornadaTransporte.inicioJornadaTransient}" />
+							
+						<p:outputLabel value="Intervalo" for="intervalo" />
+						<p:inputMask id="intervalo"	
+						             mask="99:99"								 
+		                             size="5"
+		                             value="#{cadastroJornadaTransporteBean.jornadaTransporte.intervaloTransient}" />
+
+						<p:outputLabel value="Fim da Jornada" for="fimJornada" />
+						<p:inputMask id="fimJornada"	
+						             mask="99:99"					              
+                                     size="5" 
+	                                 value="#{cadastroJornadaTransporteBean.jornadaTransporte.fimJornadaTransient}" 
+	                                  >
+							<p:ajax event="blur"
+								listener="#{cadastroJornadaTransporteBean.calculaHoraExtra}"
+								update="extra"
+								process="@this, inicioJornada, intervalo, fimJornada" />
+						</p:inputMask>
+
+						<p:outputLabel value="Hora Extra" for="extra" />
+						 	<p:inputText id="extra"	
+                                     size="5" 
+	                                 value="#{cadastroJornadaTransporteBean.jornadaTransporte.extra}" />
+	                                 
+	                   <p:outputLabel value="Custo Hora Extra" for="custoHoraExtra" />
+						 	<pe:inputNumber id="custoHoraExtra"	
+                                     size="10" 
+	                                 value="#{cadastroJornadaTransporteBean.jornadaTransporte.custoHoraExtra}" 
+	                                 symbol="R$"/>
+	                                 
+						<p:outputLabel value="Observação" for="obs" />
+						<p:inputTextarea id="obs"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte.obs}" />
+					</p:panelGrid>
+
+					<h4>Km percorrido:</h4>
+
+					<p:panelGrid columns="4" columnClasses="rotulo, campo"
+						style="width:100%;margin-top:20px">
+						<p:outputLabel value="Km Inicial" for="kmInicial" />
+						<p:inputText id="kmInicial"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte.kmInicial}" size="5" />
+
+						<p:outputLabel value="Km Final" for="kmFinal" />
+						<p:inputText id="kmFinal"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte.kmFinal}"
+							size="5">
+							<p:ajax event="blur" update="kmTotalPercorrido" process="@this,kmInicial"
+								listener="#{cadastroJornadaTransporteBean.atualizaKmPercorridoTotal}" />
+						</p:inputText>
+
+						<p:outputLabel value="Km Total Percorrido" for="kmTotalPercorrido" />
+						<p:inputText id="kmTotalPercorrido"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte.kmTotalPercorrido}"
+							size="5">
+
+						</p:inputText>
+
+						<p:outputLabel value="Km Excedente" for="kmExcedente" />
+						<p:inputText id="kmExcedente"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte.kmExcedente}"
+							size="5">
+
+						</p:inputText>
+					</p:panelGrid>
+
+					<h4>Abastecimento:</h4>
+
+					<p:panelGrid columns="4" columnClasses="rotulo, campo"
+						style="width:100%;margin-top:20px">
+						<p:outputLabel value="Litros" for="litros" />
+						<pe:inputNumber id="litros"
+							value="#{cadastroJornadaTransporteBean.abastecimento.litros}"
+							size="5" thousandSeparator="." decimalSeparator=",">
+						</pe:inputNumber>
+
+						<p:outputLabel value="Valor Total do Abastecimento" for="valor" />
+						<pe:inputNumber id="valor"
+							value="#{cadastroJornadaTransporteBean.abastecimento.valor}"
+							size="5" symbol="R$">
+							<p:ajax event="blur" update="media" process="@this,litros,valor"
+								listener="#{cadastroJornadaTransporteBean.atualizaMediaGasolinaPorLitro}" />
+						</pe:inputNumber>
+
+						<p:outputLabel value="Km do Abastecimento" for="kmAbastecimento" />
+						<p:inputText id="kmAbastecimento"
+							value="#{cadastroJornadaTransporteBean.abastecimento.kmAbastecimento}"
+							size="5" />
+
+						<p:outputLabel value="Média de km/L" for="media" />
+						<p:inputText id="media"
+							value="#{cadastroJornadaTransporteBean.abastecimento.media}"
+							size="5" />
+					</p:panelGrid>
+
+					<p:commandButton value="Cadastrar" style="margin-top:20px"
+						action="#{cadastroJornadaTransporteBean.salvar}">
+						<f:ajax render="@form" resetValues="true" />
+						<p:collector unique="true"
+							value="#{cadastroJornadaTransporteBean.jornadaTransporte}"
+							addTo="#{cadastroJornadaTransporteBean.listaJornadaTransporte}" />
+					</p:commandButton>
+
+				</h:form>
+				<br />
+
+				<h:form id="frmDt">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId"
+							value="#{cadastroJornadaTransporteBean.listaJornadaTransporte}"
+							var="ljt" paginator="true" paginatorPosition="bottom"
+							paginatorAlwaysVisible="false" rows="5" editable="true"
+							rendered="#{request.isUserInRole('consulta')}">
+
+							<p:ajax event="rowEdit"
+								listener="#{cadastroJornadaTransporteBean.onRowEdit}"
+								update=":frmDt:msgs" />
+
+							<p:column style="color:black;text-align:center;width:150px"
+								headerText="Carro"
+								sortyBy="#{ljt.carro.placa} - #{ljt.carro.modelo}"
+								filterBy="#{ljt.carro.placa} - #{ljt.carro.modelo}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.carro.placa} - #{ljt.carro.modelo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="carro" dropdown="true"
+											converter="carroConverter" value="#{ljt.carro}"
+											completeMethod="#{cadastroJornadaTransporteBean.autoCompleteCarro}"
+											var="varEnt" itemLabel="#{varEnt.modelo} #{varEnt.placa}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="15" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:150px"
+								headerText="Cliente" sortyBy="#{ljt.cliente.cliente.nome}" filterBy="#{ljt.cliente.cliente.nome}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.cliente.cliente.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="cliente" dropdown="true"
+											converter="clienteConverter" value="#{ljt.cliente}"
+											completeMethod="#{cadastroJornadaTransporteBean.autoCompleteCliente}"
+											var="varEnt" itemLabel="#{varEnt.cliente.nome}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="40" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:250px"
+								headerText="Motorista" sortyBy="#{ljt.funcionario.pessoa.nome}" filterBy="#{ljt.funcionario.pessoa.nome}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.funcionario.pessoa.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="funcionario" dropdown="true"
+											converter="funcionarioConverter" value="#{ljt.funcionario}"
+											completeMethod="#{cadastroJornadaTransporteBean.autoCompleteFuncionario}"
+											var="varEnt" itemLabel="#{varEnt.pessoa.nome}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="40" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;text-align:center;width:80px"
+								headerText="Tipo de Rota">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.tipoRota}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu id="rota"
+											value="#{ljt.tipoRota}" style="width:150px">
+											<f:selectItem itemLabel="Selecione" itemValue="" />
+											<f:selectItems value="#{cadastroJornadaTransporteBean.tipoItemListRota}"
+												var="ent" itemLabel="#{ent.label}" itemValue="#{ent}" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:100px"
+								headerText="Data Jornada" sortyBy="#{ljt.dataJornada}" filterBy="#{ljt.dataJornada}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.dataJornada}">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{ljt.dataJornada}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:60px"
+								headerText="Início Jornada">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.inicioJornada}">
+											<f:convertDateTime pattern="HH:mm"
+												timeZone="America/Fortaleza" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{ljt.inicioJornada}" pattern="HH:mm">
+											<f:convertDateTime pattern="HH:mm"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:60px"
+								headerText="Fim Jornada">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.fimJornada}">
+											<f:convertDateTime pattern="HH:mm"
+												timeZone="America/Fortaleza" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{ljt.fimJornada}" pattern="HH:mm">
+											<f:convertDateTime pattern="HH:mm"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center; width:60px" 
+							    		headerText="Extra" >
+								
+									<f:facet name="output">
+										<h:outputText value="#{ljt.extra}">
+											<f:convertDateTime pattern="HH:mm" timeZone="America/Fortaleza" />
+										</h:outputText>
+									</f:facet>
+									<!-- <f:facet name="input">
+										<p:calendar value="#{ljt.extra}" pattern="HH:mm">
+											<f:convertDateTime pattern="HH:mm"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet> -->
+								
+							</p:column>
+							
+							<p:column style="color:black;text-align:center;width:60px"
+								headerText="Custo Hora extra">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="R$ #{ljt.custoHoraExtra}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{ljt.custoHoraExtra}" id="custoHoraExtra" symbol="R$"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:60px"
+								headerText="km Inicial">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.kmInicial}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{ljt.kmInicial}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:60px"
+								headerText="km Final">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.kmFinal}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{ljt.kmFinal}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;text-align:center;width:70px"
+								headerText="km Percorrido">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{ljt.kmTotalPercorrido}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{ljt.kmTotalPercorrido}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Obs" style="color:black;width:150px">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText id="obsOutput" value="#{ljt.obs}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputTextarea id="obsInput" value="#{ljt.obs}" style="width:100px;margin-left:5px; margin-top:4px" rows="6" cols="33" />
+											<p:tooltip for="obsInput" value="Até 500 caracteres" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+
+							<p:column style="color:black;width:15px"
+								rendered="#{request.isUserInRole('cadastro')}">
+
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar">
+								</p:tooltip>
+
+							</p:column>
+
+							<!-- <p:column style="color:black;width:15px">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroServicoBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{s}"
+										removeFrom="#{cadastroServicoBean.servicos}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{s}"
+										target="#{cadastroServicoBean.servico}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir #{s.descricao}">
+								</p:tooltip>
+							</p:column>-->
+						</p:dataTable>
+
+					</p:outputPanel>
+
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

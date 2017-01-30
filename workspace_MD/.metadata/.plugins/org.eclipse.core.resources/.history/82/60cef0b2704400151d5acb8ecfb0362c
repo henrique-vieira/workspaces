@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Locações</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{consultaLocacaoBean.consultar()}"></f:viewAction>
+			</f:metadata>
+			<p:panel header="Consulta de Locações">
+				<h:form id="frmLoc">
+					<p:dataTable id="idDt" paginator="true"
+						paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+						emptyMessage="No records found" editable="true"
+						value="#{consultaLocacaoBean.contratosLocados}" var="cl">
+
+						<p:column headerText="Cliente" style="color:black">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText id="clienteOutput"
+										value="#{cl.cliente.cliente.nome}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="clienteInput"
+										value="#{cl.cliente.cliente.nome}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Veiculo" style="color:black">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText id="veiculoOutput"
+										value="#{cl.carro.modelo}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="veiculoInput"
+										value="#{cl.carro.modelo}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Placa" style="color:black">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText id="placaOutput"
+										value="#{cl.carro.placa}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="placaInput"
+										value="#{cl.carro.placa}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Numero Locacao" style="color:black">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText id="numeroLocOutput" value="#{cl.numeroLocacao}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="numerLocInput" value="#{cl.numeroLocacao}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Data Inicio" style="color:black">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText id="dataInicioOutput"
+										value="#{cl.dataInicioLocacao}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>  
+								     </h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="dataInicioInput"
+										value="#{cl.dataInicioLocacao}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Data Fim" style="color:black">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText id="dataFimInput" value="#{cl.dataFimLocacao}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>  
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="dataFimOutput" value="#{cl.dataFimLocacao}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>						
+					</p:dataTable>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

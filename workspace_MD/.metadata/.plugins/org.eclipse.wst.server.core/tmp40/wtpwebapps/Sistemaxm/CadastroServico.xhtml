@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro de Serviços</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{cadastroServicoBean.consultar}" />
+			</f:metadata>
+			<p:panel header="Cadastro de Serviços">
+				<h:form rendered="#{request.isUserInRole('cadastro')}">
+					<p:messages autoUpdate="true" closable="true" redisplay="true" />
+					<p:panelGrid columns="2" columnClasses="rotulo, campo" style="width:100%">
+						<h:outputLabel value="Servico" style="margin-right:10px" />
+						<p:inputText id="descricao" requiredMessage="Campo Obrigatório"
+							value="#{cadastroServicoBean.servico.descricao}" />						
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar" style="color:black;margin-top:20px"
+							action="#{cadastroServicoBean.cadastrar}" update=":frm:opResultadoId">
+							
+							<f:ajax render="@form" resetValues="true"/>
+							<p:collector unique="true" value="#{cadastroServicoBean.servico}"
+								addTo="#{cadastroServicoBean.servicos}"></p:collector>
+								
+					</p:commandButton>
+				</h:form>
+				<br />
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId" value="#{cadastroServicoBean.servicos}" var="s"
+							paginator="true" paginatorPosition="bottom" editable="true" rendered="#{request.isUserInRole('consulta')}">
+
+							<p:ajax event="rowEdit" listener="#{cadastroServicoBean.onRowEdit}"
+								update=":frm:msgs" />
+
+							<p:column style="color:black" headerText="Código">
+								<h:outputText value="#{s.codigo}" />							
+							</p:column>
+							<p:column style="color:black" headerText="Descrição">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{s.descricao}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{s.descricao}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:15px">
+
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar #{s.descricao}">
+								</p:tooltip>
+
+							</p:column>
+
+							<p:column style="color:black;width:15px" rendered="#{request.isUserInRole('cadastro')}">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroServicoBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{s}"
+										removeFrom="#{cadastroServicoBean.servicos}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{s}"
+										target="#{cadastroServicoBean.servico}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir #{s.descricao}">
+								</p:tooltip>
+							</p:column>
+						</p:dataTable>
+						
+					</p:outputPanel>
+						
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

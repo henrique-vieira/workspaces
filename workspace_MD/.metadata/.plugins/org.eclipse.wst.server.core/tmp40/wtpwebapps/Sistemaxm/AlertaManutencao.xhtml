@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      
+<h:head>
+	<title>Alerta de manutenção</title>
+</h:head>
+<h:body>
+	<ui:decorate template="Master.xhtml">
+		<ui:define name="centro">		
+			<p:panel header="Alerta de manutenção">
+				<p:panelGrid columns="2" columnClasses="rotulo, campo" style="width:100%">
+					<p:outputLabel value="Serviço" for="servico"/>
+					<p:autoComplete id="servico"
+									value="#{alertasManutencaoBean.servico}"
+									converter="servicoConverter"
+									dropdown="true"
+									completeMethod="#{alertasManutencaoBean.autoCompleteServico}"
+									var="s"
+									itemLabel="#{s.descricao}"
+									itemValue="#{s}"
+									forceSelection="true"
+									scrollHeight="350">
+						<p:ajax event="itemSelect" listener="#{alertasManutencaoBean.onItemSelect}" update=":frmDt:dtId" />
+					</p:autoComplete>
+				</p:panelGrid>
+				<h:form id="frmDt">
+					<p:dataTable id="dtId"
+								 rows="10" 
+								 paginatorAlwaysVisible="false" 
+								 paginator="true" 
+								 paginatorPosition="bottom"
+								 value="#{alertasManutencaoBean.listaAlertasManutencao}"
+								 var="lam"
+								 style="margin-top:20px">
+						<p:column headerText="Modelo">
+							<h:outputText value="#{lam[0]}" />
+						</p:column>
+						
+						<p:column headerText="Placa">
+							<h:outputText value="#{lam[1]}" />
+						</p:column>
+						
+						<p:column headerText="Serviço">
+							<h:outputText value="#{lam[2]}" />
+						</p:column>
+						
+						<p:column headerText="Item/peça">
+							<h:outputText value="#{lam[3]}" />
+						</p:column>
+						
+						<p:column headerText="Data Ult. Manut" style="text-align:center">
+							<h:outputText value="#{lam[4]}" />
+						</p:column>
+						
+						<p:column headerText="Km Ult. Troca">
+							<h:outputText value="#{lam[5]}" />
+						</p:column>
+						
+						<p:column headerText="Km Atual">
+							<h:outputText value="#{lam[6]}" />
+						</p:column>
+						
+						<p:column headerText="Km Prox. Troca">
+							<h:outputText value="#{lam[7]}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

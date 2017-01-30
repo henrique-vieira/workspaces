@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Relatório de Jornada de Transporte</title>
+	<style type="text/css">
+		td.ui-panelgrid-cell.rotulo {
+				width:220px;
+				text-align:right;
+			}
+		
+	</style>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<h:form target="_blank">
+			<p:messages autoUpdate="true" closable="true" />
+				<p:panel header="Relatório de Jornada de Transporte">
+					
+					<p:panelGrid columns="2" columnClasses="rotulo, campo"
+						style="margin-top:20px;width:100%">
+						<p:outputLabel value="Data de Inicio" style="margin-left:20px" />						
+							<p:calendar label="Data Inicio" pattern="dd/MM/yyyy" size="10"
+								value="#{relatorioJornadaTransporteBean.pDataInicioJornada}" required="true"
+								requiredMessage="Parâmetros são obrigatórios" title="Data Início">
+								<f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="America/Fortaleza" />
+							</p:calendar>
+						<p:outputLabel value="Data Fim" style="margin-left:20px" />							
+							<p:calendar label="Data Fim" pattern="dd/MM/yyyy" size="10"
+								value="#{relatorioJornadaTransporteBean.pDataFimJornada}" required="true"
+								requiredMessage="Parâmetros são obrigatórios" title="Data Fim">
+								<f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="America/Fortaleza" />
+							</p:calendar>
+						<p:outputLabel value="Carro" for="carro" />
+						<p:autoComplete id="carro" dropdown="true"
+											converter="carroConverter"
+											value="#{relatorioJornadaTransporteBean.carro}"
+											completeMethod="#{relatorioJornadaTransporteBean.autoCompleteCarro}"
+											var="varEnt" itemLabel="#{varEnt.placa} #{varEnt.modelo}" itemValue="#{varEnt}"
+											scrollHeight="350" 
+											forceSelection="false"
+											title="Pesquise modelo ou placa. Campo opcional"/>	
+																
+						<p:outputLabel value="Funcionario" for="funcionario" />
+						<p:autoComplete id="funcionario" dropdown="true"
+											converter="funcionarioConverter"
+											value="#{relatorioJornadaTransporteBean.funcionario}"
+											completeMethod="#{relatorioJornadaTransporteBean.autoCompleteFuncionario}"
+											var="varEnt" itemLabel="#{varEnt.pessoa.nome}" itemValue="#{varEnt}"
+											scrollHeight="250" 
+											forceSelection="false"
+											title="Campo opcional"/>							
+					</p:panelGrid>
+					<p:commandButton value="Emitir" style="color:black;margin-top:20px;margin-left:20px"
+								action="#{relatorioJornadaTransporteBean.emitir}" ajax="false" />
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

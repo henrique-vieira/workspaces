@@ -1,0 +1,88 @@
+package br.com.sistemaxm.beans;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import br.com.sistemaxm.business.CadastroCarros;
+import br.com.sistemaxm.dao.JpaUtil;
+import br.com.sistemaxm.entidades.Carro;
+import br.com.sistemaxm.enums.AcessorioEnum;
+import br.com.sistemaxm.enums.Cambio;
+import br.com.sistemaxm.enums.Combustivel;
+import br.com.sistemaxm.repository.CarroRepository;
+
+@ManagedBean
+@ViewScoped
+public class CadastroCarroBean {
+
+	private Carro carro = new Carro();	//abre este objeo
+	List carros = new ArrayList();
+	
+	public List<SelectItem> getTipoItemList() {
+		List<SelectItem> auxLista = new ArrayList<SelectItem>();
+		for (Cambio cambioEnum : Cambio.values()) {
+			auxLista.add(new SelectItem(cambioEnum.getDesc()));
+		}
+		return auxLista;
+	}
+	
+	public Cambio[] getCambio() {
+		return Cambio.values();
+	}
+	
+	public Combustivel[] getCombustivel() {
+		return Combustivel.values();
+	}
+	
+		
+	public void redirectMarca() throws IOException {
+	 FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroMarca.xhtml");
+	}
+	
+	public Carro getCarro() {
+		return carro;
+	}
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
+	public List getCarros() {
+		return carros;
+	}
+	public void setCarros(List carros) {
+		this.carros = carros;
+	}
+	
+	public void salvar() {
+		EntityManager manager = JpaUtil.getEntityManager();
+		EntityTransaction trx = manager.getTransaction();
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		try {
+			trx.begin();
+			CadastroCarros cadastro = new CadastroCarros(new CarroRepository(manager));
+			cadastro.salvar(carro);
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Carro cadastrado com sucesso!",null));
+			this.carro = new Carro();
+			trx.commit();
+		}
+		catch(Exception e) {
+			trx.rollback();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro ao cadastrar o carro!", null));
+		}
+		finally {
+			manager.close();
+		}
+	}
+	
+
+	
+}

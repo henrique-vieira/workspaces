@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Cadastro de Clientes</title>
+	</h:head>
+	<h:body>
+		<ui:decorate template="/Master.xhtml">
+			<ui:define name="centro">
+			
+				<p:panel header="Cadastro de clientes" style="width:95%;height:110%%;color:black">
+				
+				 <p:messages for="nome"/>
+				
+					<h:form preparedId="false" id="frm">
+						<p:panelGrid columns="2" style="margin-top:20px;width:90%" columnClasses="rotulo, campo">
+						
+							<p:outputLabel value="Tipo Cliente"/>
+							<p:selectOneRadio id="tipoPessoa" valueChangeListener="#{cadastroClienteBean.vcePjPf}">							
+								<f:selectItem itemLabel="Pessoa Física" itemValue="pf"/>
+								<f:selectItem itemLabel="Pessoa Jurídica" itemValue="pj"/>
+								<p:ajax event="change"  update=":panelPessoa" />
+							</p:selectOneRadio>
+					
+						</p:panelGrid>
+						</h:form>
+						
+						<h:panelGroup id="panelPessoa">
+							<h:form preparedId="false" id="frmPf">																					
+								<h:panelGroup rendered="#{cadastroClienteBean.cliente.pf}" >
+									<h4 style="margin-left:10px">Cliente Pessoa Física</h4>
+									<p:tabView effect="fade" effectDuration="fast" style="height:80%">
+																				
+										<p:tab title="Dados Pessoais">
+											
+											<p:panelGrid columns="2" style="margin-top:20px;width:90%" columnClasses="rotulo, campo">
+												<p:outputLabel value="Nome" for="nome" />
+												<p:inputText id="nome" size="30" maxlength="30" value="#{cadastroClienteBean.pessoaFisica.nome}" required="true" requiredMessage="Preenchimento obrigatório" />
+																								
+												<p:outputLabel value="Sexo" for="sexo" />
+												<p:selectOneRadio id="sexo" value="#{cadastroClienteBean.pessoaFisica.sexo}" >
+													<f:selectItems value="#{cadastroClienteBean.tipoItemListSexo}"/>																									
+												</p:selectOneRadio>
+												
+												<p:outputLabel value="CPF" for="cpf" />
+												<p:inputText id="cpf" size="20" maxlength="11" title="Sem pontuação" value="#{cadastroClienteBean.pessoaFisica.cpf}" required="true" requiredMessage="Preenchimento obrigatório"/>
+												
+												<p:outputLabel value="RG" for="rg" />
+												<p:inputText id="rg" size="20" maxlength="15" title="Sem pontuação" value="#{cadastroClienteBean.pessoaFisica.rg}" />
+												
+												
+												<p:outputLabel value="Telefone" for="telefone"/>
+												<p:inputMask mask="(99) 99999-9999" id="telefone" value="#{cadastroClienteBean.pessoaFisica.telefone}"/>
+																																				
+											</p:panelGrid>
+										 </p:tab>
+										 <p:tab title="Endereço">
+										 	<p:panelGrid columns="2" style="margin-top:20px;width:90%" columnClasses="rotulo, campo">
+										 		<p:outputLabel value="Logradouro" for="logradouro" />
+												<p:inputText id="logradouro" size="50" maxlength="50" value="#{cadastroClienteBean.endereco.logradouro}"/>
+												
+												<p:outputLabel value="Numero" for="numero" />
+												<p:inputText id="numero" size="8" maxlength="8" value="#{cadastroClienteBean.endereco.numero}"/>
+												
+												<p:outputLabel value="Complemento" for="complemento" />
+												<p:inputText id="complemento" size="10" maxlength="10" value="#{cadastroClienteBean.endereco.complemento}" />
+												
+												<p:outputLabel value="CEP" for="cep" />
+												<p:inputText id="cep" size="8" maxlength="8" value="#{cadastroClienteBean.endereco.cep}"/>
+												
+												<p:outputLabel value="Bairro" for="bairro" />
+												<p:inputText id="bairro" size="20" maxlength="50" value="#{cadastroClienteBean.endereco.bairro}"/>
+												
+												<p:outputLabel value="Cidade" for="cidade" />
+												<p:inputText id="cidade" size="20" maxlength="20" value="#{cadastroClienteBean.endereco.cidade}"/>
+												
+												<p:outputLabel value="UF" for="uf" />
+												<p:inputText id="uf" size="1" maxlength="2" value="#{cadastroClienteBean.endereco.uf}" />
+											</p:panelGrid>	
+										 </p:tab>
+										 
+										</p:tabView>
+										
+										<p:commandButton value="Cadastrar" 
+														 style="color:black;margin-left:27px;margin-top:10px" 
+														 actionListener="#{cadastroClienteBean.salvarPf}" 														
+														 process="@form">
+											
+										</p:commandButton>
+										
+								</h:panelGroup>
+								
+							</h:form>
+							
+							<h:form preparedId="false" id="frmPj">
+								
+								<h:panelGroup rendered="#{cadastroClienteBean.cliente.pj}" >
+									<h4 style="margin-left:10px">Cliente Pessoa Jurídica</h4>
+									<p:tabView effect="fade" effectDuration="fast" style="height:80%">
+										<p:tab title="Dados da Empresa">
+												<p:panelGrid columns="2" style="margin-top:20px;width:90%" columnClasses="rotulo, campo">
+													<p:outputLabel value="Nome Fantasia" for="nomeFantasia" />
+													<p:inputText id="nomeFantasia" size="30" maxlength="30" />
+																						
+													<p:outputLabel value="CNPJ" for="cnpj" />
+													<p:inputText id="cnpj" size="20" maxlength="11" title="Sem pontuação" />
+													
+													<p:outputLabel value="Inscrição Municipal" for="inscricaoMunicipal" />
+													<p:inputText id="inscricaoMunicipal" size="20" maxlength="15" title="Sem pontuação" />
+													
+													<p:outputLabel value="Inscrição Estadual" for="inscricaoEstadual" />
+													<p:inputText id="inscricaoEstadual" size="20" maxlength="15" title="Sem pontuação" />
+													
+													<p:outputLabel value="Telefone" for="telefone"/>
+													<p:inputMask mask="(99) 99999-9999" id="telefone" value="#{cadastroClienteBean.pessoaJuridica.telefone}"/>
+																								
+												</p:panelGrid>
+											</p:tab>
+											<p:tab title="Endereço">
+												<p:panelGrid columns="2" style="margin-top:20px;width:90%" columnClasses="rotulo, campo">
+										 		<p:outputLabel value="Logradouro" for="logradouro" />
+												<p:inputText id="logradouro" size="50" maxlength="50" value="#{cadastroClienteBean.endereco.logradouro}"/>
+												
+												<p:outputLabel value="Numero" for="numero" />
+												<p:inputText id="numero" size="8" maxlength="8" value="#{cadastroClienteBean.endereco.numero}"/>
+												
+												<p:outputLabel value="Complemento" for="complemento" />
+												<p:inputText id="complemento" size="10" maxlength="10" value="#{cadastroClienteBean.endereco.complemento}" />
+												
+												<p:outputLabel value="CEP" for="cep" />
+												<p:inputText id="cep" size="8" maxlength="8" value="#{cadastroClienteBean.endereco.cep}"/>
+												
+												<p:outputLabel value="Bairro" for="bairro" />
+												<p:inputText id="bairro" size="20" maxlength="50" value="#{cadastroClienteBean.endereco.bairro}"/>
+												
+												<p:outputLabel value="Cidade" for="cidade" />
+												<p:inputText id="cidade" size="20" maxlength="20" value="#{cadastroClienteBean.endereco.cidade}"/>
+												
+												<p:outputLabel value="UF" for="uf" />
+												<p:inputText id="uf" size="1" maxlength="2" value="#{cadastroClienteBean.endereco.uf}" />
+											</p:panelGrid>	
+											</p:tab>
+									</p:tabView>
+											<p:commandButton value="Cadastrar" 
+														 style="color:black;margin-left:27px;margin-top:10px" 
+														 actionListener="#{cadastroClienteBean.salvarPj}" 														
+														 process="@form">
+											
+										</p:commandButton>
+								</h:panelGroup>
+								
+							</h:form>
+						</h:panelGroup>
+						
+			</p:panel>	
+					
+				</ui:define>
+		</ui:decorate>
+	</h:body>
+</html>

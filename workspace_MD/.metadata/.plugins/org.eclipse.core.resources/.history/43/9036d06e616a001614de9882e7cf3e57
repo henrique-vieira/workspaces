@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Cadastro de Abastecimento</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{cadastroAbastecimentoSemJornadaBean.consultar}" />
+			</f:metadata>
+			<p:panel header="Cadastro de Abastecimento (Sem Jornada)">
+				<h:form rendered="#{request.isUserInRole('cadastro')}">
+					<p:messages autoUpdate="true" closable="true" redisplay="true" />
+					<p:panelGrid columns="2" columnClasses="rotulo, campo"
+						style="width:100%;margin-top:20px">
+
+						<p:outputLabel value="Data Abastecimento" for="dataAbastecimento" />
+										<p:calendar id="dataAbastecimento"
+											value="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada.data}"
+											pattern="dd/MM/yyyy" timeZone="America/Fortaleza">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+						<p:outputLabel value="Carro" for="carro" />
+						<p:autoComplete id="carro"
+							value="#{cadastroAbastecimentoSemJornadaBean.carro}"
+							dropdown="true" converter="carroConverter"
+							completeMethod="#{cadastroAbastecimentoSemJornadaBean.autoCompleteCarro}"
+							forceSelection="true" scrollHeight="250" var="c"
+							itemLabel=" #{c.placa} #{c.modelo} " itemValue="#{c}">
+						</p:autoComplete>
+
+						<p:outputLabel value="Litros" for="litros" />
+						<pe:inputNumber id="litros"
+							value="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada.litros}"
+							size="5" thousandSeparator="." decimalSeparator=",">
+						</pe:inputNumber>
+
+						<p:outputLabel value="Valor Total do Abastecimento" for="valor" />
+						<pe:inputNumber id="valor"
+							value="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada.valor}"
+							size="5" symbol="R$">
+
+						</pe:inputNumber>
+
+						<p:outputLabel value="Km do Abastecimento" for="kmAbastecimento" />
+						<p:inputText id="kmAbastecimento"
+							value="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada.kmAbastecimento}"
+							size="5" />
+							
+						<p:outputLabel value="Km Anterior" for="kmAnterior" />
+						<p:inputText id="kmAnterior"
+							value="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada.kmAnterior}"
+							size="5" >
+							<p:ajax event="blur" update="kmPercorrido" process="@this,kmAbastecimento"
+								listener="#{cadastroAbastecimentoSemJornadaBean.atualizaKmPercorridoTotal}" />
+						</p:inputText>
+												
+							<p:outputLabel value="Km percorrido" for="kmPercorrido" />
+						<p:inputText id="kmPercorrido"
+							value="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada.kmPercorrido}"
+							size="5" >
+							<p:ajax event="blur" update="media" process="@this,litros,valor"
+								listener="#{cadastroAbastecimentoSemJornadaBean.atualizaMediaGasolinaPorLitro}" />
+						</p:inputText>
+							
+						
+						<p:outputLabel value="Média de km/L" for="media" />
+						<p:inputText id="media"
+							value="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada.media}"
+							size="5" />
+
+					</p:panelGrid>
+					<p:commandButton value="Cadastrar"
+						style="color:black;margin-top:20px"
+						action="#{cadastroAbastecimentoSemJornadaBean.salvar}">
+
+					</p:commandButton>
+				</h:form>
+				<br />
+				<h:form id="frm">
+					<p:growl id="msgs" showDetail="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="dtId"
+							value="#{cadastroAbastecimentoSemJornadaBean.listaAbastSemJornada}"
+							var="c" paginator="true" paginatorPosition="bottom"
+							editable="true" emptyMessage="Nenhum registro encontrado." rows="15">
+
+							<p:ajax event="rowEdit"
+								listener="#{cadastroAbastecimentoSemJornadaBean.onRowEdit}"
+								update=":frm:msgs" />
+
+
+
+							<p:column headerText="Data Abastecimento"
+								style="color:black;width:120px;text-align:center" sortyBy="#{c.data}"
+								filterBy="#{c.data}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dtAbastecimentoOutput" value="#{c.data}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{c.data}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="America/Fortaleza" />
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column style="color:black;text-align:center;width:250px"
+								headerText="Veículo"
+								sortyBy="#{c.carro.placa} - #{c.carro.modelo}"
+								filterBy="#{c.carro.placa} - #{c.carro.modelo}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.carro.placa} - #{c.carro.modelo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete id="veiculo" dropdown="true"
+											converter="carroConverter" value="#{c.carro}"
+											completeMethod="#{cadastroAbastecimentoSemJornadaBean.autoCompleteCarro}"
+											var="varEnt" itemLabel="#{varEnt.modelo} #{varEnt.placa}"
+											itemValue="#{varEnt}" required="true" forceSelection="true"
+											scrollHeight="150" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:100px" headerText="Litros">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.litros}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{c.litros}" size="10" />
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;width:100px"
+								headerText="Km Abastecimento">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.kmAbastecimento}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.kmAbastecimento}"
+											id="kmAbastecimento" />
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							
+							<p:column style="color:black;width:100px" headerText="Km Anterior">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.kmAnterior}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{c.kmAnterior}" size="10" />
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;width:100px" headerText="Km Percorrido">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.kmPercorrido}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{c.kmPercorrido}" size="10" />
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column style="color:black;width:100px" headerText="Média Km/L">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{c.media}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{c.media}" size="10" />
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="color:black;width:100px"
+								headerText="Valor Total abastecimento">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="R$ #{c.valor}" />
+									</f:facet>
+									<f:facet name="input">
+										<pe:inputNumber value="#{c.valor}" id="valorTotal" symbol="R$" />
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							
+
+							<p:column style="color:black;width:5px">
+								<p:rowEditor id="ok" />
+								<p:tooltip for="ok" value="Editar">
+								</p:tooltip>
+
+							</p:column>
+
+							<!-- <p:column style="color:black;width:15px">
+								<p:commandLink id="oi" process="@this"
+									action="#{cadastroAbastecimentoSemJornadaBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frm:opResultadoId">
+									<p:collector unique="true" value="#{c}"
+										removeFrom="#{cadastroAbastecimentoSemJornadaBean.listaAbastSemJornada}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{c}"
+										target="#{cadastroAbastecimentoSemJornadaBean.abastecimentoSemJornada}" />
+								</p:commandLink>
+
+								<p:tooltip for="oi" value="Excluir">
+								</p:tooltip>
+							</p:column> -->
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

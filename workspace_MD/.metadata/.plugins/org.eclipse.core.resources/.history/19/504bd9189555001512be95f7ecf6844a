@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Cotações</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+			<f:metadata>
+				<f:viewAction action="#{consultaCotacaoBean.consultar}"></f:viewAction>
+			</f:metadata>
+			<p:panel header="Consulta de Cotações">
+				<h:form id="frmLoc">
+					<p:growl id="msgs" showDetail="true" autoUpdate="true" />
+					<p:outputPanel id="opResultadoId">
+						<p:dataTable id="idDt" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							rows="10" emptyMessage="No records found" editable="true"
+							value="#{consultaCotacaoBean.listaCotacao}" var="c">
+
+							<p:ajax event="rowEdit" update=":frmLoc:msgs" listener="#{consultaCotacaoBean.onRowEdit}"/>
+																												
+							<p:column headerText="Carro" style="color:black;width:150px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="nomeOutput" value="#{c.carro.modelo} - #{c.carro.placa}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="nomeInput" value="#{c.carro.modelo}" size="20" style="margin-left:10px" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Item/Peça" style="color:black;width:100px">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="itemOutput" value="#{c.item}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="itemInput" value="#{c.item}" size="10" style="margin-left:10px"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Quantidade"	style="color:black;width:100px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="quantidadeOuput" value="#{c.qtde}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="quantidadeInput" value="#{c.qtde}" style="margin-left:10px" size="10"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Preço" style="color:black;width:100px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="preçoOuput" value="#{c.valor}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="preçoInput" value="#{c.valor}" style="margin-left:10px" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Numero" style="color:black;width:40px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="numeroOuput" value="#{c.fornecedor.fornecedor.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="numeroInput" value="#{c.fornecedor.fornecedor.nome}" style="margin-left:10px" size="10" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Data Cotação" style="color:black;width:100px;text-align:center">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText id="dataOuput" value="#{c.dataCotacao}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar id="dataInput" value="#{consultaCotacaoBean.cotacaoPecas.dataCotacao}" pattern="dd/MM/yyyy">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Fortaleza"/>
+										</p:calendar> 
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+													
+								<p:column style="color:black;width:10px">
+										<p:rowEditor id="ok" />
+										<p:tooltip for="ok" value="Editar">
+										</p:tooltip>
+								</p:column>
+
+							<p:column style="color:black;width:10px">
+								<p:commandLink id="oi" process="@this"
+									action="#{consultaCotacaoBean.excluir}"
+									styleClass="fa fa-trash-o" update=":frmLoc:opResultadoId">
+									<p:collector unique="true" value="#{c}"
+										removeFrom="#{consultaCotacaoBean.listaCotacao}">
+									</p:collector>
+									<f:setPropertyActionListener value="#{c}"
+										target="#{consultaCotacaoBean.cotacaoPecas}" />
+								</p:commandLink>
+								<p:tooltip for="oi" value="Excluir" />
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

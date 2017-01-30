@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Cadastro de Proprietario</title>
+</h:head>
+<h:body>
+	<ui:decorate template="/Master.xhtml">
+		<ui:define name="centro">
+
+			<p:panel header="Cadastro de proprietarios"
+				style="width:95%;height:110%%;color:black">
+
+				<p:messages autoUpdate="true" closable="true"/>
+
+				<h:form preparedId="false" id="frm">
+					<p:panelGrid columns="2" style="margin-top:20px;width:90%"
+						columnClasses="rotulo, campo">
+
+						<p:outputLabel value="Tipo Proprietario" />
+						<p:selectOneRadio id="tipoPessoa"
+							valueChangeListener="#{cadastroProprietarioBean.vcePjPf}">
+							<f:selectItem itemLabel="Pessoa Física" itemValue="pf" />
+							<f:selectItem itemLabel="Pessoa Jurídica" itemValue="pj" />
+							<p:ajax event="change" update=":panelPessoa" />
+						</p:selectOneRadio>
+
+					</p:panelGrid>
+				</h:form>
+
+				<h:panelGroup id="panelPessoa">
+					<h:form preparedId="false" id="frmPf">
+						<h:panelGroup
+							rendered="#{cadastroProprietarioBean.proprietario.pf}">
+							<h4 style="margin-left: 10px">Proprietario Pessoa Física</h4>
+							<p:tabView effect="fade" effectDuration="fast" style="height:80%">
+
+								<p:tab title="Dados Pessoais">
+
+									<p:panelGrid columns="2" style="margin-top:20px;width:90%"
+										columnClasses="rotulo, campo">
+										<p:outputLabel value="Nome" for="nome" />
+										<p:inputText id="nome" size="30" maxlength="30"
+											value="#{cadastroProprietarioBean.pessoaFisica.nome}"
+											required="true" requiredMessage="O campo NOME é obrigatório" />
+
+										<p:outputLabel value="Sexo" for="sexo" />
+										<p:selectOneRadio id="sexo"
+											value="#{cadastroProprietarioBean.pessoaFisica.sexo}">
+											<f:selectItems
+												value="#{cadastroProprietarioBean.tipoItemListSexo}" />
+										</p:selectOneRadio>
+
+										<p:outputLabel value="CPF" for="cpf" />
+										<p:inputText id="cpf" size="20" maxlength="11"
+											title="Sem pontuação"
+											value="#{cadastroProprietarioBean.pessoaFisica.cpf}"
+											required="true" requiredMessage="O campo CPF é obrigatório" />
+
+										<p:outputLabel value="RG" for="rg" />
+										<p:inputText id="rg" size="20" maxlength="15"
+											title="Sem pontuação"
+											value="#{cadastroProprietarioBean.pessoaFisica.rg}" />
+
+										<p:outputLabel value="Telefone" for="telefone" />
+										<p:inputMask mask="(99) 99999-9999" id="telefone"
+											value="#{cadastroProprietarioBean.pessoaFisica.telefone}" 
+											required="true" requiredMessage="O campo TELEFONE é obrigatório"/>
+
+										<p:outputLabel value="E-mail" for="email" />
+										<p:inputText id="email" size="20" maxlength="40"
+											title="Sem pontuação"
+											value="#{cadastroProprietarioBean.pessoaFisica.email}" 
+											required="true" requiredMessage="O campo E-MAIL é obrigatório"/>
+
+									</p:panelGrid>
+								</p:tab>
+								<p:tab title="Endereço">
+									<h:panelGroup id="panelEndereco">
+										<p:panelGrid columns="2" style="margin-top:20px;width:90%"
+											columnClasses="rotulo, campo">
+
+											<p:outputLabel value="CEP" for="cep" />
+											<p:inputText id="cep" size="8" maxlength="8"
+												value="#{cadastroProprietarioBean.endereco.cep}">
+												<p:ajax event="blur" update="panelEndereco" global="false"
+													listener="#{cadastroProprietarioBean.buscaCep}" />
+											</p:inputText>
+
+											<p:outputLabel value="Logradouro" for="logradouro" />
+											<p:inputText id="logradouro" size="50" maxlength="50"
+												value="#{cadastroProprietarioBean.endereco.logradouro}" 
+												required="true" requiredMessage="O campo LOGRADOURO é obrigatório"/>
+
+											<p:outputLabel value="Numero" for="numero" />
+											<p:inputText id="numero" size="8" maxlength="8"
+												value="#{cadastroProprietarioBean.endereco.numero}" />
+
+											<p:outputLabel value="Complemento" for="complemento" />
+											<p:inputText id="complemento" size="10" maxlength="10"
+												value="#{cadastroProprietarioBean.endereco.complemento}" />
+
+											<p:outputLabel value="Bairro" for="bairro" />
+											<p:inputText id="bairro" size="40" maxlength="50"
+												value="#{cadastroProprietarioBean.endereco.bairro}" 
+												required="true" requiredMessage="O campo BAIRRO é obrigatório"/>
+
+											<p:outputLabel value="Cidade" for="cidade" />
+											<p:inputText id="cidade" size="20" maxlength="20"
+												value="#{cadastroProprietarioBean.endereco.cidade}" />
+
+											<p:outputLabel value="UF" for="uf" />
+											<p:inputText id="uf" size="1" maxlength="2"
+												value="#{cadastroProprietarioBean.endereco.uf}" />
+										</p:panelGrid>
+									</h:panelGroup>
+								</p:tab>
+
+							</p:tabView>
+
+							<p:commandButton value="Cadastrar"
+								style="color:black;margin-left:27px;margin-top:10px"
+								actionListener="#{cadastroProprietarioBean.salvarPf}" process="@form">
+								<f:ajax render="@form" resetValues="true" />
+
+							</p:commandButton>
+
+						</h:panelGroup>
+
+					</h:form>
+
+					<h:form preparedId="false" id="frmPj">
+						<h:panelGroup
+							rendered="#{cadastroProprietarioBean.proprietario.pj}">
+							<h4 style="margin-left: 10px">Proprietario Pessoa Jurídica</h4>
+							<p:tabView effect="fade" effectDuration="fast" style="height:80%">
+								<p:tab title="Dados da Empresa">
+									<p:panelGrid columns="2" style="margin-top:20px;width:90%"
+										columnClasses="rotulo, campo">
+										<p:outputLabel value="Nome Fantasia" for="nomeFantasia" />
+										<p:inputText id="nomeFantasia" size="30" maxlength="30"
+											value="#{cadastroProprietarioBean.pessoaJuridica.nome}"
+											required="true"
+											requiredMessage="O campo NOME FANTASIA é obrigatório" />
+
+										<p:outputLabel value="CNPJ" for="cnpj" />
+										<p:inputText id="cnpj" size="20" maxlength="20"
+											title="Sem pontuação"
+											value="#{cadastroProprietarioBean.pessoaJuridica.cnpj}" 
+											required="true" requiredMessage="O campo CNPJ é obrigatório"/>
+
+										<p:outputLabel value="Inscrição Municipal"
+											for="inscricaoMunicipal" />
+										<p:inputText id="inscricaoMunicipal" size="20" maxlength="15"
+											title="Sem pontuação"
+											value="#{cadastroProprietarioBean.pessoaJuridica.inscricaoMunicipal}" />
+
+										<p:outputLabel value="Inscrição Estadual"
+											for="inscricaoEstadual" />
+										<p:inputText id="inscricaoEstadual" size="20" maxlength="15"
+											title="Sem pontuação"
+											value="#{cadastroProprietarioBean.pessoaJuridica.inscricaoEstadual}" />
+
+										<p:outputLabel value="Telefone" for="telefone" />
+										<p:inputMask mask="(99) 99999-9999" id="telefone"
+											value="#{cadastroProprietarioBean.pessoaJuridica.telefone}" 
+											required="true" requiredMessage="O campo TELEFONE é obrigatório"/>
+
+										<p:outputLabel value="E-mail" for="email" />
+										<p:inputText id="email" size="20" maxlength="40"
+											title="Sem pontuação"
+											value="#{cadastroProprietarioBean.pessoaJuridica.email}" 
+											required="true" requiredMessage="O campo E-MAIL é obrigatório"/>
+
+									</p:panelGrid>
+								</p:tab>
+								<p:tab title="Endereço">
+									<h:panelGroup id="panelEnderecoPj">
+										<p:panelGrid columns="2" style="margin-top:20px;width:90%"
+											columnClasses="rotulo, campo">
+
+											<p:outputLabel value="CEP" for="cep" />
+											<p:inputText id="cep" size="8" maxlength="8"
+												value="#{cadastroProprietarioBean.endereco.cep}">
+												<p:ajax event="blur" update="panelEnderecoPj" global="false"
+													listener="#{cadastroProprietarioBean.buscaCep}" />
+											</p:inputText>
+
+											<p:outputLabel value="Logradouro" for="logradouro" />
+											<p:inputText id="logradouro" size="50" maxlength="50"
+												value="#{cadastroProprietarioBean.endereco.logradouro}" 
+												required="true" requiredMessage="O campo LOGRADOURO é obrigatório"/>
+
+											<p:outputLabel value="Numero" for="numero" />
+											<p:inputText id="numero" size="8" maxlength="8"
+												value="#{cadastroProprietarioBean.endereco.numero}"/>
+
+											<p:outputLabel value="Complemento" for="complemento" />
+											<p:inputText id="complemento" size="10" maxlength="10"
+												value="#{cadastroProprietarioBean.endereco.complemento}" />
+
+											<p:outputLabel value="Bairro" for="bairro" />
+											<p:inputText id="bairro" size="40" maxlength="50"
+												value="#{cadastroProprietarioBean.endereco.bairro}" 
+												required="true" requiredMessage="O campo BAIRRO é obrigatório"/>
+
+											<p:outputLabel value="Cidade" for="cidade" />
+											<p:inputText id="cidade" size="20" maxlength="20"
+												value="#{cadastroProprietarioBean.endereco.cidade}" />
+
+											<p:outputLabel value="UF" for="uf" />
+											<p:inputText id="uf" size="1" maxlength="2"
+												value="#{cadastroProprietarioBean.endereco.uf}" />
+										</p:panelGrid>
+									</h:panelGroup>
+								</p:tab>
+							</p:tabView>
+							<p:commandButton value="Cadastrar"
+								style="color:black;margin-left:27px;margin-top:10px"
+								actionListener="#{cadastroProprietarioBean.salvarPj}"
+								process="@form">
+								<f:ajax render="@form" resetValues="true" />
+							</p:commandButton>
+
+						</h:panelGroup>
+
+					</h:form>
+				</h:panelGroup>
+
+			</p:panel>
+
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

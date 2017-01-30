@@ -1,0 +1,67 @@
+package br.com.sistemaxm.entidades;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+@Entity
+public class Proprietario {
+
+	private Pessoa proprietario;
+	private Long codigo;
+	
+	@Transient
+	private boolean pf;
+	@Transient
+	private boolean pj;
+
+	public Proprietario() {
+
+	}
+	
+	public Proprietario(Long codigo, Pessoa proprietario) {
+		this.proprietario = proprietario;
+		this.codigo = codigo;
+	}
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_pessoa")
+	public Pessoa getProprietario() {
+		return proprietario;
+	}
+
+	public void setProprietario(Pessoa proprietario) {
+		this.proprietario = proprietario;
+	}
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public boolean isPf() {
+		return pf;
+	}
+
+	public void setPf(boolean pf) {
+		this.pf = pf;
+	}
+
+	public boolean isPj() {
+		return pj;
+	}
+
+	public void setPj(boolean pj) {
+		this.pj = pj;
+	}
+
+	
+}
